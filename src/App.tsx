@@ -4,7 +4,7 @@ function App() {
 
   return (
     <div>
-      App {i18next.t('hello')}
+      <p className="text-main-color bg-main-background">App {i18next.t('hello')}</p>
     </div>
   )
 }
