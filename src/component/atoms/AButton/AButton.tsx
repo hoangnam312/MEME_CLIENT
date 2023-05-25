@@ -18,7 +18,10 @@ const AButton = ({
 }: AButtonPropsType) => {
 	return (
 		<button
-			className={`relative rounded-full shadow-xl group flex items-center text-white justify-center bg-gradient-to-r bg-main-background text-main-color px-5 py-2 font-semibold ${addClass}`}
+			className={`
+				group relative flex items-center justify-center rounded-full bg-emerald-300 
+				bg-gradient-to-r px-5 py-2 font-semibold text-violet-900 shadow-xl ${addClass}
+			`}
 			onClick={onClick}
 			{...rest}
 		>
