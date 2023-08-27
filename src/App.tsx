@@ -7,6 +7,7 @@ function App() {
 	return (
 		<>
 			<MNavbar />
+
 			<div>
 				<p className="bg-main-background text-main-color">
 					App {i18next.t('hello')}
