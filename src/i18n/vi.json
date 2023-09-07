@@ -2,5 +2,7 @@
 	"hello": "Xin chào",
 	"search": "Tìm kiếm",
 	"upload": "Tải lên",
-	"myMemes": "Kho meme của tôi"
+	"myMemes": "Kho meme của tôi",
+	"QuickUpload.dragHere": "Thả meme vào đây hoặc tải lên",
+	"QuickUpload.pastHere": "Dán đường link meme vào đây"
 }

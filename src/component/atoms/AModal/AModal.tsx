@@ -10,7 +10,7 @@ export interface AModalPropsType {
 	addClassWrap?: string;
 }
 
-export const AModal = ({
+const AModal = ({
 	isOpen = false,
 	closeModal,
 	onClickBackdrop,
@@ -45,3 +45,5 @@ export const AModal = ({
 		</div>
 	);
 };
+
+export default AModal;

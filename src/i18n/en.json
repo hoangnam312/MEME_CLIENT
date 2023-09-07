@@ -2,5 +2,7 @@
 	"hello": "Hello",
 	"search": "Search",
 	"upload": "Upload",
-	"myMemes": "My memes"
+	"myMemes": "My memes",
+	"QuickUpload.dragHere": "Drop a meme here or upload it",
+	"QuickUpload.pastHere": "Paste the meme link here"
 }

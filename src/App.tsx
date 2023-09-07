@@ -2,10 +2,11 @@ import i18next from 'src/i18n/i18next.config';
 import { MNavbar } from './component/molecules/MNavbar/MNavbar';
 import fakeImage from './fakeData/dataImage';
 import { OBoard } from './component/organisms/OBoard/OBoard';
+import QuickUploadWrapper from './containers/QuickUploadWrapper/QuickUploadWrapper';
 
 function App() {
 	return (
-		<>
+		<QuickUploadWrapper>
 			<MNavbar />
 
 			<div>
@@ -16,7 +17,7 @@ function App() {
 					<OBoard imageArray={fakeImage} />
 				</div>
 			</div>
-		</>
+		</QuickUploadWrapper>
 	);
 }
 
