@@ -3,6 +3,11 @@
 	"search": "Search",
 	"upload": "Upload",
 	"myMemes": "My memes",
+	"save": "Save",
+	"saveLink": "Save only link *",
+	"saveLink.explant": "* Because I don't have money to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
 	"QuickUpload.dragHere": "Drop a meme here or upload it",
-	"QuickUpload.pastHere": "Paste the meme link here"
+	"QuickUpload.pastHere": "Paste the meme link here",
+	"UploadModal.name": "Hey, what is your name of this meme",
+	"UploadModal.tag": "Add more tag to easy find: #fun #cat"
 }

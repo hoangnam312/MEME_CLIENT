@@ -1,4 +1,4 @@
-import React, { ReactNode } from 'react';
+import { ReactNode } from 'react';
 import { IRestParameterAttribute } from 'src/constants/type';
 
 export interface AButtonPropsType {
