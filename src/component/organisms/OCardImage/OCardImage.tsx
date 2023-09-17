@@ -11,12 +11,14 @@ export interface OCardImagePropsType {
 	imagePath: string;
 	addClassWrapper?: string;
 	addClassImage?: string;
+	onClick?: () => void;
 }
 
 export const OCardImage = ({
 	imagePath,
 	addClassWrapper,
 	addClassImage,
+	onClick,
 }: OCardImagePropsType) => {
 	const [isHover, setIsHover] = useState<boolean>(false);
 	const [isCopy, setIsCopy] = useState<boolean>(false);
@@ -28,6 +30,9 @@ export const OCardImage = ({
 			onMouseLeave={() => {
 				setIsCopy(false);
 				setIsHover(false);
+			}}
+			onClick={() => {
+				if (onClick) onClick();
 			}}
 		>
 			<img
