@@ -9,9 +9,10 @@
 	"copyLink": "Copy link meme",
 	"noName": "Meme này chưa có tên",
 	"noTag": "Meme này chưa có tag",
-	"saveLink.explant": "* Vì không có tiền lưu trữ ảnh nên nếu ảnh của bạn lấy từ nguồn chất lượng không bị nén hay thay đổi địa chỉ ảnh thì có thể lưu link ở đây",
+	"upload.link.error": "Oops, chúng tôi không tìm thấy meme này",
+	"saveLink.explant": "* Vì không có kinh phí lưu trữ ảnh nên nếu ảnh của bạn lấy từ nguồn chất lượng không bị nén hay thay đổi địa chỉ ảnh thì có thể lưu link ở đây",
 	"QuickUpload.dragHere": "Thả meme vào đây hoặc tải lên",
-	"QuickUpload.pastHere": "Dán đường link meme vào đây",
+	"QuickUpload.pastHere": "Dán đường link hoặc paste vào đây",
 	"UploadModal.name": "Tên meme là gì bạn nhỉ",
 	"UploadModal.tag": "Thêm cái tag cho dễ nhớ, dễ tìm: #hai-huoc #meo"
 }

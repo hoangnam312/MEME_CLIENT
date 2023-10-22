@@ -9,9 +9,10 @@
 	"copyLink": "Copy link meme",
 	"noName": "This meme not have name yet",
 	"noTag": "This meme not have tag yet",
-	"saveLink.explant": "* Because I don't have money to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
+	"upload.link.error": "Oops, we can't find this meme",
+	"saveLink.explant": "* Because I don't have budget to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
 	"QuickUpload.dragHere": "Drop a meme here or upload it",
-	"QuickUpload.pastHere": "Paste the meme link here",
+	"QuickUpload.pastHere": "Paste the link or meme here",
 	"UploadModal.name": "Hey, what is your name of this meme",
 	"UploadModal.tag": "Add more tag to easy find: #fun #cat"
 }

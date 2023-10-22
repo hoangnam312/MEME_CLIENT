@@ -17,6 +17,7 @@ const QuickUploadWrapper = ({ children }: QuickUploadWrapperPropsType) => {
 				closeModal={closeModal}
 				onSelectImage={() => {
 					console.log('onSelect');
+					// !TODO: handle select image and open UploadModal
 				}}
 			/>
 		</>
