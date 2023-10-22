@@ -1,5 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App from '../App';
+import MyMeme from 'src/containers/MyMeme/MyMeme';
 
 export const router = createBrowserRouter([
 	{
@@ -8,14 +9,14 @@ export const router = createBrowserRouter([
 		errorElement: <div>Error Page</div>,
 		children: [
 			{
-				path: 'children',
+				path: 'child',
 				element: <div>Child Route</div>,
 			},
 		],
 	},
 	{
-		path: '/second',
-		element: <div>Second Page</div>,
+		path: '/my-meme',
+		element: <MyMeme />,
 		children: [],
 	},
 ]);

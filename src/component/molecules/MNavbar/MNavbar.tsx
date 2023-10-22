@@ -17,9 +17,10 @@ export const MNavbar = () => {
 				<div className="flex items-center justify-start">
 					<div className="mr-5 flex items-center justify-start">
 						<img
-							className="h-10 w-10 rounded-full object-cover"
+							className="h-10 w-10 cursor-pointer rounded-full object-cover"
 							src="vite.svg"
 							alt="viteIcon"
+							onClick={() => (window.location.href = '/')}
 						/>
 					</div>
 					<div className="flex items-center justify-center">
@@ -31,7 +32,10 @@ export const MNavbar = () => {
 				</div>
 				<div className="flex items-center justify-end">
 					<div className="mr-5 flex items-center justify-end">
-						<AButton content={t('myMemes')} />
+						<AButton
+							content={t('myMemes')}
+							onClick={() => (window.location.href = '/my-meme')}
+						/>
 					</div>
 					<div className="flex items-center justify-start">
 						<div
