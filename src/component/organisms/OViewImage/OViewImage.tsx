@@ -8,12 +8,19 @@ import AInput from 'src/component/atoms/AInput/AInput';
 import AModal from 'src/component/atoms/AModal/AModal';
 import { color } from 'src/config/style';
 import { IImage } from 'src/constants/type';
+import useCopyImage from 'src/hooks/useCopy';
 
 export interface OViewImagePropsType {
 	isOpen: boolean;
 	data: IImage;
 	closeModal: () => void;
 	onSelectImage: () => void;
+}
+
+export enum StatusCopyImage {
+	SUCCESS,
+	FAIL,
+	UN_COPY,
 }
 
 const OViewImage = ({
@@ -26,6 +33,13 @@ const OViewImage = ({
 	const [name, setName] = useState('');
 	const [tag, setTag] = useState('');
 	const [isEdit, setIsEdit] = useState<boolean>(false);
+	const [isCopiedImage, setIsCopiedImage] = useState<StatusCopyImage>(
+		StatusCopyImage.UN_COPY
+	);
+	const [isCopiedLink, setIsCopiedLink] = useState<StatusCopyImage>(
+		StatusCopyImage.UN_COPY
+	);
+	const { copyImage, copyLink } = useCopyImage();
 
 	// eslint-disable-next-line @typescript-eslint/no-unused-vars
 	const onPreHandleImage = (e: unknown) => {
@@ -38,6 +52,46 @@ const OViewImage = ({
 		setTag(data?.tag);
 		setIsEdit(false);
 	}, [isOpen, data]);
+
+	async function handleCopyImage() {
+		const awaitCopy = await copyImage(data.imagePath);
+		if (awaitCopy) setIsCopiedImage(StatusCopyImage.SUCCESS);
+		else setIsCopiedImage(StatusCopyImage.FAIL);
+		setTimeout(() => {
+			setIsCopiedImage(StatusCopyImage.UN_COPY);
+		}, 3000);
+	}
+
+	async function handleCopyLink() {
+		const awaitCopy = await copyLink(data.imagePath);
+		if (awaitCopy) setIsCopiedLink(StatusCopyImage.SUCCESS);
+		else setIsCopiedLink(StatusCopyImage.FAIL);
+		setTimeout(() => {
+			setIsCopiedLink(StatusCopyImage.UN_COPY);
+		}, 3000);
+	}
+
+	function renderBtnCopyImage() {
+		switch (isCopiedImage) {
+			case StatusCopyImage.SUCCESS:
+				return t('copy.success');
+			case StatusCopyImage.FAIL:
+				return t('copy.fail');
+			default:
+				return t('copy');
+		}
+	}
+
+	function renderBtnCopyLink() {
+		switch (isCopiedLink) {
+			case StatusCopyImage.SUCCESS:
+				return t('copyLink.success');
+			case StatusCopyImage.FAIL:
+				return t('copyLink.fail');
+			default:
+				return t('copyLink');
+		}
+	}
 
 	return (
 		<AModal isOpen={isOpen} closeModal={closeModal} addClassWrap="!w-1/2">
@@ -62,8 +116,10 @@ const OViewImage = ({
 					)}
 				</div>
 				<div className="flex justify-end self-center">
-					<AButton>{t('copy')}</AButton>
-					<AButton addClass="ml-5">{t('copyLink')}</AButton>
+					<AButton onClick={handleCopyImage}>{renderBtnCopyImage()}</AButton>
+					<AButton addClass="ml-5" onClick={handleCopyLink}>
+						{renderBtnCopyLink()}
+					</AButton>
 				</div>
 				{isEdit ? (
 					<>
