@@ -32,6 +32,11 @@ const OQuickUpload = ({
 		onSelectImage();
 	};
 
+	useEffect(() => {
+		setLink('');
+		setSource('');
+	}, [isOpen, setSource]);
+
 	const onUpdateLink = (e: React.FormEvent<HTMLFormElement>, value: string) => {
 		setLink(value);
 		setSource('');
@@ -53,7 +58,11 @@ const OQuickUpload = ({
 				</h3>
 				{(source || link) && !isImageError ? (
 					<div className="my-10" onDrop={onDrop} onDragOver={onDragOverAble}>
-						<img src={source} alt="meme preview" onError={onImageError} />
+						<img
+							src={source || link}
+							alt="meme preview"
+							onError={onImageError}
+						/>
 					</div>
 				) : (
 					<div

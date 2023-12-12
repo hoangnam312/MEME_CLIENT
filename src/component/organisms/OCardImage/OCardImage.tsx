@@ -6,6 +6,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
+import './style.css';
+import useCopyImage from 'src/hooks/useCopy';
 
 export interface OCardImagePropsType {
 	imagePath: string;
@@ -16,16 +18,26 @@ export interface OCardImagePropsType {
 
 export const OCardImage = ({
 	imagePath,
-	addClassWrapper,
-	addClassImage,
+	addClassWrapper = '',
+	addClassImage = '',
 	onClick,
 }: OCardImagePropsType) => {
 	const [isHover, setIsHover] = useState<boolean>(false);
 	const [isCopy, setIsCopy] = useState<boolean>(false);
+	const { copyImage } = useCopyImage();
+
+	const handleCopy = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+		e.stopPropagation();
+		if (await copyImage(imagePath)) setIsCopy(true);
+	};
+
+	const handleTag = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+		e.stopPropagation();
+	};
 
 	return (
 		<div
-			className={`relative h-fit ${addClassWrapper}`}
+			className={`relative h-fit ${addClassWrapper} `}
 			onMouseEnter={() => setIsHover(true)}
 			onMouseLeave={() => {
 				setIsCopy(false);
@@ -41,16 +53,16 @@ export const OCardImage = ({
 				alt="viteIcon"
 			/>
 			{isHover && (
-				<div className="absolute inset-0 flex items-end justify-end bg-black bg-opacity-50">
+				<div className="box-shadow-image absolute inset-0 flex items-end  justify-end">
 					<div className="mb-2 mr-2">
-						<AButton addClass="mb-2" onClick={() => setIsCopy(true)}>
+						<AButton addClass="mb-2" onClick={handleCopy}>
 							{isCopy ? (
 								<FontAwesomeIcon icon={faCircleCheck} />
 							) : (
 								<FontAwesomeIcon icon={faCopy} />
 							)}
 						</AButton>
-						<AButton>
+						<AButton onClick={handleTag}>
 							<FontAwesomeIcon icon={faHashtag} />
 						</AButton>
 					</div>

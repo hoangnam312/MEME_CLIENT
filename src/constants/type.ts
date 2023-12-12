@@ -7,3 +7,15 @@ export interface IImage {
 	tag: string;
 	name?: string;
 }
+
+export enum StatusCopyImage {
+	SUCCESS,
+	FAIL,
+	UN_COPY,
+}
+
+export enum typeModal {
+	QUICK_UPLOAD,
+	UPLOAD,
+	NONE,
+}

@@ -1,15 +1,27 @@
 import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { defaultStye } from 'src/assets/css/defaultStyle';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ASearch from 'src/component/atoms/ASearch/ASearch';
 import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
+import { typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
 
-export const MNavbar = () => {
+export interface MNavbarPropsType {
+	updateModalOpening: (type: typeModal) => void;
+}
+
+export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 	const { t } = useTranslation();
 	const { isOpen, openModal, closeModal } = useOpen();
+
+	useEffect(() => {
+		if (isOpen) updateModalOpening(typeModal.UPLOAD);
+		else updateModalOpening(typeModal.NONE);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [isOpen]);
 
 	return (
 		<>

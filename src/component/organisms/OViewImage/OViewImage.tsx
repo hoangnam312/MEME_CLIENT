@@ -7,7 +7,7 @@ import AButton from 'src/component/atoms/AButton/AButton';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AModal from 'src/component/atoms/AModal/AModal';
 import { color } from 'src/config/style';
-import { IImage } from 'src/constants/type';
+import { IImage, StatusCopyImage } from 'src/constants/type';
 import useCopyImage from 'src/hooks/useCopy';
 
 export interface OViewImagePropsType {
@@ -15,12 +15,6 @@ export interface OViewImagePropsType {
 	data: IImage;
 	closeModal: () => void;
 	onSelectImage: () => void;
-}
-
-export enum StatusCopyImage {
-	SUCCESS,
-	FAIL,
-	UN_COPY,
 }
 
 const OViewImage = ({
@@ -93,12 +87,17 @@ const OViewImage = ({
 		}
 	}
 
+	const handleUpload = () => {
+		if (data?.imagePath) return;
+		inputFile.current.click();
+	};
+
 	return (
 		<AModal isOpen={isOpen} closeModal={closeModal} addClassWrap="!w-1/2">
 			<div className="relative">
 				<div
 					className="my-10 flex items-center justify-center rounded-lg text-5xl"
-					onClick={() => inputFile?.current.click()}
+					onClick={handleUpload}
 				>
 					{data?.imagePath ? (
 						<img
