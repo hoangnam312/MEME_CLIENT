@@ -13,10 +13,24 @@
 	"copyLink.fail": "Copy link meme fail",
 	"noName": "This meme not have name yet",
 	"noTag": "This meme not have tag yet",
+	"google": "Google",
+	"facebook": "Facebook",
+	"email": "Email",
+	"password": "Password",
+	"repassword": "Re-enter password.",
+	"backToApp": "Back to app",
+
 	"upload.link.error": "Oops, we can't find this meme",
 	"saveLink.explant": "* Because I don't have budget to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
 	"QuickUpload.dragHere": "Drop a meme here or upload it",
 	"QuickUpload.pastHere": "Paste the link or meme here",
 	"UploadModal.name": "Hey, what is your name of this meme",
-	"UploadModal.tag": "Add more tag to easy find: #fun #cat"
+	"UploadModal.tag": "Add more tag to easy find: #fun #cat",
+
+	"login": "Login",
+	"Login.notAccountYet": "Don't have an account?",
+	"Login.signUp": "Sign up",
+	"Login.forgotPassword": "Forgot Password",
+
+	"register": "Register"
 }
