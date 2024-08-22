@@ -1,11 +1,13 @@
 import { t } from 'i18next';
-import AInput, { AInputPropsType } from '../AInput/AInput';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMagnifyingGlass } from '@fortawesome/free-solid-svg-icons';
+import MInputWithinForm, {
+	MInputWithinFormPropsType,
+} from 'src/component/molecules/MInputWithinForm/MInputWithinForm';
 
-const ASearch = (props: AInputPropsType) => {
+const ASearch = (props: MInputWithinFormPropsType) => {
 	return (
-		<AInput
+		<MInputWithinForm
 			{...props}
 			labelButton={t('search')}
 			icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}

@@ -5,8 +5,17 @@ interface InterfacePayloadLogin {
 	password: string;
 }
 
+interface InterfacePayloadRegister {
+	email: string;
+	username: string;
+	password: string;
+}
+
 const login = (payload: InterfacePayloadLogin) =>
 	api.post('/auth/login', payload);
 
-export { login };
-export type { InterfacePayloadLogin };
+const register = (payload: InterfacePayloadRegister) =>
+	api.post('/auth/register', payload);
+
+export { login, register };
+export type { InterfacePayloadLogin, InterfacePayloadRegister };

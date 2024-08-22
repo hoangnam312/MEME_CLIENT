@@ -17,10 +17,13 @@
 	"facebook": "Facebook",
 	"email": "Email",
 	"password": "Password",
-	"repassword": "Re-enter password.",
+	"confirmPassword": "Re-enter password.",
 	"backToApp": "Back to app",
 
 	"toast.unexpectedError": "An unexpected error occurred",
+
+	"validate.requiredField": "This field is required",
+	"validate.dontSamePassword": "The confirmation password does not match. Please try again",
 
 	"upload.link.error": "Oops, we can't find this meme",
 	"saveLink.explant": "* Because I don't have budget to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",

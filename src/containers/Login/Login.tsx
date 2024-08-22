@@ -5,7 +5,6 @@ import { Path } from 'src/constants/type';
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import ALink from 'src/component/atoms/AButton/ALink';
-import AInput from 'src/component/atoms/AInput/AInput';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import AButton from 'src/component/atoms/AButton/AButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,11 +14,9 @@ import {
 	faUnlockKeyhole,
 } from '@fortawesome/free-solid-svg-icons';
 
-import useLogin from './useLogin';
+import FormLogin from './FormLogin';
 
 function Login() {
-	const { email, changeEmail, password, changePassword, handleLogin } =
-		useLogin();
 	const navigate = useNavigate();
 
 	return (
@@ -32,23 +29,7 @@ function Login() {
 				</div>
 				<div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
 					<div className="px-5 py-7">
-						<AInput
-							addClassWrapper="mt-3"
-							name="email"
-							label={t('email')}
-							value={email}
-							onChange={changeEmail}
-						/>
-						<AInput
-							addClassWrapper="mt-3"
-							label={t('password')}
-							type="password"
-							value={password}
-							onChange={changePassword}
-						/>
-						<div className="mt-7 flex justify-center align-middle">
-							<AButton content={t('login')} onClick={handleLogin} />
-						</div>
+						<FormLogin />
 					</div>
 					<div className="p-5">
 						<div className="grid">

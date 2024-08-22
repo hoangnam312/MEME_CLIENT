@@ -3,12 +3,12 @@ import { t } from 'i18next';
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import ALink from 'src/component/atoms/AButton/ALink';
-import AInput from 'src/component/atoms/AInput/AInput';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
-import AButton from 'src/component/atoms/AButton/AButton';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AOutlineButton from 'src/component/atoms/AButton/AOutlineButton';
+
+import FormRegister from './FormRegister';
 
 function Register() {
 	return (
@@ -21,20 +21,7 @@ function Register() {
 				</div>
 				<div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
 					<div className="px-5 py-7">
-						<AInput addClassWrapper="mt-3" label={t('email')} />
-						<AInput
-							addClassWrapper="mt-3"
-							label={t('password')}
-							type="password"
-						/>
-						<AInput
-							addClassWrapper="mt-3"
-							label={t('repassword')}
-							type="password"
-						/>
-						<div className="mt-7 flex justify-center align-middle">
-							<AButton content={t('register')} />
-						</div>
+						<FormRegister />
 					</div>
 					<div className="p-5">
 						<div className="grid">
