@@ -19,3 +19,11 @@ export enum typeModal {
 	UPLOAD,
 	NONE,
 }
+
+export enum Path {
+	HOME_PAGE = '/',
+	MY_MEME = '/my-meme',
+	LOGIN = '/login',
+	REGISTER = '/register',
+	SERVER_ERROR = '/sever-error',
+}

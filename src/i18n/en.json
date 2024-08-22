@@ -20,6 +20,8 @@
 	"repassword": "Re-enter password.",
 	"backToApp": "Back to app",
 
+	"toast.unexpectedError": "An unexpected error occurred",
+
 	"upload.link.error": "Oops, we can't find this meme",
 	"saveLink.explant": "* Because I don't have budget to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
 	"QuickUpload.dragHere": "Drop a meme here or upload it",

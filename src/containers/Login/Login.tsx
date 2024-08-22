@@ -1,5 +1,7 @@
 import { t } from 'i18next';
+import { useNavigate } from 'react-router-dom';
 
+import { Path } from 'src/constants/type';
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import ALink from 'src/component/atoms/AButton/ALink';
@@ -13,25 +15,39 @@ import {
 	faUnlockKeyhole,
 } from '@fortawesome/free-solid-svg-icons';
 
+import useLogin from './useLogin';
+
 function Login() {
+	const { email, changeEmail, password, changePassword, handleLogin } =
+		useLogin();
+	const navigate = useNavigate();
+
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
 			<div className="xs:p-0 mx-auto p-10 md:w-full md:max-w-md">
 				<div className="mb-5 flex items-center justify-center">
-					<div onClick={() => (window.location.href = '/')}>
+					<div onClick={() => navigate(Path.HOME_PAGE)}>
 						<MainIcon />
 					</div>
 				</div>
 				<div className="w-full divide-y divide-gray-200 rounded-lg bg-white shadow">
 					<div className="px-5 py-7">
-						<AInput addClassWrapper="mt-3" label={t('email')} />
+						<AInput
+							addClassWrapper="mt-3"
+							name="email"
+							label={t('email')}
+							value={email}
+							onChange={changeEmail}
+						/>
 						<AInput
 							addClassWrapper="mt-3"
 							label={t('password')}
 							type="password"
+							value={password}
+							onChange={changePassword}
 						/>
 						<div className="mt-7 flex justify-center align-middle">
-							<AButton content={t('login')} />
+							<AButton content={t('login')} onClick={handleLogin} />
 						</div>
 					</div>
 					<div className="p-5">
@@ -68,7 +84,7 @@ function Login() {
 				<div className="py-5">
 					<div className="grid grid-cols-2 gap-1">
 						<div className="whitespace-nowrap text-center sm:text-left">
-							<AOutlineButton>
+							<AOutlineButton onClick={() => navigate(Path.HOME_PAGE)}>
 								<FontAwesomeIcon icon={faArrowLeft} />
 								<span className="ml-1 inline-block">{t('backToApp')}</span>
 							</AOutlineButton>
