@@ -10,6 +10,8 @@ import { color } from 'src/config/style';
 import { IImage, StatusCopyImage } from 'src/constants/type';
 import useCopyImage from 'src/hooks/useCopy';
 
+const baseImage = import.meta.env.VITE_BASE_IMAGE;
+
 export interface OViewImagePropsType {
 	isOpen: boolean;
 	data: IImage;
@@ -101,7 +103,7 @@ const OViewImage = ({
 				>
 					{data?.imagePath ? (
 						<img
-							src={data.imagePath}
+							src={baseImage + data.imagePath}
 							alt={data.imagePath}
 							className="max-h-96 max-w-2xl"
 						/>

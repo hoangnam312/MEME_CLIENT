@@ -31,3 +31,9 @@ export enum Path {
 export type ErrorResponse = {
 	message: string;
 };
+
+export interface TypeParams {
+	search?: string;
+	limit?: number;
+	page?: number;
+}

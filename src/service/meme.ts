@@ -1,3 +1,4 @@
+import { IImage, TypeParams } from 'src/constants/type';
 import api from './config';
 
 interface InterfacePayloadCreateMeme {
@@ -8,6 +9,16 @@ interface InterfacePayloadCreateMeme {
 	tag?: string;
 }
 
+interface InterfaceParamsGetMemes extends TypeParams {
+	userId?: string;
+}
+
+interface InterfaceResponseGetMemes {
+	total: number;
+	page: number;
+	data: IImage[];
+}
+
 const createMeme = (payload: FormData) =>
 	api.post('/meme', payload, {
 		headers: {
@@ -15,5 +26,12 @@ const createMeme = (payload: FormData) =>
 		},
 	});
 
-export { createMeme };
-export type { InterfacePayloadCreateMeme };
+const getMemes = (params?: InterfaceParamsGetMemes) =>
+	api.get<InterfaceResponseGetMemes>('/meme', { params });
+
+export { createMeme, getMemes };
+export type {
+	InterfacePayloadCreateMeme,
+	InterfaceParamsGetMemes,
+	InterfaceResponseGetMemes,
+};
