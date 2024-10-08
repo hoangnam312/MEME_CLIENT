@@ -10,7 +10,9 @@ const ASearch = (props: MInputWithinFormPropsType) => {
 		<MInputWithinForm
 			{...props}
 			labelButton={t('search')}
-			icon={<FontAwesomeIcon icon={faMagnifyingGlass} />}
+			icon={
+				<FontAwesomeIcon className="text-violet-900" icon={faMagnifyingGlass} />
+			}
 		/>
 	);
 };

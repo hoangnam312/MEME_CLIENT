@@ -20,7 +20,7 @@ const OQuickUpload = ({
 }: OQuickUploadPropsType) => {
 	const inputFile = useRef();
 	const [isImageError, setIsImageError] = useState<boolean>(false);
-	const { source, onPaste, onDrop, onDragOverAble, onUpload, setSource } =
+	const { source, onPaste, onDrop, onDragOverAble, onUpload, clearSource } =
 		useFile();
 	const [link, setLink] = useState<string>('');
 
@@ -34,12 +34,12 @@ const OQuickUpload = ({
 
 	useEffect(() => {
 		setLink('');
-		setSource('');
-	}, [isOpen, setSource]);
+		clearSource();
+	}, [isOpen, clearSource]);
 
 	const onUpdateLink = (e: React.FormEvent<HTMLFormElement>, value: string) => {
 		setLink(value);
-		setSource('');
+		clearSource();
 	};
 
 	const onImageError = () => {

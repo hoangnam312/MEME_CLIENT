@@ -30,6 +30,7 @@
 	"QuickUpload.dragHere": "Drop a meme here or upload it",
 	"QuickUpload.pastHere": "Paste the link or meme here",
 	"UploadModal.name": "Hey, what is your name of this meme",
+	"UploadModal.description": "How about describing something about this meme",
 	"UploadModal.tag": "Add more tag to easy find: #fun #cat",
 
 	"login": "Login",

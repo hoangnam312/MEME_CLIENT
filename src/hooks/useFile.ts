@@ -2,9 +2,12 @@ import { useEffect, useState } from 'react';
 
 const useFile = () => {
 	const [source, setSource] = useState<string>('');
+	const [file, setFile] = useState<File | null>();
 
 	useEffect(() => {
-		return () => setSource('');
+		return () => {
+			setSource('');
+		};
 	}, []);
 
 	const onPaste = (e: React.ClipboardEvent<HTMLInputElement>) => {
@@ -13,6 +16,7 @@ const useFile = () => {
 		for (const item of items) {
 			if (item.type.startsWith('image')) {
 				blob = item.getAsFile();
+				setFile(item.getAsFile());
 			}
 		}
 		let newScr = '';
@@ -30,12 +34,13 @@ const useFile = () => {
 	};
 
 	const onDrop = (e: React.DragEvent<HTMLInputElement>) => {
-		console.log('onDrop ~ e:', e);
 		e.preventDefault();
 		e.stopPropagation();
 		const files = e.dataTransfer.files;
 		let newScr = '';
 		if (files && files.length > 0) {
+			setFile(files[0]);
+
 			const reader = new FileReader();
 			reader.onload = function (event) {
 				if (event.target) {
@@ -52,6 +57,8 @@ const useFile = () => {
 		const files = e.target.files;
 		let newScr = '';
 		if (files && files.length > 0) {
+			setFile(files[0]);
+
 			const reader = new FileReader();
 			reader.onload = function (event) {
 				if (event.target) {
@@ -68,7 +75,19 @@ const useFile = () => {
 		e.preventDefault();
 	};
 
-	return { source, setSource, onDrop, onPaste, onUpload, onDragOverAble };
+	const clearSource = () => setSource('');
+	const clearFile = () => setFile(null);
+
+	return {
+		source,
+		clearSource,
+		file,
+		clearFile,
+		onDrop,
+		onPaste,
+		onUpload,
+		onDragOverAble,
+	};
 };
 
 export default useFile;

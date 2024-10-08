@@ -27,3 +27,7 @@ export enum Path {
 	REGISTER = '/register',
 	SERVER_ERROR = '/sever-error',
 }
+
+export type ErrorResponse = {
+	message: string;
+};
