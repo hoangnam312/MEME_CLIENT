@@ -69,13 +69,13 @@ const FormUpload = ({
 					{t('saveLink')}
 				</AButton> */}
 			</div>
-			<div className="mt-3 flex justify-end self-center">
+			{/* <div className="mt-3 flex justify-end self-center">
 				<div className="w-3/5">
 					<p className="text-right text-sm italic text-gray-500">
 						{t('saveLink.explant')}
 					</p>
 				</div>
-			</div>
+			</div> */}
 		</form>
 	);
 };

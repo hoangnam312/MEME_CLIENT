@@ -50,7 +50,7 @@ const OViewImage = ({
 	}, [isOpen, data]);
 
 	async function handleCopyImage() {
-		const awaitCopy = await copyImage(data.imagePath);
+		const awaitCopy = await copyImage(baseImage + data.imagePath);
 		if (awaitCopy) setIsCopiedImage(StatusCopyImage.SUCCESS);
 		else setIsCopiedImage(StatusCopyImage.FAIL);
 		setTimeout(() => {
@@ -59,7 +59,7 @@ const OViewImage = ({
 	}
 
 	async function handleCopyLink() {
-		const awaitCopy = await copyLink(data.imagePath);
+		const awaitCopy = await copyLink(baseImage + data.imagePath);
 		if (awaitCopy) setIsCopiedLink(StatusCopyImage.SUCCESS);
 		else setIsCopiedLink(StatusCopyImage.FAIL);
 		setTimeout(() => {
@@ -162,13 +162,13 @@ const OViewImage = ({
 					<AButton>{t('save')}</AButton>
 					{/* !TODO: handle image here */}
 				</div>
-				<div className="mt-3 flex justify-end self-center">
+				{/* <div className="mt-3 flex justify-end self-center">
 					<div className="w-3/5">
 						<p className="text-right text-sm italic text-gray-500">
 							{t('saveLink.explant')}
 						</p>
 					</div>
-				</div>
+				</div> */}
 			</div>
 			<input
 				ref={inputFile}
