@@ -14,7 +14,7 @@ import 'react-toastify/dist/ReactToastify.css';
 // React scan for dev. Ref: https://github.com/aidenybai/react-scan
 scan({
 	enabled: true,
-	log: true, // logs render info to console (default: false)
+	log: false, // logs render info to console (default: false)
 });
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(

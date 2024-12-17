@@ -8,14 +8,16 @@ import { Path } from 'src/constants/type';
 import { login } from 'src/service/login';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
+import { useAuthen } from 'src/store/authen';
+
+type TInputs = {
+	email: string;
+	password: string;
+};
 
 function FormLogin() {
 	const navigate = useNavigate();
-
-	type TInputs = {
-		email: string;
-		password: string;
-	};
+	const { updateAuthen } = useAuthen((state) => state);
 
 	const {
 		register,
@@ -29,6 +31,8 @@ function FormLogin() {
 			await login({
 				email,
 				password,
+			}).then((res) => {
+				updateAuthen(res.data.authentication);
 			});
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
