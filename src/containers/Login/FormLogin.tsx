@@ -8,7 +8,7 @@ import { Path } from 'src/constants/type';
 import { login } from 'src/service/login';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
-import { useAuthen } from 'src/store/authen';
+import { useBoundStore } from 'src/store/store';
 
 type TInputs = {
 	email: string;
@@ -17,7 +17,7 @@ type TInputs = {
 
 function FormLogin() {
 	const navigate = useNavigate();
-	const { updateAuthen } = useAuthen((state) => state);
+	const { updateAuthen } = useBoundStore((state) => state.authen);
 
 	const {
 		register,
