@@ -2,11 +2,11 @@ import { t } from 'i18next';
 
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
-import ALink from 'src/component/atoms/AButton/ALink';
+import ALink from 'src/component/atoms/Alink/ALink';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AOutlineButton from 'src/component/atoms/AButton/AOutlineButton';
+import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 
 import FormRegister from './FormRegister';
 

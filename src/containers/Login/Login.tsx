@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { Path } from 'src/constants/type';
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
-import ALink from 'src/component/atoms/AButton/ALink';
+import ALink from 'src/component/atoms/Alink/ALink';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import AButton from 'src/component/atoms/AButton/AButton';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AOutlineButton from 'src/component/atoms/AButton/AOutlineButton';
+import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 import {
 	faArrowLeft,
 	faUnlockKeyhole,

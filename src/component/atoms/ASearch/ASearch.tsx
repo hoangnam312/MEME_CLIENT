@@ -8,11 +8,11 @@ import MInputWithinForm, {
 const ASearch = (props: MInputWithinFormPropsType) => {
 	return (
 		<MInputWithinForm
-			{...props}
 			labelButton={t('search')}
 			icon={
 				<FontAwesomeIcon className="text-violet-900" icon={faMagnifyingGlass} />
 			}
+			{...props}
 		/>
 	);
 };
