@@ -2,6 +2,7 @@ import { faUser } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useNavigate } from 'react-router';
 import { defaultStye } from 'src/assets/css/defaultStyle';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ASearch from 'src/component/atoms/ASearch/ASearch';
@@ -16,12 +17,17 @@ export interface MNavbarPropsType {
 export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 	const { t } = useTranslation();
 	const { isOpen, openModal, closeModal } = useOpen();
+	const navigate = useNavigate();
 
 	useEffect(() => {
 		if (isOpen) updateModalOpening(typeModal.UPLOAD);
 		else updateModalOpening(typeModal.NONE);
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [isOpen]);
+
+	const onSearch = (value: string) => {
+		navigate(`?search=${value}`);
+	};
 
 	return (
 		<>
@@ -40,7 +46,10 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 					</div>
 				</div>
 				<div className="flex basis-1/2 items-center justify-end">
-					<ASearch addClassWrapper="w-full" />
+					<ASearch
+						onSubmit={(_, value) => onSearch(value)}
+						addClassWrapper="w-full"
+					/>
 				</div>
 				<div className="flex items-center justify-end">
 					<div className="mr-5 flex items-center justify-end">
