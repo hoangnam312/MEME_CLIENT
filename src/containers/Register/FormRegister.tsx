@@ -1,13 +1,13 @@
 import { t } from 'i18next';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Path } from 'src/constants/type';
-import { register as registerService } from 'src/service/login';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
+import { register as registerService } from 'src/service/login';
 
 function FormRegister() {
 	const navigate = useNavigate();

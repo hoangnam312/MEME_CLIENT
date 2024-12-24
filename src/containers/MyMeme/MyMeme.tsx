@@ -1,30 +1,23 @@
+import { useEffect, useState } from 'react';
+import { useSearchParams } from 'react-router';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
-import dataMyImage from 'src/fakeData/dataMyImage';
-import i18next from 'src/i18n/i18next.config';
-import QuickUploadWrapper from '../QuickUploadWrapper/QuickUploadWrapper';
-import { MNavbar } from 'src/component/molecules/MNavbar/MNavbar';
-import useCheckModalOpening from 'src/hooks/useCheckModalOpening';
+import { IImage } from 'src/constants/type';
+import { getMemes } from 'src/service/meme';
+import { useBoundStore } from 'src/store/store';
 
 function MyMeme() {
-	const { modalOpening, updateModalOpening } = useCheckModalOpening();
+	const [listImage, setListImage] = useState<IImage[]>([]);
+	const [searchParams] = useSearchParams();
+	const searchValue = searchParams.get('search');
+	const authen = useBoundStore((state) => state.authen);
 
-	return (
-		<QuickUploadWrapper
-			modalOpening={modalOpening}
-			updateModalOpening={updateModalOpening}
-		>
-			<MNavbar updateModalOpening={updateModalOpening} />
+	useEffect(() => {
+		getMemes({ search: searchValue ?? undefined, userId: authen.userId }).then(
+			(res) => setListImage(res.data.data)
+		);
+	}, [searchValue, authen]);
 
-			<div>
-				<p className="bg-main-background text-main-color">
-					MyMeme {i18next.t('hello')}
-				</p>
-				<div className="m-5">
-					<OBoard imageArray={dataMyImage} />
-				</div>
-			</div>
-		</QuickUploadWrapper>
-	);
+	return <OBoard imageArray={listImage} />;
 }
 
 export default MyMeme;

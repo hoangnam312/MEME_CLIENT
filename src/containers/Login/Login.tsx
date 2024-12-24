@@ -1,5 +1,5 @@
 import { t } from 'i18next';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 import { Path } from 'src/constants/type';
 import MainIcon from 'src/assets/icon/MainIcon';

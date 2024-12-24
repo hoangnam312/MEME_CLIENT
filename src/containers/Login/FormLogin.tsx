@@ -1,14 +1,14 @@
 import { t } from 'i18next';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Path } from 'src/constants/type';
 import { login } from 'src/service/login';
+import { useBoundStore } from 'src/store/store';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
-import { useBoundStore } from 'src/store/store';
 
 type TInputs = {
 	email: string;
@@ -32,7 +32,13 @@ function FormLogin() {
 				email,
 				password,
 			}).then((res) => {
-				updateAuthen(res.data.authentication);
+				updateAuthen({
+					email: res.data.email,
+					username: res.data.username,
+					userId: res.data._id,
+					v: res.data.__v,
+					...res.data.authentication,
+				});
 			});
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
