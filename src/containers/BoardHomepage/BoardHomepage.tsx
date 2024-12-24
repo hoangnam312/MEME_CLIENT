@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router-dom';
-import { OBoard } from 'src/component/organisms/OBoard/OBoard';
+
+import { useSearchParams } from 'react-router';
+
 import { IImage } from 'src/constants/type';
 import { getMemes } from 'src/service/meme';
+import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 
 export const BoardHomepage = () => {
 	const [listImage, setListImage] = useState<IImage[]>([]);

@@ -7,7 +7,7 @@ import { defaultStye } from 'src/assets/css/defaultStyle';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ASearch from 'src/component/atoms/ASearch/ASearch';
 import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
-import { typeModal } from 'src/constants/type';
+import { Path, typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
 
 export interface MNavbarPropsType {
@@ -55,7 +55,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 					<div className="mr-5 flex items-center justify-end">
 						<AButton
 							content={t('myMemes')}
-							onClick={() => (window.location.href = '/my-meme')}
+							onClick={() => navigate(Path.MY_MEME)}
 						/>
 					</div>
 					<div className="flex items-center justify-start">
