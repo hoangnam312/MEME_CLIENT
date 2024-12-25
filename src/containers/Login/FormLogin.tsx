@@ -32,13 +32,15 @@ function FormLogin() {
 				email,
 				password,
 			}).then((res) => {
-				updateAuthen({
+				const newAuthen = {
 					email: res.data.email,
 					username: res.data.username,
 					userId: res.data._id,
 					v: res.data.__v,
 					...res.data.authentication,
-				});
+				};
+				localStorage.setItem('authen', JSON.stringify(newAuthen));
+				updateAuthen(newAuthen);
 			});
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
