@@ -9,8 +9,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 
 import FormRegister from './FormRegister';
+import useNavigateBack from 'src/hooks/useNavigateBack';
 
 function Register() {
+	const goBack = useNavigateBack();
+
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
 			<div className="xs:p-0 mx-auto p-10 md:w-full md:max-w-md">
@@ -41,7 +44,7 @@ function Register() {
 				<div className="py-5">
 					<div className="grid grid-cols-2 gap-1">
 						<div className="whitespace-nowrap text-center sm:text-left">
-							<AOutlineButton>
+							<AOutlineButton onClick={goBack}>
 								<FontAwesomeIcon icon={faArrowLeft} />
 								<span className="ml-1 inline-block">{t('backToApp')}</span>
 							</AOutlineButton>

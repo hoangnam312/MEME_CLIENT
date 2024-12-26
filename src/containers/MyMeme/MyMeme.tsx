@@ -1,9 +1,12 @@
 import { useEffect, useState } from 'react';
+
 import { useSearchParams } from 'react-router';
-import { OBoard } from 'src/component/organisms/OBoard/OBoard';
+
 import { IImage } from 'src/constants/type';
 import { getMemes } from 'src/service/meme';
 import { useBoundStore } from 'src/store/store';
+import { OBoard } from 'src/component/organisms/OBoard/OBoard';
+import ORequiredAuthen from 'src/component/organisms/ORequiredAuthen/ORequiredAuthen';
 
 function MyMeme() {
 	const [listImage, setListImage] = useState<IImage[]>([]);
@@ -17,7 +20,11 @@ function MyMeme() {
 		);
 	}, [searchValue, authen]);
 
-	return <OBoard imageArray={listImage} />;
+	return (
+		<ORequiredAuthen>
+			<OBoard imageArray={listImage} />
+		</ORequiredAuthen>
+	);
 }
 
 export default MyMeme;

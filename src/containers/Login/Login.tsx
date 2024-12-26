@@ -15,9 +15,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 
 import FormLogin from './FormLogin';
+import useNavigateBack from 'src/hooks/useNavigateBack';
 
 function Login() {
 	const navigate = useNavigate();
+	const goBack = useNavigateBack();
 
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
@@ -65,7 +67,7 @@ function Login() {
 				<div className="py-5">
 					<div className="grid grid-cols-2 gap-1">
 						<div className="whitespace-nowrap text-center sm:text-left">
-							<AOutlineButton onClick={() => navigate(Path.HOME_PAGE)}>
+							<AOutlineButton onClick={goBack}>
 								<FontAwesomeIcon icon={faArrowLeft} />
 								<span className="ml-1 inline-block">{t('backToApp')}</span>
 							</AOutlineButton>

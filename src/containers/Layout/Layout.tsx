@@ -9,18 +9,19 @@ const Layout = () => {
 	const { modalOpening, updateModalOpening } = useCheckModalOpening();
 
 	return (
-		<QuickUploadWrapper
-			modalOpening={modalOpening}
-			updateModalOpening={updateModalOpening}
-		>
+		<>
 			<MNavbar updateModalOpening={updateModalOpening} />
-
-			<div>
-				<div className="m-5">
-					<Outlet />
+			<QuickUploadWrapper
+				modalOpening={modalOpening}
+				updateModalOpening={updateModalOpening}
+			>
+				<div>
+					<div className="m-5">
+						<Outlet />
+					</div>
 				</div>
-			</div>
-		</QuickUploadWrapper>
+			</QuickUploadWrapper>
+		</>
 	);
 };
 

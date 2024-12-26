@@ -36,5 +36,7 @@
 	"Login.signUp": "Đăng ký",
 	"Login.forgotPassword": "Quên mật khẩu",
 
-	"register": "Đăng ký"
+	"register": "Đăng ký",
+
+	"requireLogin": "Oops, bạn chưa đăng nhập"
 }
