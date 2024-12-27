@@ -7,7 +7,6 @@ import UploadImage from './UploadImage';
 export interface OUploadModalPropsType {
 	isOpen: boolean;
 	closeModal: () => void;
-	onSelectImage: () => void;
 }
 
 const OUploadModal = ({ isOpen, closeModal }: OUploadModalPropsType) => {

@@ -12,10 +12,26 @@ import { createMeme } from 'src/service/meme';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from 'src/constants/type';
+import AButton from 'src/component/atoms/AButton/AButton';
 
 export interface OUploadImagePropsType {
 	closeModal: () => void;
 }
+
+const ToastUploadSuccess = () => {
+	const handleCopy = () => {
+		// !TODO: copy image by id
+	};
+
+	return (
+		<div className="ms-3">
+			<p>{t('upload.success')}</p>
+			<div className="mt-1">
+				<AButton onClick={handleCopy}>{t('copy')}</AButton>
+			</div>
+		</div>
+	);
+};
 
 const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 	const inputFile = useRef();
@@ -60,7 +76,10 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			console.log(value);
 		}
 		createMeme(memeFormData)
-			.then(closeModal)
+			.then(() => {
+				closeModal();
+				toast.success(ToastUploadSuccess);
+			})
 			.catch((error: AxiosError<ErrorResponse>) =>
 				toast.error(error.response?.data.message ?? t('toast.unexpectedError'))
 			);
@@ -116,7 +135,12 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 				}}
 			/>
 
-			<FormUpload isDisabledButtonSave={isImageError} handleSave={handleSave} />
+			{(source || link) && (
+				<FormUpload
+					isDisabledButtonSave={isImageError}
+					handleSave={handleSave}
+				/>
+			)}
 		</div>
 	);
 };

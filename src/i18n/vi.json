@@ -24,6 +24,7 @@
 	"validate.dontSamePassword": "Mật khẩu xác nhận không khớp. Vui lòng thử lại",
 
 	"upload.link.error": "Oops, chúng tôi không tìm thấy meme này",
+	"upload.success": "Upload meme thành công",
 	"saveLink.explant": "* Vì không có kinh phí lưu trữ ảnh nên nếu ảnh của bạn lấy từ nguồn chất lượng không bị nén hay thay đổi địa chỉ ảnh thì có thể lưu link ở đây",
 	"QuickUpload.dragHere": "Thả meme vào đây hoặc tải lên",
 	"QuickUpload.pastHere": "Dán đường link hoặc paste vào đây",

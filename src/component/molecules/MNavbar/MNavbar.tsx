@@ -68,13 +68,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 					</div>
 				</div>
 			</div>
-			<OUploadModal
-				isOpen={isOpen}
-				closeModal={closeModal}
-				onSelectImage={() => {
-					console.log('onSelect');
-				}}
-			/>
+			<OUploadModal isOpen={isOpen} closeModal={closeModal} />
 		</>
 	);
 };

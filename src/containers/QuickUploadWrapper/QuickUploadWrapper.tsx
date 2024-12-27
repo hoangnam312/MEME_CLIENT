@@ -1,5 +1,5 @@
 import { ReactNode, useEffect } from 'react';
-import OQuickUpload from 'src/component/organisms/OQuickUpload/OQuickUpload';
+import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
 import { typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
 
@@ -29,14 +29,7 @@ const QuickUploadWrapper = ({
 	return (
 		<>
 			<div onDragEnter={handleDrag}>{children}</div>
-			<OQuickUpload
-				isOpen={isOpen}
-				closeModal={closeModal}
-				onSelectImage={() => {
-					console.log('onSelect');
-					// !TODO: handle select image and open UploadModal
-				}}
-			/>
+			<OUploadModal isOpen={isOpen} closeModal={closeModal} />
 		</>
 	);
 };

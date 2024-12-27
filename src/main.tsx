@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 				<AppRoutes />
 				<App />
 			</BrowserRouter>
-			<ToastContainer />
+			<ToastContainer hideProgressBar={true} autoClose={4000} />
 		</I18nextProvider>
 	</React.StrictMode>
 );

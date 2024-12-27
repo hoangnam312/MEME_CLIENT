@@ -20,8 +20,5 @@ export const Default: Story = {
 		closeModal: () => {
 			console.log('close');
 		},
-		onSelectImage: () => {
-			console.log('onSelectImage');
-		},
 	},
 };
