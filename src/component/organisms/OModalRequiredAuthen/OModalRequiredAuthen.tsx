@@ -14,7 +14,7 @@ export interface ORequiredAuthenPropsType {
 	children: ReactNode;
 }
 
-const ORequiredAuthen = ({ children }: ORequiredAuthenPropsType) => {
+const OModalRequiredAuthen = ({ children }: ORequiredAuthenPropsType) => {
 	const { sessionToken } = useBoundStore((state) => state.authen);
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
@@ -55,4 +55,4 @@ const ORequiredAuthen = ({ children }: ORequiredAuthenPropsType) => {
 	return children;
 };
 
-export default ORequiredAuthen;
+export default OModalRequiredAuthen;

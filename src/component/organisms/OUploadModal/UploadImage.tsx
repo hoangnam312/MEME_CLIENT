@@ -13,6 +13,7 @@ import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { ErrorResponse } from 'src/constants/type';
 import AButton from 'src/component/atoms/AButton/AButton';
+import OBlurRequiredAuthen from '../OBlurRequiredAuthen/OBlurRequiredAuthen';
 
 export interface OUploadImagePropsType {
 	closeModal: () => void;
@@ -136,10 +137,12 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			/>
 
 			{(source || link) && (
-				<FormUpload
-					isDisabledButtonSave={isImageError}
-					handleSave={handleSave}
-				/>
+				<OBlurRequiredAuthen>
+					<FormUpload
+						isDisabledButtonSave={isImageError}
+						handleSave={handleSave}
+					/>
+				</OBlurRequiredAuthen>
 			)}
 		</div>
 	);
