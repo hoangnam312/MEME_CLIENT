@@ -6,7 +6,6 @@ export const App = () => {
 	const { updateAuthen } = useBoundStore((state) => state.authen);
 	useEffect(() => {
 		const authen = JSON.parse(localStorage.getItem('authen') ?? '{}');
-		console.log('🚀 ~ useEffect ~ authen:', authen);
 		if (isEmpty(authen)) return;
 		updateAuthen(authen);
 	}, [updateAuthen]);

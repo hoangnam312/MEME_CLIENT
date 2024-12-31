@@ -2,12 +2,14 @@ import axios, { AxiosError } from 'axios';
 import { Path } from 'src/constants/type';
 
 const baseURL = import.meta.env.VITE_BASE_URL;
+const token = localStorage.getItem('token');
 
 const api = axios.create({
 	baseURL: baseURL,
 	headers: {
 		Accept: 'application/json',
 		'Content-Type': 'application/json',
+		Authorization: `Bearer ${token}`,
 	},
 });
 

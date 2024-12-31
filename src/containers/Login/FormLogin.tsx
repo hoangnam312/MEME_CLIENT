@@ -35,11 +35,11 @@ function FormLogin() {
 				const newAuthen = {
 					email: res.data.email,
 					username: res.data.username,
-					userId: res.data._id,
+					userId: res.data.userId,
 					v: res.data.__v,
 					...res.data.authentication,
 				};
-				localStorage.setItem('authen', JSON.stringify(newAuthen));
+				localStorage.setItem('token', newAuthen.token);
 				updateAuthen(newAuthen);
 			});
 			navigate(Path.HOME_PAGE);

@@ -10,10 +10,10 @@ export interface ORequiredAuthenPropsType {
 }
 
 const OBlurRequiredAuthen = ({ children }: ORequiredAuthenPropsType) => {
-	const { sessionToken } = useBoundStore((state) => state.authen);
+	const { token } = useBoundStore((state) => state.authen);
 	const navigate = useNavigate();
 
-	if (!sessionToken) {
+	if (!token) {
 		return (
 			<div className="relative">
 				{children}
