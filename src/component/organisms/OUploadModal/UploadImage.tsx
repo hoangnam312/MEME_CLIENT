@@ -35,7 +35,7 @@ const ToastUploadSuccess = () => {
 };
 
 const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
-	const inputFile = useRef();
+	const inputFile = useRef<HTMLInputElement>(null);
 	const [link, setLink] = useState('');
 	const [isImageError, setIsImageError] = useState<boolean>(true);
 	const {
@@ -49,7 +49,10 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 		clearFile,
 	} = useFile();
 
-	const onUpdateLink = (e: React.FormEvent<HTMLFormElement>, value: string) => {
+	const onUpdateLink = (
+		_e: React.FormEvent<HTMLFormElement>,
+		value: string
+	) => {
 		setLink(value);
 		clearSource();
 		clearFile();
@@ -107,7 +110,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			) : (
 				<div
 					className="my-10 flex items-center justify-center rounded-lg border-2 border-dashed border-main-color bg-gray-100 pb-8 pt-14 text-5xl"
-					onClick={() => inputFile?.current.click()}
+					onClick={() => inputFile?.current?.click()}
 					onDragOver={onDragOverAble}
 					onDrop={onDrop}
 				>

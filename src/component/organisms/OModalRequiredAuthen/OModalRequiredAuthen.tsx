@@ -15,11 +15,11 @@ export interface ORequiredAuthenPropsType {
 }
 
 const OModalRequiredAuthen = ({ children }: ORequiredAuthenPropsType) => {
-	const { sessionToken } = useBoundStore((state) => state.authen);
+	const { token } = useBoundStore((state) => state.authen);
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
 
-	if (!sessionToken) {
+	if (!token) {
 		return (
 			<AModal
 				isOpen={true}

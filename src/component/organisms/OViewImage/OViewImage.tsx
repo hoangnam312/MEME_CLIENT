@@ -2,7 +2,7 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faHashtag, faPen } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
-import { useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AModal from 'src/component/atoms/AModal/AModal';
@@ -25,7 +25,7 @@ const OViewImage = ({
 	closeModal,
 	onSelectImage,
 }: OViewImagePropsType) => {
-	const inputFile = useRef();
+	const inputFile = useRef<HTMLInputElement>(null);
 	const [name, setName] = useState('');
 	const [tag, setTag] = useState('');
 	const [isEdit, setIsEdit] = useState<boolean>(false);
@@ -37,8 +37,7 @@ const OViewImage = ({
 	);
 	const { copyImage, copyLink } = useCopyImage();
 
-	// eslint-disable-next-line @typescript-eslint/no-unused-vars
-	const onPreHandleImage = (e: unknown) => {
+	const onPreHandleImage = () => {
 		// !TODO: handle data to image
 		onSelectImage();
 	};
@@ -91,7 +90,7 @@ const OViewImage = ({
 
 	const handleUpload = () => {
 		if (data?.imagePath) return;
-		inputFile.current.click();
+		inputFile?.current?.click();
 	};
 
 	return (
@@ -125,21 +124,23 @@ const OViewImage = ({
 				{isEdit ? (
 					<>
 						<AInput
-							placeholder={t('UploadModal.name')}
 							addClassWrapper="mt-3"
-							onChange={(e) => setName(e.target.value)}
 							icon={<FontAwesomeIcon icon={faPen} />}
 							rest={{
 								value: name,
+								placeholder: t('UploadModal.name'),
+								onChange: (e: ChangeEvent<HTMLInputElement>) =>
+									setName(e.target.value),
 							}}
 						/>
 						<AInput
-							placeholder={t('UploadModal.tag')}
 							addClassWrapper="mt-3"
-							onChange={(e) => setTag(e.target.value)}
 							icon={<FontAwesomeIcon icon={faHashtag} />}
 							rest={{
 								value: tag,
+								placeholder: t('UploadModal.name'),
+								onChange: (e: ChangeEvent<HTMLInputElement>) =>
+									setTag(e.target.value),
 							}}
 						/>
 					</>
@@ -174,7 +175,7 @@ const OViewImage = ({
 				ref={inputFile}
 				type="file"
 				className="hidden"
-				onChange={(e) => onPreHandleImage(e)}
+				onChange={onPreHandleImage}
 			/>
 		</AModal>
 	);

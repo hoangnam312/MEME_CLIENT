@@ -35,14 +35,16 @@ export const OBoard = ({
 					onClick={() => handleClick(item)}
 				/>
 			))}
-			<OViewImage
-				isOpen={isOpen}
-				closeModal={closeModal}
-				data={dataImage}
-				onSelectImage={() => {
-					console.log('onSelect');
-				}}
-			/>
+			{dataImage && (
+				<OViewImage
+					isOpen={isOpen}
+					closeModal={closeModal}
+					data={dataImage}
+					onSelectImage={() => {
+						console.log('onSelect');
+					}}
+				/>
+			)}
 		</div>
 	);
 };

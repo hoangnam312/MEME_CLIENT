@@ -36,10 +36,10 @@ function FormLogin() {
 					email: res.data.email,
 					username: res.data.username,
 					userId: res.data.userId,
-					v: res.data.__v,
 					...res.data.authentication,
 				};
 				localStorage.setItem('token', newAuthen.token);
+				localStorage.setItem('authen', JSON.stringify(newAuthen));
 				updateAuthen(newAuthen);
 			});
 			navigate(Path.HOME_PAGE);
@@ -56,9 +56,8 @@ function FormLogin() {
 		<form onSubmit={handleSubmit(handleLogin)}>
 			<AInput
 				addClassWrapper="mt-3"
-				name="email"
 				label={t('email')}
-				rest={{ ...register('email', { required: true }) }}
+				rest={{ ...register('email', { required: true }), name: 'email' }}
 			/>
 			{errors.email && (
 				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
@@ -74,9 +73,10 @@ function FormLogin() {
 			)}
 			<div className="mt-7 flex justify-center align-middle">
 				<AButton
-					type="submit"
 					content={t('login')}
-					onClick={handleSubmit(handleLogin)}
+					rest={{
+						type: 'submit',
+					}}
 				/>
 			</div>
 		</form>

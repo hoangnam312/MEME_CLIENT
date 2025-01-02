@@ -51,18 +51,16 @@ function FormRegister() {
 		<form onSubmit={handleSubmit(handleRegister)}>
 			<AInput
 				addClassWrapper="mt-3"
-				name="email"
 				label={t('email')}
-				rest={{ ...register('email', { required: true }) }}
+				rest={{ ...register('email', { required: true }), name: 'email' }}
 			/>
 			{errors.email && (
 				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
 			)}
 			<AInput
 				addClassWrapper="mt-3"
-				name="username"
 				label={t('username')}
-				rest={{ ...register('username', { required: true }) }}
+				rest={{ ...register('username', { required: true }), name: 'username' }}
 			/>
 			{errors.email && (
 				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
@@ -87,9 +85,11 @@ function FormRegister() {
 			)}
 			<div className="mt-7 flex justify-center align-middle">
 				<AButton
-					type="submit"
 					content={t('login')}
 					onClick={handleSubmit(handleRegister)}
+					rest={{
+						type: 'submit',
+					}}
 				/>
 			</div>
 		</form>
