@@ -15,7 +15,7 @@ function MyMeme() {
 	const authen = useBoundStore((state) => state.authen);
 
 	useEffect(() => {
-		if (!authen.userId) return
+		if (!authen.userId) return;
 		getMemes({ search: searchValue ?? undefined, userId: authen.userId }).then(
 			(res) => setListImage(res.data.data)
 		);

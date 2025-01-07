@@ -9,6 +9,7 @@ import { login } from 'src/service/login';
 import { useBoundStore } from 'src/store/store';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
+import { setToken } from 'src/utils/token';
 
 type TInputs = {
 	email: string;
@@ -38,12 +39,13 @@ function FormLogin() {
 					userId: res.data.userId,
 					...res.data.authentication,
 				};
-				localStorage.setItem('token', newAuthen.token);
+				setToken(newAuthen.token);
 				localStorage.setItem('authen', JSON.stringify(newAuthen));
 				updateAuthen(newAuthen);
 			});
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
+			localStorage.removeItem('authen');
 			if (error instanceof AxiosError && error.response) {
 				toast.error(error.response.data);
 			} else {
