@@ -1,0 +1,54 @@
+name: Deploy React App to EC2
+
+on:
+  push:
+    branches:
+      - master # Chạy khi có push lên nhánh main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Checkout mã nguồn
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    # 2. Thiết lập Node.js
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 20 # Sử dụng Node.js version 18 (hoặc version bạn cần)
+        cache: "npm"
+
+    # 3. Cài đặt dependencies với Yarn
+    - name: Install dependencies
+      run: npm install
+
+    # 4. Build dự án với Yarn
+    - name: Build React app
+      run: npm run build-npm
+
+    # 5. Copy build folder lên EC2
+    - name: Deploy to EC2
+      env:
+        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_IP: ${{ secrets.EC2_IP }}
+      run: |
+        echo "${EC2_SSH_KEY}" > private_key.pem
+        chmod 600 private_key.pem
+        scp -i private_key.pem -r dist ${EC2_USER}@${EC2_IP}:~/MEME_FRONTEND/
+
+    # 6. Chạy lại ứng dụng trên EC2
+    - name: Restart Application on EC2
+      env:
+        EC2_SSH_KEY: ${{ secrets.EC2_SSH_KEY }}
+        EC2_USER: ${{ secrets.EC2_USER }}
+        EC2_IP: ${{ secrets.EC2_IP }}
+      run: |
+        ssh -i private_key.pem ${EC2_USER}@${EC2_IP} << EOF
+          cd ~/MEME_FRONTEND/
+          # Khởi chạy lại server hoặc frontend (tùy theo setup của bạn)
+          sudo systemctl reload nginx
+        EOF
