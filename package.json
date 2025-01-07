@@ -5,10 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "build": "tsc && vite build",
+    "build": "run tailwind && tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "format": "prettier src --write",
     "preview": "vite preview",
+    "tailwind": "npx tailwindcss -o ./dist/output.css --minify",
     "tailwind:watch": "npx tailwindcss -i ./src/assets/css/main.css -o ./dist/output.css --watch",
     "postinstall": "husky install",
     "lint-staged": "yarn run lint && yarn run format",
