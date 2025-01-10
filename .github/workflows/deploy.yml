@@ -28,9 +28,9 @@ jobs:
     - name: Deploy to EC2
       uses: easingthemes/ssh-deploy@v5.1.0
       with:
-        SSH_PRIVATE_KEY: ${{ vars.EC2_SSH_KEY }}
+        SSH_PRIVATE_KEY: ${{ secrets.EC2_SSH_KEY }}
         SOURCE: "dist"
-        REMOTE_HOST: "ec2-3-106-113-166.ap-southeast-2.compute.amazonaws.com"
-        REMOTE_USER: ${{ vars.EC2_USER }}
+        REMOTE_HOST: ${{ secrets.EC2_REMOTE_HOST }}
+        REMOTE_USER: ${{ secrets.EC2_USER }}
         TARGET: "~/MEME_FRONTEND/"
         SCRIPT_AFTER: "sudo systemctl reload nginx"
