@@ -4,8 +4,6 @@ import { IImage } from 'src/constants/type';
 import OViewImage from '../OViewImage/OViewImage';
 import { useState } from 'react';
 
-const baseImage = import.meta.env.VITE_BASE_IMAGE;
-
 export interface OBoardPropsType {
 	imageArray: IImage[];
 	addClass?: string;
@@ -30,7 +28,7 @@ export const OBoard = ({
 			{imageArray.map((item, index) => (
 				<OCardImage
 					key={index}
-					imagePath={baseImage + item.imagePath}
+					imagePath={item.location}
 					addClassWrapper={addClassWrapperImage}
 					onClick={() => handleClick(item)}
 				/>

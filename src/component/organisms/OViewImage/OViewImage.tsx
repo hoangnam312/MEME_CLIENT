@@ -10,8 +10,6 @@ import { color } from 'src/config/style';
 import { IImage, StatusCopyImage } from 'src/constants/type';
 import useCopyImage from 'src/hooks/useCopy';
 
-const baseImage = import.meta.env.VITE_BASE_IMAGE;
-
 export interface OViewImagePropsType {
 	isOpen: boolean;
 	data: IImage;
@@ -49,7 +47,7 @@ const OViewImage = ({
 	}, [isOpen, data]);
 
 	async function handleCopyImage() {
-		const awaitCopy = await copyImage(baseImage + data.imagePath);
+		const awaitCopy = await copyImage(data.location);
 		if (awaitCopy) setIsCopiedImage(StatusCopyImage.SUCCESS);
 		else setIsCopiedImage(StatusCopyImage.FAIL);
 		setTimeout(() => {
@@ -58,7 +56,7 @@ const OViewImage = ({
 	}
 
 	async function handleCopyLink() {
-		const awaitCopy = await copyLink(baseImage + data.imagePath);
+		const awaitCopy = await copyLink(data.location);
 		if (awaitCopy) setIsCopiedLink(StatusCopyImage.SUCCESS);
 		else setIsCopiedLink(StatusCopyImage.FAIL);
 		setTimeout(() => {
@@ -89,7 +87,7 @@ const OViewImage = ({
 	}
 
 	const handleUpload = () => {
-		if (data?.imagePath) return;
+		if (data?.location) return;
 		inputFile?.current?.click();
 	};
 
@@ -100,10 +98,10 @@ const OViewImage = ({
 					className="my-10 flex items-center justify-center rounded-lg text-5xl"
 					onClick={handleUpload}
 				>
-					{data?.imagePath ? (
+					{data?.location ? (
 						<img
-							src={baseImage + data.imagePath}
-							alt={data.imagePath}
+							src={data.location}
+							alt={data.location}
 							className="max-h-96 max-w-2xl"
 						/>
 					) : (

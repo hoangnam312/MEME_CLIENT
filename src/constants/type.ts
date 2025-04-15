@@ -5,6 +5,7 @@ export interface IRestParameterAttribute {
 export interface IImage {
 	imagePath: string;
 	tag: string;
+	location: string;
 	name?: string;
 }
 
