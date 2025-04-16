@@ -1,22 +1,21 @@
-import { faUser } from '@fortawesome/free-regular-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router';
-import { defaultStye } from 'src/assets/css/defaultStyle';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ASearch from 'src/component/atoms/ASearch/ASearch';
 import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
 import { Path, typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
+import MUserDropdown from '../MUserDropdown/MUserDropdown';
+import { t } from 'i18next';
+import { useAuthen } from 'src/hooks/useAuthen';
 
 export interface MNavbarPropsType {
 	updateModalOpening: (type: typeModal) => void;
 }
 
 export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
-	const { t } = useTranslation();
 	const { isOpen, openModal, closeModal } = useOpen();
+	const { isLoggedIn } = useAuthen();
 	const navigate = useNavigate();
 
 	useEffect(() => {
@@ -52,19 +51,16 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 					/>
 				</div>
 				<div className="flex items-center justify-end">
-					<div className="mr-5 flex items-center justify-end">
-						<AButton
-							content={t('myMemes')}
-							onClick={() => navigate(Path.MY_MEME)}
-						/>
-					</div>
-					<div className="flex items-center justify-start">
-						<div
-							className={`flex h-14 w-14 cursor-pointer items-center justify-center 
-						rounded-full border-2 border-main-background p-4 ${defaultStye.border}`}
-						>
-							<FontAwesomeIcon icon={faUser} size="xl" />
+					{isLoggedIn() && (
+						<div className="mr-5 flex items-center justify-end">
+							<AButton
+								content={t('myMemes')}
+								onClick={() => navigate(Path.MY_MEME)}
+							/>
 						</div>
+					)}
+					<div className="flex items-center justify-start">
+						<MUserDropdown />
 					</div>
 				</div>
 			</div>

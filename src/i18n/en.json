@@ -39,6 +39,8 @@
 	"Login.signUp": "Sign up",
 	"Login.forgotPassword": "Forgot Password",
 
+	"logout": "Logout",
+
 	"register": "Register",
 
 	"requireLogin": "Oops, you are not login"

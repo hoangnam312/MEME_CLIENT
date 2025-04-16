@@ -37,6 +37,8 @@
 	"Login.signUp": "Đăng ký",
 	"Login.forgotPassword": "Quên mật khẩu",
 
+	"logout": "Đăng xuất",
+
 	"register": "Đăng ký",
 
 	"requireLogin": "Oops, bạn chưa đăng nhập"
