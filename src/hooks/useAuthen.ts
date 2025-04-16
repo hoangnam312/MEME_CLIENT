@@ -18,7 +18,7 @@ export const useAuthen = () => {
 			token: '',
 		});
 		clearToken();
-    localStorage.removeItem('authen');
+		localStorage.removeItem('authen');
 		navigate(Path.LOGIN);
 	};
 

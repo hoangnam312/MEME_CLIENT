@@ -48,7 +48,12 @@ function Login() {
 						</div>
 						<div className="mt-2 flex flex-col items-center p-5 sm:flex-row">
 							<p>{t('Login.notAccountYet')}</p>
-							<AButton addClass="sm:ml-2 mt-1">{t('Login.signUp')}</AButton>
+							<AButton
+								onClick={() => navigate(Path.REGISTER)}
+								addClass="sm:ml-2 mt-1"
+							>
+								{t('Login.signUp')}
+							</AButton>
 						</div>
 					</div>
 					<div className="py-5">

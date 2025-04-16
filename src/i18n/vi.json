@@ -36,10 +36,12 @@
 	"Login.notAccountYet": "Chưa có tài khoản?",
 	"Login.signUp": "Đăng ký",
 	"Login.forgotPassword": "Quên mật khẩu",
+	"login.success": "Đăng nhập thành công",
 
 	"logout": "Đăng xuất",
 
 	"register": "Đăng ký",
+	"register.success": "Đăng ký thành công",
 
 	"requireLogin": "Oops, bạn chưa đăng nhập"
 }

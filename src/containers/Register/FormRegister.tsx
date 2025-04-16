@@ -37,7 +37,8 @@ function FormRegister() {
 				username,
 				password,
 			});
-			navigate(Path.HOME_PAGE);
+			toast.success(t('register.success'));
+			navigate(Path.LOGIN);
 		} catch (error) {
 			if (error instanceof AxiosError && error.response) {
 				toast.error(error.response.data);

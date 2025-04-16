@@ -43,6 +43,7 @@ function FormLogin() {
 				localStorage.setItem('authen', JSON.stringify(newAuthen));
 				updateAuthen(newAuthen);
 			});
+			toast.success(t('login.success'));
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
 			localStorage.removeItem('authen');

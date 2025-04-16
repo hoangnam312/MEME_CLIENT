@@ -38,10 +38,12 @@
 	"Login.notAccountYet": "Don't have an account?",
 	"Login.signUp": "Sign up",
 	"Login.forgotPassword": "Forgot Password",
+	"login.success": "Login success",
 
 	"logout": "Logout",
 
 	"register": "Register",
+	"register.success": "Register success",
 
 	"requireLogin": "Oops, you are not login"
 }

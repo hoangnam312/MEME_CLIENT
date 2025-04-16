@@ -23,12 +23,25 @@ const MUserDropdown = () => {
 			label: t('login'),
 			value: 'login',
 		},
+		{
+			label: t('register'),
+			value: 'register',
+		},
 	];
 
 	const onSelect = (value: string) => {
-		if (value === 'logout') return logout();
-		if (value === 'login') {
-			navigate(Path.LOGIN);
+		switch (value) {
+			case 'logout':
+				logout();
+				break;
+			case 'login':
+				navigate(Path.LOGIN);
+				break;
+			case 'register':
+				navigate(Path.REGISTER);
+				break;
+			default:
+				break;
 		}
 	};
 
