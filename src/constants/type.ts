@@ -3,10 +3,14 @@ export interface IRestParameterAttribute {
 }
 
 export interface IImage {
-	imagePath: string;
-	tag: string;
-	location: string;
+	_id: string;
 	name?: string;
+	description?: string;
+	tag?: string;
+	userId: string;
+	location: string;
+	__v: number;
+	imagePath: string;
 }
 
 export enum StatusCopyImage {
@@ -37,4 +41,8 @@ export interface TypeParams {
 	search?: string;
 	limit?: number;
 	page?: number;
+}
+
+export interface InterfaceId {
+	id?: string;
 }

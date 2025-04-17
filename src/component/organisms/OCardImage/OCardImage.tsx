@@ -1,13 +1,9 @@
-import {
-	faCircleCheck,
-	faCopy,
-	faHashtag,
-} from '@fortawesome/free-solid-svg-icons';
+import { faCircleCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
-import './style.css';
 import useCopyImage from 'src/hooks/useCopy';
+import './style.css';
 
 export interface OCardImagePropsType {
 	imagePath: string;
@@ -31,10 +27,6 @@ export const OCardImage = ({
 		if (await copyImage(imagePath)) setIsCopy(true);
 	};
 
-	const handleTag = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		e.stopPropagation();
-	};
-
 	return (
 		<div
 			className={`relative h-fit ${addClassWrapper} `}
@@ -55,15 +47,12 @@ export const OCardImage = ({
 			{isHover && (
 				<div className="box-shadow-image absolute inset-0 flex items-end  justify-end">
 					<div className="mb-2 mr-2">
-						<AButton addClass="mb-2" onClick={handleCopy}>
+						<AButton onClick={handleCopy}>
 							{isCopy ? (
 								<FontAwesomeIcon icon={faCircleCheck} />
 							) : (
 								<FontAwesomeIcon icon={faCopy} />
 							)}
-						</AButton>
-						<AButton onClick={handleTag}>
-							<FontAwesomeIcon icon={faHashtag} />
 						</AButton>
 					</div>
 				</div>

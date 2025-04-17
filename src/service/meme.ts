@@ -1,4 +1,4 @@
-import { IImage, TypeParams } from 'src/constants/type';
+import { IImage, TypeParams, InterfaceId } from 'src/constants/type';
 import api from './config';
 
 interface InterfacePayloadCreateMeme {
@@ -29,7 +29,10 @@ const createMeme = (payload: FormData) =>
 const getMemes = (params?: InterfaceParamsGetMemes) =>
 	api.get<InterfaceResponseGetMemes>('/meme', { params });
 
-export { createMeme, getMemes };
+const deleteMeme = (params?: InterfaceId) =>
+	api.delete<InterfaceResponseGetMemes>(`/meme/${params?.id}`);
+
+export { createMeme, getMemes, deleteMeme };
 export type {
 	InterfacePayloadCreateMeme,
 	InterfaceParamsGetMemes,

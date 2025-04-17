@@ -34,14 +34,7 @@ export const OBoard = ({
 				/>
 			))}
 			{dataImage && (
-				<OViewImage
-					isOpen={isOpen}
-					closeModal={closeModal}
-					data={dataImage}
-					onSelectImage={() => {
-						console.log('onSelect');
-					}}
-				/>
+				<OViewImage isOpen={isOpen} closeModal={closeModal} data={dataImage} />
 			)}
 		</div>
 	);
