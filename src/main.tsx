@@ -23,13 +23,11 @@ if (process.env.NODE_ENV !== 'production') {
 }
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-	<React.StrictMode>
-		<I18nextProvider i18n={i18n} defaultNS={'translation'}>
-			<BrowserRouter>
-				<AppRoutes />
-				<App />
-			</BrowserRouter>
-			<ToastContainer hideProgressBar={true} autoClose={4000} />
-		</I18nextProvider>
-	</React.StrictMode>
+	<I18nextProvider i18n={i18n} defaultNS={'translation'}>
+		<BrowserRouter>
+			<AppRoutes />
+			<App />
+		</BrowserRouter>
+		<ToastContainer hideProgressBar={true} autoClose={4000} />
+	</I18nextProvider>
 );

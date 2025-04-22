@@ -3,6 +3,7 @@ import { OCardImage } from '../OCardImage/OCardImage';
 import { IImage } from 'src/constants/type';
 import OViewImage from '../OViewImage/OViewImage';
 import { useState } from 'react';
+import { trackingMeme } from 'src/service/meme';
 
 export interface OBoardPropsType {
 	imageArray: IImage[];
@@ -19,15 +20,20 @@ export const OBoard = ({
 	const [dataImage, setDataImage] = useState<IImage>();
 
 	const handleClick = (item: IImage) => {
+		trackingMeme({
+			memeId: item._id,
+			action: 'view',
+		});
 		openModal();
 		setDataImage(item);
 	};
 
 	return (
 		<div className={addClass}>
-			{imageArray.map((item, index) => (
+			{imageArray?.map((item) => (
 				<OCardImage
-					key={index}
+					key={item._id}
+					data={item}
 					imagePath={item.location}
 					addClassWrapper={addClassWrapperImage}
 					onClick={() => handleClick(item)}

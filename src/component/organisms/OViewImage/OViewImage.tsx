@@ -9,7 +9,7 @@ import { color } from 'src/config/style';
 import { IImage, StatusCopyImage } from 'src/constants/type';
 import { useAuthen } from 'src/hooks/useAuthen';
 import useCopyImage from 'src/hooks/useCopy';
-import { deleteMeme } from 'src/service/meme';
+import { deleteMeme, trackingMeme } from 'src/service/meme';
 
 export interface OViewImagePropsType {
 	isOpen: boolean;
@@ -27,8 +27,13 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 
 	async function handleCopyImage() {
 		const awaitCopy = await copyImage(data.location);
-		if (awaitCopy) setIsCopiedImage(StatusCopyImage.SUCCESS);
-		else setIsCopiedImage(StatusCopyImage.FAIL);
+		if (awaitCopy) {
+			setIsCopiedImage(StatusCopyImage.SUCCESS);
+			trackingMeme({
+				memeId: data._id,
+				action: 'copy',
+			});
+		} else setIsCopiedImage(StatusCopyImage.FAIL);
 		setTimeout(() => {
 			setIsCopiedImage(StatusCopyImage.UN_COPY);
 		}, 3000);

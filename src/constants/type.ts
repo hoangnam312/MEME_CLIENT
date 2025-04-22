@@ -10,7 +10,11 @@ export interface IImage {
 	userId: string;
 	location: string;
 	__v: number;
-	imagePath: string;
+	imageMedium: string;
+	imageSmall: string;
+	viewCount: number;
+	likeCount: number;
+	copyCount: number;
 }
 
 export enum StatusCopyImage {
@@ -45,4 +49,17 @@ export interface TypeParams {
 
 export interface InterfaceId {
 	id?: string;
+}
+
+export interface IParamsGetListCursor {
+	limit?: number;
+	lastScore?: number;
+	lastId?: number;
+}
+
+export interface IResponseGetListCursor<T> {
+	limit: number;
+	lastScore: number;
+	lastId: number;
+	data: T[];
 }

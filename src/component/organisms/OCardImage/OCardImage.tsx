@@ -4,8 +4,11 @@ import { useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
 import useCopyImage from 'src/hooks/useCopy';
 import './style.css';
+import { IImage } from 'src/constants/type';
+import { trackingMeme } from 'src/service/meme';
 
 export interface OCardImagePropsType {
+	data: IImage;
 	imagePath: string;
 	addClassWrapper?: string;
 	addClassImage?: string;
@@ -13,6 +16,7 @@ export interface OCardImagePropsType {
 }
 
 export const OCardImage = ({
+	data,
 	imagePath,
 	addClassWrapper = '',
 	addClassImage = '',
@@ -24,7 +28,13 @@ export const OCardImage = ({
 
 	const handleCopy = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
-		if (await copyImage(imagePath)) setIsCopy(true);
+		if (await copyImage(imagePath)) {
+			setIsCopy(true);
+			trackingMeme({
+				memeId: data._id,
+				action: 'copy',
+			});
+		}
 	};
 
 	return (

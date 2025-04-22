@@ -1,4 +1,10 @@
-import { IImage, TypeParams, InterfaceId } from 'src/constants/type';
+import {
+	IImage,
+	TypeParams,
+	InterfaceId,
+	IParamsGetListCursor,
+	IResponseGetListCursor,
+} from 'src/constants/type';
 import api from './config';
 
 interface InterfacePayloadCreateMeme {
@@ -19,6 +25,11 @@ interface InterfaceResponseGetMemes {
 	data: IImage[];
 }
 
+interface IBodyTrackingMeme {
+	memeId: string;
+	action: 'like' | 'copy' | 'view';
+}
+
 const createMeme = (payload: FormData) =>
 	api.post('/meme', payload, {
 		headers: {
@@ -32,9 +43,16 @@ const getMemes = (params?: InterfaceParamsGetMemes) =>
 const deleteMeme = (params?: InterfaceId) =>
 	api.delete<InterfaceResponseGetMemes>(`/meme/${params?.id}`);
 
-export { createMeme, getMemes, deleteMeme };
+const getRecommendMemes = (params?: IParamsGetListCursor) =>
+	api.get<IResponseGetListCursor<IImage>>('/meme/recommend', { params });
+
+const trackingMeme = (body?: IBodyTrackingMeme) =>
+	api.post(`/user-action`, body);
+
+export { createMeme, getMemes, deleteMeme, getRecommendMemes, trackingMeme };
 export type {
 	InterfacePayloadCreateMeme,
 	InterfaceParamsGetMemes,
 	InterfaceResponseGetMemes,
+	IBodyTrackingMeme,
 };
