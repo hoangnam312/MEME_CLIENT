@@ -1,27 +1,94 @@
-import { useEffect, useState } from 'react';
-
+import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { IImage } from 'src/constants/type';
-import { getMemes, getRecommendMemes } from 'src/service/meme';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { debounce } from 'lodash';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
+import { color } from 'src/config/style';
+import { IImage, IParamsGetListCursor } from 'src/constants/type';
+import { getMemes, getRecommendMemes } from 'src/service/meme';
+
+const initialParamsList: IParamsGetListCursor = {
+	limit: 50,
+};
 
 export const BoardHomepage = () => {
 	const [listImage, setListImage] = useState<IImage[]>([]);
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
+	const [isLoading, setIsLoading] = useState(false);
+	const [paramsList, setParamsList] =
+		useState<IParamsGetListCursor>(initialParamsList);
+
+	const debouncedFetchMemes = debounce(
+		async (currentParamsList: IParamsGetListCursor) => {
+			setIsLoading(true);
+			const res = await getRecommendMemes(currentParamsList);
+			if (res?.data) {
+				setListImage((prev) => [...prev, ...(res?.data?.data ?? [])]);
+				setParamsList((prev) => ({
+					...prev,
+					lastScore: res?.data?.lastScore,
+					lastId: res?.data?.lastId,
+				}));
+			}
+			setIsLoading(false);
+		},
+		300
+	);
+
+	const fetchMemes = useCallback(() => {
+		debouncedFetchMemes(paramsList);
+	}, [paramsList, debouncedFetchMemes]);
+
+	const fetchSearchMemes = async () => {
+		setIsLoading(true);
+		if (!searchValue) return;
+		const res = await getMemes({ search: searchValue });
+		setListImage(() => [...(res?.data?.data ?? [])]);
+		setIsLoading(false);
+	};
 
 	useEffect(() => {
-		if (!searchValue) {
-			getRecommendMemes().then((res) => {
-				return setListImage(res?.data?.data ?? []);
-			});
-			return;
+		if (searchValue) {
+			fetchSearchMemes();
+		} else {
+			setParamsList(initialParamsList);
+			fetchMemes();
 		}
-		getMemes(searchValue ? { search: searchValue } : undefined).then((res) =>
-			setListImage(res?.data?.data ?? [])
-		);
+		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchValue]);
 
-	return <OBoard imageArray={listImage} />;
+	useEffect(() => {
+		const handleScroll = () => {
+			if (
+				window.innerHeight + document.documentElement.scrollTop >=
+					document.documentElement.offsetHeight - 250 &&
+				!isLoading
+			) {
+				setIsLoading(true);
+				fetchMemes();
+			}
+		};
+
+		window.addEventListener('scroll', handleScroll);
+		return () => window.removeEventListener('scroll', handleScroll);
+	}, [isLoading, fetchMemes]);
+
+	return (
+		<>
+			<OBoard imageArray={listImage} />
+			{isLoading && (
+				<div className="my-4 flex justify-center">
+					<FontAwesomeIcon
+						icon={faSpinner}
+						spin
+						size="3x"
+						style={{ color: color.text }}
+					/>
+				</div>
+			)}
+		</>
+	);
 };
