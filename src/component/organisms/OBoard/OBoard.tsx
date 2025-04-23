@@ -34,7 +34,6 @@ export const OBoard = ({
 				<OCardImage
 					key={item._id}
 					data={item}
-					imagePath={item.location}
 					addClassWrapper={addClassWrapperImage}
 					onClick={() => handleClick(item)}
 				/>

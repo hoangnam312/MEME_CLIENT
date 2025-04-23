@@ -9,7 +9,6 @@ import { trackingMeme } from 'src/service/meme';
 
 export interface OCardImagePropsType {
 	data: IImage;
-	imagePath: string;
 	addClassWrapper?: string;
 	addClassImage?: string;
 	onClick?: () => void;
@@ -17,7 +16,6 @@ export interface OCardImagePropsType {
 
 export const OCardImage = ({
 	data,
-	imagePath,
 	addClassWrapper = '',
 	addClassImage = '',
 	onClick,
@@ -28,7 +26,7 @@ export const OCardImage = ({
 
 	const handleCopy = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
-		if (await copyImage(imagePath)) {
+		if (await copyImage(data.imageMedium)) {
 			setIsCopy(true);
 			trackingMeme({
 				memeId: data._id,
@@ -51,8 +49,8 @@ export const OCardImage = ({
 		>
 			<img
 				className={`w-full rounded-2xl object-cover hover:drop-shadow-2xl ${addClassImage}`}
-				src={imagePath}
-				alt="viteIcon"
+				src={data.imageSmall}
+				alt={data.imageSmall}
 			/>
 			{isHover && (
 				<div className="box-shadow-image absolute inset-0 flex items-end  justify-end">

@@ -1,24 +1,18 @@
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import {
-	faCopy,
-	faTrashCan
-} from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faTrashCan } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AModal from 'src/component/atoms/AModal/AModal';
 import { color } from 'src/config/style';
-import {
-	IImage,
-	StatusCopyImage
-} from 'src/constants/type';
+import { IImage, StatusCopyImage } from 'src/constants/type';
 import { useAuthen } from 'src/hooks/useAuthen';
 import useCopyImage from 'src/hooks/useCopy';
 import {
 	deleteMeme,
 	getRecommendMemesByImage,
-	trackingMeme
+	trackingMeme,
 } from 'src/service/meme';
 import { OCardImage } from '../OCardImage/OCardImage';
 
@@ -34,15 +28,13 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		StatusCopyImage.UN_COPY
 	);
 	const [listImage, setListImage] = useState<IImage[]>([]);
-	const [dataImage, setDataImage] = useState<IImage>(data)
+	const [dataImage, setDataImage] = useState<IImage>(data);
 
 	const fetchMemes = async (imageId: string) => {
-		const res = await getRecommendMemesByImage(
-					{
+		const res = await getRecommendMemesByImage({
 			limit: 20,
 			imageId,
-		}
-		);
+		});
 		if (res?.data) {
 			setListImage([...(res?.data?.data ?? [])]);
 		}
@@ -97,23 +89,22 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	};
 
 	useEffect(() => {
-		setDataImage(data)
+		setDataImage(data);
 	}, [data]);
 
 	useEffect(() => {
 		fetchMemes(dataImage?._id);
-	}, [dataImage])
-	
+	}, [dataImage]);
 
 	return (
 		<AModal isOpen={isOpen} closeModal={closeModal} addClassWrap="!w-2/3">
 			<div className="grid grid-cols-3 gap-4">
 				<div className="relative col-span-2">
 					<div className="mb-3 mt-10 flex items-center justify-center rounded-lg text-5xl">
-						{dataImage?.location ? (
+						{dataImage?.imageMedium ? (
 							<img
-								src={dataImage.location}
-								alt={dataImage.location}
+								src={dataImage.imageMedium}
+								alt={dataImage.imageMedium}
 								className="max-xl max-h-96"
 							/>
 						) : (
@@ -151,7 +142,6 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								<OCardImage
 									key={item._id}
 									data={item}
-									imagePath={item.location}
 									addClassImage={'w-full'}
 									onClick={() => handleClick(item)}
 								/>
