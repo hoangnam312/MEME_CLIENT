@@ -1,5 +1,3 @@
-import React from 'react';
-
 import { scan } from 'react-scan';
 import { BrowserRouter } from 'react-router';
 import { ToastContainer } from 'react-toastify';
