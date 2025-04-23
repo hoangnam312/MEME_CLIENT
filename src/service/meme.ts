@@ -30,6 +30,10 @@ interface IBodyTrackingMeme {
 	action: 'like' | 'copy' | 'view';
 }
 
+interface IParamsGetRecommendMemesByImage extends IParamsGetListCursor {
+	imageId: string;
+}
+
 const createMeme = (payload: FormData) =>
 	api.post('/meme', payload, {
 		headers: {
@@ -46,13 +50,18 @@ const deleteMeme = (params?: InterfaceId) =>
 const getRecommendMemes = (params?: IParamsGetListCursor) =>
 	api.get<IResponseGetListCursor<IImage>>('/meme/recommend', { params });
 
+const getRecommendMemesByImage = (params?: IParamsGetRecommendMemesByImage) =>
+	api.get<IResponseGetListCursor<IImage>>('/meme/recommend/by-image', { params });
+
+
 const trackingMeme = (body?: IBodyTrackingMeme) =>
 	api.post(`/user-action`, body);
 
-export { createMeme, getMemes, deleteMeme, getRecommendMemes, trackingMeme };
+export { createMeme, getMemes, deleteMeme, getRecommendMemes, trackingMeme, getRecommendMemesByImage };
 export type {
 	InterfacePayloadCreateMeme,
 	InterfaceParamsGetMemes,
 	InterfaceResponseGetMemes,
 	IBodyTrackingMeme,
+	IParamsGetRecommendMemesByImage
 };
