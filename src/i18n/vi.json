@@ -21,6 +21,7 @@
 	"backToApp": "Quay lại màn hình chính",
 
 	"toast.unexpectedError": "Đã xảy ra lỗi không mong muốn.",
+	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",
 
 	"validate.requiredField": "Trường này là bắt buộc",
 	"validate.dontSamePassword": "Mật khẩu xác nhận không khớp. Vui lòng thử lại",

@@ -23,6 +23,7 @@
 	"backToApp": "Back to app",
 
 	"toast.unexpectedError": "An unexpected error occurred",
+	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",
 
 	"validate.requiredField": "This field is required",
 	"validate.dontSamePassword": "The confirmation password does not match. Please try again",

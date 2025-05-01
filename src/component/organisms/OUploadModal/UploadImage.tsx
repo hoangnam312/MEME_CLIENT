@@ -71,9 +71,15 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 		}
 		if (source && file) memeFormData.append('image', file);
 		if (link) {
-			const imageFromLink = await fetch(link);
-			const blob = await imageFromLink.blob();
-			memeFormData.append('image', blob);
+			try {
+				const imageFromLink = await fetch(link);
+				const blob = await imageFromLink.blob();
+				memeFormData.append('image', blob);
+			} catch (error) {
+				toast.error(t('toast.cannotGetImageFromLink'));
+				setIsImageError(true);
+				return;
+			}
 		}
 
 		for (const value of memeFormData.values()) {
