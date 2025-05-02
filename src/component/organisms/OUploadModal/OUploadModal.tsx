@@ -11,7 +11,11 @@ export interface OUploadModalPropsType {
 
 const OUploadModal = ({ isOpen, closeModal }: OUploadModalPropsType) => {
 	return (
-		<AModal isOpen={isOpen} closeModal={closeModal} addClassWrap="!w-1/2">
+		<AModal
+			isOpen={isOpen}
+			closeModal={closeModal}
+			addClassWrap="!w-1/2 xl:max-w-[75vh]"
+		>
 			<div className="relative max-h-screen overflow-auto">
 				<h3 className="p-3 text-center text-xl font-bold text-main-color">
 					{t('QuickUpload.dragHere')}
