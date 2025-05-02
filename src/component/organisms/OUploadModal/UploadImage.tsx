@@ -37,7 +37,7 @@ const ToastUploadSuccess = () => {
 const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 	const inputFile = useRef<HTMLInputElement>(null);
 	const [link, setLink] = useState('');
-	const [isImageError, setIsImageError] = useState<boolean>(true);
+	const [isImageError, setIsImageError] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState(false);
 	const {
 		source,
@@ -57,10 +57,6 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 		setLink(value);
 		clearSource();
 		clearFile();
-	};
-
-	const onImageError = () => {
-		setIsImageError(true);
 	};
 
 	const handleSave = async (data: TInputs) => {
@@ -112,29 +108,48 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 
 	return (
 		<div>
-			{(source || link) && !isImageError ? (
-				<div
-					className="my-10 flex justify-center"
-					onDrop={onDrop}
-					onDragOver={onDragOverAble}
-				>
-					<img src={source || link} alt="meme preview" onError={onImageError} />
-				</div>
-			) : (
-				<div
-					className="my-10 flex items-center justify-center rounded-lg border-2 border-dashed border-main-color bg-gray-100 pb-8 pt-14 text-5xl"
-					onClick={() => inputFile?.current?.click()}
-					onDragOver={onDragOverAble}
-					onDrop={onDrop}
-				>
-					<FontAwesomeIcon
-						icon={faUpload}
-						bounce
-						size="2xl"
-						style={{ color: color.main }}
-					/>
-				</div>
-			)}
+			<div className="my-10">
+				{(source || link) && !isImageError ? (
+					<div
+						className="flex justify-center"
+						onDrop={onDrop}
+						onDragOver={onDragOverAble}
+					>
+						<img
+							src={source || link}
+							alt="meme preview"
+							onError={() => {
+								setIsImageError(true);
+								console.log('error');
+							}}
+							onLoad={() => {
+								setIsImageError(false);
+								console.log('load');
+							}}
+						/>
+					</div>
+				) : (
+					<div
+						className="flex items-center justify-center rounded-lg border-2 border-dashed border-main-color bg-gray-100 pb-8 pt-14 text-5xl"
+						onClick={() => inputFile?.current?.click()}
+						onDragOver={onDragOverAble}
+						onDrop={onDrop}
+					>
+						<FontAwesomeIcon
+							icon={faUpload}
+							bounce
+							size="2xl"
+							style={{ color: color.main }}
+						/>
+					</div>
+				)}
+				{isImageError && (
+					<p className="mt-2 text-center font-semibold text-red-500">
+						{t('toast.cannotGetImageFromLink')}
+					</p>
+				)}
+			</div>
+
 			<input
 				ref={inputFile}
 				type="file"
@@ -142,15 +157,17 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 				onChange={onUpload}
 			/>
 
-			<ASearch
-				placeholder={t('QuickUpload.pastHere')}
-				value={link}
-				onSubmit={onUpdateLink}
-				rest={{
-					onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => onPaste(e),
-					onDrop: onDrop,
-				}}
-			/>
+			{(!source || isImageError) && (
+				<ASearch
+					placeholder={t('QuickUpload.pastHere')}
+					value={link}
+					onSubmit={onUpdateLink}
+					rest={{
+						onPaste: (e: React.ClipboardEvent<HTMLInputElement>) => onPaste(e),
+						onDrop: onDrop,
+					}}
+				/>
+			)}
 
 			{(source || link) && (
 				<OBlurRequiredAuthen>
