@@ -1,11 +1,9 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useSearchParams } from 'react-router';
 
-import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { debounce } from 'lodash';
+import ALoading from 'src/component/atoms/ALoading/ALoading';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
-import { color } from 'src/config/style';
 import { IImage, IParamsGetListCursor } from 'src/constants/type';
 import { getMemes, getRecommendMemes } from 'src/service/meme';
 
@@ -81,12 +79,7 @@ export const BoardHomepage = () => {
 			<OBoard imageArray={listImage} />
 			{isLoading && (
 				<div className="my-4 flex justify-center">
-					<FontAwesomeIcon
-						icon={faSpinner}
-						spin
-						size="3x"
-						style={{ color: color.text }}
-					/>
+					<ALoading isLoading={isLoading} />
 				</div>
 			)}
 		</>

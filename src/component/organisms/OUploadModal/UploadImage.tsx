@@ -38,6 +38,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 	const inputFile = useRef<HTMLInputElement>(null);
 	const [link, setLink] = useState('');
 	const [isImageError, setIsImageError] = useState<boolean>(true);
+	const [isLoading, setIsLoading] = useState(false);
 	const {
 		source,
 		file,
@@ -63,6 +64,8 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 	};
 
 	const handleSave = async (data: TInputs) => {
+		if (isLoading) return;
+		setIsLoading(true);
 		const memeFormData = new FormData();
 
 		for (const [key, value] of Object.entries(data)) {
@@ -78,6 +81,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			} catch (error) {
 				toast.error(t('toast.cannotGetImageFromLink'));
 				setIsImageError(true);
+				setIsLoading(false);
 				return;
 			}
 		}
@@ -92,7 +96,10 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			})
 			.catch((error: AxiosError<ErrorResponse>) =>
 				toast.error(error.response?.data.message ?? t('toast.unexpectedError'))
-			);
+			)
+			.finally(() => {
+				setIsLoading(false);
+			});
 	};
 
 	useEffect(() => {
@@ -150,6 +157,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 					<FormUpload
 						isDisabledButtonSave={isImageError}
 						handleSave={handleSave}
+						isLoading={isLoading}
 					/>
 				</OBlurRequiredAuthen>
 			)}

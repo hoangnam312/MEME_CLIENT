@@ -8,6 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'i18next';
 import AButton from 'src/component/atoms/AButton/AButton';
+import ALoading from 'src/component/atoms/ALoading/ALoading';
 
 export type TInputs = {
 	name: string;
@@ -16,6 +17,7 @@ export type TInputs = {
 };
 
 interface FormUploadPropsType {
+	isLoading?: boolean;
 	isDisabledButtonSave: boolean;
 	handleSave: (data: TInputs) => void;
 }
@@ -23,6 +25,7 @@ interface FormUploadPropsType {
 const FormUpload = ({
 	isDisabledButtonSave,
 	handleSave,
+	isLoading = false,
 }: FormUploadPropsType) => {
 	const { register, handleSubmit } = useForm<TInputs>();
 
@@ -59,23 +62,9 @@ const FormUpload = ({
 					isDisabled={isDisabledButtonSave}
 					onClick={handleSubmit(handleSave)}
 				>
-					{t('save')}
+					{isLoading ? <ALoading size="xl" /> : t('save')}
 				</AButton>
-				{/* <AButton
-					addClass={'ml-4'}
-					isDisabled={isDisabledButtonSaveLink}
-					onClick={handleSubmit(handleSaveOnlyLink)}
-				>
-					{t('saveLink')}
-				</AButton> */}
 			</div>
-			{/* <div className="mt-3 flex justify-end self-center">
-				<div className="w-3/5">
-					<p className="text-right text-sm italic text-gray-500">
-						{t('saveLink.explant')}
-					</p>
-				</div>
-			</div> */}
 		</form>
 	);
 };
