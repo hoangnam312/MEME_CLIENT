@@ -12,7 +12,6 @@ interface InterfacePayloadCreateMeme {
 	link?: string;
 	description?: string;
 	image?: string;
-	tag?: string;
 }
 
 interface InterfaceParamsGetMemes extends TypeParams {

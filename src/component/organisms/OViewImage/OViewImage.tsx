@@ -132,7 +132,6 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 					<div className="ml-5 mt-5">
 						<h2 className="mb-2 text-3xl">{dataImage?.name ?? t('noName')}</h2>
 						<p>{dataImage?.description}</p>
-						<p>{dataImage?.tag}</p>
 					</div>
 				</div>
 				<div className="rounded-lg border bg-gray-200">

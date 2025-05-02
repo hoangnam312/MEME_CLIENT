@@ -1,11 +1,7 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useForm } from 'react-hook-form';
 import AInput from 'src/component/atoms/AInput/AInput';
-import {
-	faHashtag,
-	faPen,
-	faPenToSquare,
-} from '@fortawesome/free-solid-svg-icons';
+import { faPen, faPenToSquare } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'i18next';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ALoading from 'src/component/atoms/ALoading/ALoading';
@@ -13,7 +9,6 @@ import ALoading from 'src/component/atoms/ALoading/ALoading';
 export type TInputs = {
 	name: string;
 	description: string;
-	tag: string;
 };
 
 interface FormUploadPropsType {
@@ -47,14 +42,6 @@ const FormUpload = ({
 				rest={{
 					placeholder: t('UploadModal.description'),
 					...register('description'),
-				}}
-			/>
-			<AInput
-				addClassWrapper="mt-3"
-				icon={<FontAwesomeIcon className="text-violet-900" icon={faHashtag} />}
-				rest={{
-					placeholder: t('UploadModal.tag'),
-					...register('tag'),
 				}}
 			/>
 			<div className="mt-5 flex justify-center self-center">
