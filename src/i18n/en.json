@@ -48,5 +48,8 @@
 	"register": "Register",
 	"register.success": "Register success",
 
-	"requireLogin": "Oops, you are not login"
+	"requireLogin": "Oops, you are not login",
+
+	"BoardHomePage.create.isEnd": "No more memes to found",
+	"BoardHomePage.isEnd": "No more memes to show"
 }

@@ -61,5 +61,6 @@ export interface IResponseGetListCursor<T> {
 	limit: number;
 	lastScore: number;
 	lastId: number;
+	isEnd: boolean;
 	data: T[];
 }
