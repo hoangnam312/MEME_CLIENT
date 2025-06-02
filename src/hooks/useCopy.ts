@@ -16,11 +16,13 @@ function useCopyImage() {
 
 	async function copyImage(url: string) {
 		try {
+			console.log('🚀 ~ copyImage ~ url:', url);
 			const imageData = await getImageData(url);
 			copyImagePngToClipboard(imageData);
 			setIsCopied(true);
 			return true;
 		} catch (error) {
+			console.log('🚀 ~ copyImage ~ error:', error);
 			setIsError(true);
 			return false;
 		}
