@@ -25,8 +25,15 @@
 	"toast.unexpectedError": "An unexpected error occurred",
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",
 
-	"validate.requiredField": "This field is required",
-	"validate.dontSamePassword": "The confirmation password does not match. Please try again",
+	"validate": {
+		"requiredField": "This field is required",
+		"invalidEmail": "Please enter a valid email address",
+		"emailMinLength": "Email must be at least 5 characters",
+		"emailMaxLength": "Email must be at most 254 characters",
+		"passwordMinLength": "Password must be at least 6 characters",
+		"passwordMaxLength": "Password must be at most 128 characters",
+		"dontSamePassword": "The confirmation password does not match. Please try again"
+	},
 
 	"upload.link.error": "Oops, we can't find this meme",
 	"upload.success": "Upload success",

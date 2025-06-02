@@ -23,8 +23,15 @@
 	"toast.unexpectedError": "Đã xảy ra lỗi không mong muốn.",
 	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",
 
-	"validate.requiredField": "Trường này là bắt buộc",
-	"validate.dontSamePassword": "Mật khẩu xác nhận không khớp. Vui lòng thử lại",
+	"validate": {
+		"requiredField": "Trường này là bắt buộc",
+		"invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
+		"emailMinLength": "Email phải có ít nhất 5 ký tự",
+		"emailMaxLength": "Email tối đa 254 ký tự",
+		"passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
+		"passwordMaxLength": "Mật khẩu tối đa 128 ký tự",
+		"dontSamePassword": "Mật khẩu xác nhận không khớp. Vui lòng thử lại"
+	},
 
 	"upload.link.error": "Oops, chúng tôi không tìm thấy meme này",
 	"upload.success": "Upload meme thành công",
