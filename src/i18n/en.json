@@ -26,13 +26,15 @@
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",
 
 	"validate": {
-		"requiredField": "This field is required",
-		"invalidEmail": "Please enter a valid email address",
-		"emailMinLength": "Email must be at least 5 characters",
-		"emailMaxLength": "Email must be at most 254 characters",
-		"passwordMinLength": "Password must be at least 6 characters",
-		"passwordMaxLength": "Password must be at most 128 characters",
-		"dontSamePassword": "The confirmation password does not match. Please try again"
+		"requiredField": "This field is required — got questions? Just type something in.",
+		"invalidEmail": "This is supposed to be an email? 🤨",
+		"emailMinLength": "What kind of email is that? So damn short — needs at least 5 characters, got it?",
+		"emailMaxLength": "Seriously, where did you find such a long email?",
+		"passwordMinLength": "That password’s so short — wanna bet I can hack your password in no time?",
+		"passwordMaxLength": "Be honest, how long did it take you to type this password?",
+		"passwordsMustMatch": "You already forgot the password you just typed?",
+		"usernameMinLength": "Too short for a name — mash your keyboard a bit more!",
+		"usernameMaxLength": "That name’s too long — delete some letters, will you?"
 	},
 
 	"upload.link.error": "Oops, we can't find this meme",

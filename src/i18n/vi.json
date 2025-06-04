@@ -24,13 +24,15 @@
 	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",
 
 	"validate": {
-		"requiredField": "Trường này là bắt buộc",
-		"invalidEmail": "Vui lòng nhập địa chỉ email hợp lệ",
-		"emailMinLength": "Email phải có ít nhất 5 ký tự",
-		"emailMaxLength": "Email tối đa 254 ký tự",
-		"passwordMinLength": "Mật khẩu phải có ít nhất 6 ký tự",
-		"passwordMaxLength": "Mật khẩu tối đa 128 ký tự",
-		"dontSamePassword": "Mật khẩu xác nhận không khớp. Vui lòng thử lại"
+		"requiredField": "Trường này là bắt buộc, Thắc mắc gì, điền đi!",
+		"invalidEmail": "Đây mà là email à? 🤨",
+		"emailMinLength": "Email méo gì ngắn thể, phải có ít nhất 5 ký tự nhớ chưa?",
+		"emailMaxLength": "Thật, chú kiếm đâu được cái email dài vậy?",
+		"passwordMinLength": "Mật khẩu ngắn thế, mày tin tao hack mật khẩu mày không?",
+		"passwordMaxLength": "Khai thật đi, mày gõ cái mật khẩu này mất mấy phút?",
+		"passwordsMustMatch": "Có cái mật khẩu vừa gõ trên cũng không nhớ!",
+		"usernameMinLength": "Tên ngắn quá, gõ bừa thêm mấy chữ cho dài hơn đi!",
+		"usernameMaxLength": "Tên dài quá, xóa bừa vài chữ cho ngắn hơn đi!"
 	},
 
 	"upload.link.error": "Oops, chúng tôi không tìm thấy meme này",

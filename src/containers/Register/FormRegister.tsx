@@ -3,6 +3,8 @@ import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+import { registerValidationSchema } from './register.validation';
 
 import { Path } from 'src/constants/type';
 import AInput from 'src/component/atoms/AInput/AInput';
@@ -23,13 +25,13 @@ function FormRegister() {
 		register,
 		handleSubmit,
 		formState: { errors },
-	} = useForm<TInputs>();
+	} = useForm<TInputs>({
+		resolver: yupResolver(registerValidationSchema),
+		mode: 'onChange',
+	});
 
 	const handleRegister: SubmitHandler<TInputs> = async (data) => {
-		const { email, password, confirmPassword, username } = data;
-
-		if (password !== confirmPassword)
-			return toast.error(t('validate.dontSamePassword'));
+		const { email, password, username } = data;
 
 		try {
 			await registerService({
@@ -53,36 +55,36 @@ function FormRegister() {
 			<AInput
 				addClassWrapper="mt-3"
 				label={t('email')}
-				rest={{ ...register('email', { required: true }), name: 'email' }}
+				rest={{ ...register('email'), name: 'email' }}
 			/>
-			{errors.email && (
-				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
+			{errors.email?.message && (
+				<p className="mt-2 text-red-500">{t(errors.email.message)}</p>
 			)}
 			<AInput
 				addClassWrapper="mt-3"
 				label={t('username')}
-				rest={{ ...register('username', { required: true }), name: 'username' }}
+				rest={{ ...register('username'), name: 'username' }}
 			/>
-			{errors.email && (
-				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
+			{errors.username?.message && (
+				<p className="mt-2 text-red-500">{t(errors.username.message)}</p>
 			)}
 			<AInput
 				addClassWrapper="mt-3"
 				label={t('password')}
 				type="password"
-				rest={{ ...register('password', { required: true }) }}
+				rest={{ ...register('password') }}
 			/>
-			{errors.password && (
-				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
+			{errors.password?.message && (
+				<p className="mt-2 text-red-500">{t(errors.password.message)}</p>
 			)}
 			<AInput
 				addClassWrapper="mt-3"
 				label={t('confirmPassword')}
 				type="password"
-				rest={{ ...register('confirmPassword', { required: true }) }}
+				rest={{ ...register('confirmPassword') }}
 			/>
-			{errors.confirmPassword && (
-				<p className="mt-2 text-red-500">{t('validate.requiredField')}</p>
+			{errors.confirmPassword?.message && (
+				<p className="mt-2 text-red-500">{t(errors.confirmPassword.message)}</p>
 			)}
 			<div className="mt-7 flex justify-center align-middle">
 				<AButton
