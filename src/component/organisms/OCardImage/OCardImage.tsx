@@ -1,11 +1,11 @@
-import { faCircleCheck, faCopy } from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useState } from 'react';
-import AButton from 'src/component/atoms/AButton/AButton';
-import useCopyImage from 'src/hooks/useCopy';
-import './style.css';
+import MemeAlbumButton from 'src/component/molecules/MemeAlbumButton';
+import MemeCopyButton from 'src/component/molecules/MemeCopyButton';
+import MemeDislikeButton from 'src/component/molecules/MemeDislikeButton';
+import MemeLikeButton from 'src/component/molecules/MemeLikeButton';
 import { IImage } from 'src/constants/type';
-import { trackingMeme } from 'src/service/meme';
+import './style.css';
+import { useAuthen } from 'src/hooks/useAuthen';
 
 export interface OCardImagePropsType {
 	data: IImage;
@@ -21,28 +21,19 @@ export const OCardImage = ({
 	onClick,
 }: OCardImagePropsType) => {
 	const [isHover, setIsHover] = useState<boolean>(false);
-	const [isCopy, setIsCopy] = useState<boolean>(false);
-	const { copyImage } = useCopyImage();
+	const { isLoggedIn } = useAuthen();
 
-	const handleCopy = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-		e.stopPropagation();
-		if (await copyImage(data.imageMedium)) {
-			setIsCopy(true);
-			trackingMeme({
-				memeId: data._id,
-				action: 'copy',
-			});
-		}
+	const handleMouseLeave = () => {
+		setIsHover(false);
 	};
 
 	return (
 		<div
-			className={`relative h-fit ${addClassWrapper} `}
+			className={`relative h-fit ${addClassWrapper} ${
+				isHover ? 'shadow-lg' : ''
+			}`}
 			onMouseEnter={() => setIsHover(true)}
-			onMouseLeave={() => {
-				setIsCopy(false);
-				setIsHover(false);
-			}}
+			onMouseLeave={handleMouseLeave}
 			onClick={() => {
 				if (onClick) onClick();
 			}}
@@ -53,15 +44,16 @@ export const OCardImage = ({
 				alt={data.imageSmall}
 			/>
 			{isHover && (
-				<div className="box-shadow-image absolute inset-0 flex items-end  justify-end">
-					<div className="mb-2 mr-2">
-						<AButton onClick={handleCopy}>
-							{isCopy ? (
-								<FontAwesomeIcon icon={faCircleCheck} />
-							) : (
-								<FontAwesomeIcon icon={faCopy} />
-							)}
-						</AButton>
+				<div className="box-shadow-image absolute inset-0 flex items-end justify-end">
+					<div className="mb-2 mr-2 flex flex-col gap-2">
+						{isLoggedIn() && (
+							<>
+								<MemeLikeButton data={data} />
+								<MemeDislikeButton data={data} />
+								<MemeAlbumButton data={data} />
+							</>
+						)}
+						<MemeCopyButton data={data} />
 					</div>
 				</div>
 			)}

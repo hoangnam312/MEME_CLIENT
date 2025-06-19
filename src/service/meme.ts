@@ -26,7 +26,7 @@ interface InterfaceResponseGetMemes {
 
 interface IBodyTrackingMeme {
 	memeId: string;
-	action: 'like' | 'copy' | 'view';
+	action: 'like' | 'copy' | 'view' | 'dislike' | 'add-to-album';
 }
 
 interface IParamsGetRecommendMemesByImage extends IParamsGetListCursor {
