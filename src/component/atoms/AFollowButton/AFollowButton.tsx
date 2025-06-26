@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckDouble, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../AButton/AButton';
 import { useAuthen } from 'src/hooks/useAuthen';
+import { t } from 'i18next';
 
 // Follow bounce state enum
 export enum FollowBounceState {
@@ -57,7 +58,7 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 				addClass={addClass}
 			>
 				<FontAwesomeIcon icon={faUserPlus} className="mr-2" />
-				Follow
+				{t('follow')}
 			</AButton>
 		);
 	}
@@ -67,7 +68,7 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 		return (
 			<AButton isDisabled={true} addClass={addClass}>
 				<FontAwesomeIcon icon={faUserPlus} bounce className="mr-2" />
-				Follow
+				{t('follow')}
 			</AButton>
 		);
 	}
@@ -81,7 +82,7 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 				addClass={`!bg-emerald-200 hover:!bg-emerald-300 transition-colors duration-200 ${addClass}`}
 			>
 				<FontAwesomeIcon icon={faCheckDouble} className="mr-2" />
-				Following
+				{t('following')}
 			</AButton>
 		);
 	}
@@ -91,7 +92,7 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 		return (
 			<AButton isDisabled={true} addClass={`!bg-emerald-200 ${addClass}`}>
 				<FontAwesomeIcon icon={faCheckDouble} bounce className="mr-2" />
-				Following
+				{t('following')}
 			</AButton>
 		);
 	}

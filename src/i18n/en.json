@@ -21,6 +21,12 @@
 	"password": "Password",
 	"confirmPassword": "Re-enter password.",
 	"backToApp": "Back to app",
+	"follow": "Follow",
+	"unfollow": "Unfollow",
+	"followers": "Followers",
+	"following": "Following",
+	"joined": "Joined",
+	"joinedIn": "Joined in",
 
 	"toast.unexpectedError": "An unexpected error occurred",
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",

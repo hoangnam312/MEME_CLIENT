@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import React from 'react';
 import AFollowButton from 'src/component/atoms/AFollowButton/AFollowButton';
 import { UserCardData } from 'src/hooks/useUserCard';
@@ -29,7 +30,8 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 					{user.username}
 				</div>
 				<div className="text-xs text-gray-500 dark:text-gray-400">
-					{user.followCount} followers - {user.followingCount} following
+					{user.followCount} {t('followers')} - {user.followingCount}{' '}
+					{t('following')}
 				</div>
 			</div>
 			{isLoggedIn && (

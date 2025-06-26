@@ -6,6 +6,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import AFollowButton from 'src/component/atoms/AFollowButton/AFollowButton';
 import { UserCardData } from 'src/hooks/useUserCard';
+import { t } from 'i18next';
 
 export interface UserCardDetailedProps {
 	user: UserCardData;
@@ -54,7 +55,7 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 							{user.followCount}
 						</div>
 						<div className="text-sm text-gray-500 dark:text-gray-400">
-							Followers
+							{t('followers')}
 						</div>
 					</div>
 					<div className="text-center">
@@ -62,7 +63,7 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 							{user.followingCount}
 						</div>
 						<div className="text-sm text-gray-500 dark:text-gray-400">
-							Following
+							{t('following')}
 						</div>
 					</div>
 				</div>
@@ -70,7 +71,9 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 				{user?.joinDate && (
 					<div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
 						<FontAwesomeIcon icon={faCalendarAlt} />
-						<span>Joined {user.joinDate}</span>
+						<span>
+							{t('joinedIn')} {user.joinDate}
+						</span>
 					</div>
 				)}
 
