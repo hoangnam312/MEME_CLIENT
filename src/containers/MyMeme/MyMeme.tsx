@@ -9,6 +9,7 @@ import { useBoundStore } from 'src/store/store';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import OModalRequiredAuthen from 'src/component/organisms/OModalRequiredAuthen/OModalRequiredAuthen';
 import ATabs from 'src/component/atoms/ATabs/ATabs';
+import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 
 function MyMeme() {
 	const [listImage, setListImage] = useState<IImage[]>([]);
@@ -24,6 +25,15 @@ function MyMeme() {
 		{ key: 'album', label: t('tab.album') },
 	];
 
+	// TODO: get user data from api
+	const userData = {
+		avatarUrl:
+			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
+		username: 'Jese Leos',
+		followCount: 5,
+		followingCount: 5,
+	};
+
 	useEffect(() => {
 		if (!authen.userId) return;
 		getMemes({ search: searchValue ?? undefined, userId: authen.userId }).then(
@@ -33,12 +43,17 @@ function MyMeme() {
 
 	return (
 		<OModalRequiredAuthen>
-			<ATabs
-				addClass="mb-4 !w-1/2"
-				tabs={tabs}
-				value={activeTab}
-				onChange={setActiveTab}
-			/>
+			<div className="mb-4 flex justify-between ">
+				<ATabs
+					addClass="!w-1/2"
+					tabs={tabs}
+					value={activeTab}
+					onChange={setActiveTab}
+				/>
+				{/* TODO: show only if user view another user */}
+				<MUserCard variant="compact" user={userData} />
+			</div>
+
 			<OBoard imageArray={listImage} />
 		</OModalRequiredAuthen>
 	);
