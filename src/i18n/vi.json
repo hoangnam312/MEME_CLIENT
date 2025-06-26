@@ -58,5 +58,9 @@
 	"requireLogin": "Oops, bạn chưa đăng nhập",
 
 	"BoardHomePage.create.isEnd": "Không tìm thấy thêm meme nào nữa",
-	"BoardHomePage.isEnd": "Hết meme rồi, lướt ít thôi"
+	"BoardHomePage.isEnd": "Hết meme rồi, lướt ít thôi",
+
+	"tab.frequent": "Thường xuyên",
+	"tab.uploadedByMe": "Upload bởi tôi",
+	"tab.album": "Album"
 }
