@@ -14,6 +14,9 @@ export interface UserCardDetailedProps {
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;
+	onFollowersClick?: () => void;
+	onFollowingClick?: () => void;
+	enableFollowModal?: boolean;
 }
 
 const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
@@ -22,6 +25,9 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 	isFollowing,
 	onFollowToggle,
 	addClass = '',
+	onFollowersClick,
+	onFollowingClick,
+	enableFollowModal = false,
 }) => {
 	return (
 		<div
@@ -50,7 +56,14 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 				)}
 
 				<div className="mb-4 flex gap-6">
-					<div className="text-center">
+					<div
+						className={`text-center ${
+							enableFollowModal
+								? 'cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+								: ''
+						}`}
+						onClick={onFollowersClick}
+					>
 						<div className="text-lg font-bold text-indigo-800 dark:text-white">
 							{user.followCount}
 						</div>
@@ -58,7 +71,14 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 							{t('followers')}
 						</div>
 					</div>
-					<div className="text-center">
+					<div
+						className={`text-center ${
+							enableFollowModal
+								? 'cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+								: ''
+						}`}
+						onClick={onFollowingClick}
+					>
 						<div className="text-lg font-bold text-indigo-800 dark:text-white">
 							{user.followingCount}
 						</div>

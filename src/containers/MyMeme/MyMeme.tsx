@@ -43,7 +43,7 @@ function MyMeme() {
 
 	return (
 		<OModalRequiredAuthen>
-			<div className="mb-4 flex justify-between ">
+			<div className="mb-6 flex justify-between ">
 				<ATabs
 					addClass="!w-1/2"
 					tabs={tabs}

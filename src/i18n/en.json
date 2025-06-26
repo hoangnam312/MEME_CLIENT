@@ -27,6 +27,8 @@
 	"following": "Following",
 	"joined": "Joined",
 	"joinedIn": "Joined in",
+	"noFollowersYet": "No followers yet",
+	"notFollowingAnyone": "Not following anyone yet",
 
 	"toast.unexpectedError": "An unexpected error occurred",
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",

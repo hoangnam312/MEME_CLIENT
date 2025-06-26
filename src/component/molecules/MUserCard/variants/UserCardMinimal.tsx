@@ -7,6 +7,9 @@ export interface UserCardMinimalProps {
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;
+	onFollowersClick?: () => void;
+	onFollowingClick?: () => void;
+	enableFollowModal?: boolean;
 }
 
 const UserCardMinimal: React.FC<UserCardMinimalProps> = ({

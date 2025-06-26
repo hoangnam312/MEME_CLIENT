@@ -25,6 +25,8 @@
 	"following": "Đang theo dõi",
 	"joined": "Tham gia",
 	"joinedIn": "Tham gia vào",
+	"noFollowersYet": "Chưa có người theo dõi",
+	"notFollowingAnyone": "Chưa theo dõi ai",
 
 	"toast.unexpectedError": "Đã xảy ra lỗi không mong muốn.",
 	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",

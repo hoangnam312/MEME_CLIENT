@@ -9,6 +9,9 @@ export interface UserCardCompactProps {
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;
+	onFollowersClick?: () => void;
+	onFollowingClick?: () => void;
+	enableFollowModal?: boolean;
 }
 
 const UserCardCompact: React.FC<UserCardCompactProps> = ({
@@ -17,6 +20,9 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 	isFollowing,
 	onFollowToggle,
 	addClass = '',
+	onFollowersClick,
+	onFollowingClick,
+	enableFollowModal = false,
 }) => {
 	return (
 		<div className={`flex items-center gap-3 ${addClass}`}>
@@ -30,8 +36,27 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 					{user.username}
 				</div>
 				<div className="text-xs text-gray-500 dark:text-gray-400">
-					{user.followCount} {t('followers')} - {user.followingCount}{' '}
-					{t('following')}
+					<span
+						className={
+							enableFollowModal
+								? 'cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400'
+								: ''
+						}
+						onClick={onFollowersClick}
+					>
+						{user.followCount} {t('followers')}
+					</span>
+					{' - '}
+					<span
+						className={
+							enableFollowModal
+								? 'cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400'
+								: ''
+						}
+						onClick={onFollowingClick}
+					>
+						{user.followingCount} {t('following')}
+					</span>
 				</div>
 			</div>
 			{isLoggedIn && (
