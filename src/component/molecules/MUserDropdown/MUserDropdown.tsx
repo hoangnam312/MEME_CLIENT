@@ -13,6 +13,10 @@ const MUserDropdown = () => {
 	const navigate = useNavigate();
 	const options = [
 		{
+			label: t('account.title'),
+			value: 'account',
+		},
+		{
 			label: t('logout'),
 			value: 'logout',
 		},
@@ -31,6 +35,9 @@ const MUserDropdown = () => {
 
 	const onSelect = (value: string) => {
 		switch (value) {
+			case 'account':
+				navigate(Path.ACCOUNT);
+				break;
 			case 'logout':
 				logout();
 				break;

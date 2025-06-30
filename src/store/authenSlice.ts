@@ -8,6 +8,7 @@ type TStateAuthenSlice = {
 	password: string;
 	userId: string;
 	token: string;
+	bio: string;
 };
 
 type TActionAuthenSlice = {
@@ -24,6 +25,7 @@ export const createAuthen: StateCreator<TBoundStore, [], [], TAuthenSlice> = (
 	password: '',
 	userId: '',
 	token: '',
+	bio: '',
 	updateAuthen: (authen) =>
 		set(
 			produce((draft: TBoundStore) => {

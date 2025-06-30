@@ -9,7 +9,7 @@ import { registerValidationSchema } from './register.validation';
 import { Path } from 'src/constants/type';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
-import { register as registerService } from 'src/service/login';
+import { register as registerService } from 'src/service/auth';
 
 function FormRegister() {
 	const navigate = useNavigate();

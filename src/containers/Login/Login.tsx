@@ -59,7 +59,10 @@ function Login() {
 					<div className="py-5">
 						<div className="grid grid-cols-2 gap-1">
 							<div className="whitespace-nowrap text-center sm:text-left">
-								<AOutlineButton addClass="mx-5">
+								<AOutlineButton
+									addClass="mx-5"
+									onClick={() => navigate(Path.FORGOT_PASSWORD)}
+								>
 									<FontAwesomeIcon icon={faUnlockKeyhole} />
 									<span className="ml-1 inline-block">
 										{t('Login.forgotPassword')}

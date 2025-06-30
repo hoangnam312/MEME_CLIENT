@@ -4,7 +4,7 @@ import { TBoundStore, useBoundStore } from 'src/store/store';
 import { clearToken } from 'src/utils/token';
 
 export const useAuthen = () => {
-	const { email, username, userId, token, updateAuthen } = useBoundStore(
+	const { email, username, userId, token, bio, updateAuthen } = useBoundStore(
 		(state: TBoundStore) => state.authen
 	);
 	const navigate = useNavigate();
@@ -16,6 +16,7 @@ export const useAuthen = () => {
 			password: '',
 			userId: '',
 			token: '',
+			bio: '',
 		});
 		clearToken();
 		localStorage.removeItem('authen');
@@ -24,5 +25,5 @@ export const useAuthen = () => {
 
 	const isLoggedIn = (): boolean => !!token;
 
-	return { email, username, userId, token, logout, isLoggedIn };
+	return { email, username, userId, token, bio, logout, isLoggedIn };
 };

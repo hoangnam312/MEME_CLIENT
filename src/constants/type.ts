@@ -32,8 +32,10 @@ export enum typeModal {
 export enum Path {
 	HOME_PAGE = '/',
 	MY_MEME = '/my-meme',
+	ACCOUNT = '/account',
 	LOGIN = '/login',
 	REGISTER = '/register',
+	FORGOT_PASSWORD = '/forgot-password',
 	SERVER_ERROR = '/sever-error',
 }
 

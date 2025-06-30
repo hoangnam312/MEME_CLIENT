@@ -27,6 +27,7 @@
 	"joinedIn": "Tham gia vào",
 	"noFollowersYet": "Chưa có người theo dõi",
 	"notFollowingAnyone": "Chưa theo dõi ai",
+	"getBack": "Quay lại",
 
 	"toast.unexpectedError": "Đã xảy ra lỗi không mong muốn.",
 	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",
@@ -65,10 +66,123 @@
 
 	"requireLogin": "Oops, bạn chưa đăng nhập",
 
+	"forgotPassword": {
+		"title": "Đặt lại mật khẩu",
+		"subtitle": "Nhập email để nhận mã xác thực",
+		"getBackToLogin": "Quay lại đăng nhập",
+		"emailStep": {
+			"title": "Đặt lại mật khẩu",
+			"subtitle": "Nhập email để nhận mã xác thực",
+			"emailLabel": "Địa chỉ Email",
+			"sendButton": "Gửi mã xác thực"
+		},
+		"codeStep": {
+			"title": "Nhập mã xác thực",
+			"subtitle": "Chúng tôi đã gửi mã 6 số đến {{email}}",
+			"codeLabel": "Mã 6 số",
+			"codePlaceholder": "123456",
+			"verifyButton": "Xác thực mã",
+			"resendCode": "Gửi lại mã",
+			"resendIn": "Gửi lại mã sau {{time}}",
+			"tooManyAttempts": "Quá nhiều lần thử. Vui lòng yêu cầu mã mới.",
+			"attemptsRemaining": "Còn {{attempts}} lần thử"
+		},
+		"resetStep": {
+			"title": "Tạo mật khẩu mới",
+			"subtitle": "Nhập mật khẩu mới của bạn",
+			"newPasswordLabel": "Mật khẩu mới",
+			"confirmPasswordLabel": "Xác nhận mật khẩu mới",
+			"resetButton": "Đặt lại mật khẩu",
+			"passwordHint": "Mật khẩu phải có ít nhất 6 ký tự"
+		},
+		"success": {
+			"title": "Đặt lại mật khẩu thành công!",
+			"message": "Mật khẩu của bạn đã được đặt lại thành công. Giờ bạn có thể đăng nhập bằng mật khẩu mới.",
+			"loginButton": "Đi đến đăng nhập"
+		},
+		"messages": {
+			"codeSent": "Mã xác thực đã được gửi đến email của bạn",
+			"codeResent": "Mã xác thực mới đã được gửi",
+			"invalidCode": "Mã không hợp lệ. Vui lòng thử lại.",
+			"codeExpired": "Mã đã hết hạn. Vui lòng yêu cầu mã mới.",
+			"emailNotFound": "Không tìm thấy email. Vui lòng kiểm tra và thử lại.",
+			"tooManyRequests": "Quá nhiều yêu cầu. Vui lòng thử lại sau.",
+			"passwordResetSuccess": "Đặt lại mật khẩu thành công",
+			"unexpectedError": "Đã xảy ra lỗi không mong muốn. Vui lòng thử lại."
+		}
+	},
+
 	"BoardHomePage.create.isEnd": "Không tìm thấy thêm meme nào nữa",
 	"BoardHomePage.isEnd": "Hết meme rồi, lướt ít thôi",
 
 	"tab.frequent": "Thường xuyên",
 	"tab.uploadedByMe": "Upload bởi tôi",
-	"tab.album": "Album"
+	"tab.album": "Album",
+
+	"account": {
+		"title": "Cài đặt tài khoản",
+		"subtitle": "Quản lý thông tin tài khoản và tùy chọn của bạn",
+		"profile": "Hồ sơ",
+		"password": "Mật khẩu",
+		"preferences": "Tùy chọn",
+		"username": "Tên người dùng",
+		"bio": "Tiểu sử",
+		"bio.placeholder": "Hãy kể về bản thân bạn...",
+		"avatar.help": "Nhấp để thay đổi ảnh đại diện",
+		"saveChanges": "Lưu thay đổi",
+		"currentPassword": "Mật khẩu hiện tại",
+		"newPassword": "Mật khẩu mới",
+		"updatePassword": "Cập nhật mật khẩu",
+		"language": "Ngôn ngữ",
+		"theme": "Giao diện",
+		"theme.light": "Sáng",
+		"theme.dark": "Tối",
+		"theme.auto": "Tự động",
+		"notifications": "Thông báo",
+		"notifications.email": "Thông báo email",
+		"notifications.push": "Thông báo đẩy",
+		"notifications.marketing": "Email quảng cáo",
+		"dangerZone": "Vùng nguy hiểm",
+		"deleteWarning": "Một khi bạn xóa tài khoản, không thể hoàn tác. Hãy chắc chắn.",
+		"deleteAccount": "Xóa tài khoản",
+		"deleteConfirmation": "Bạn có chắc chắn muốn xóa tài khoản? Hành động này không thể hoàn tác.",
+		"confirmDelete": "Có, xóa tài khoản",
+		"deleteSuccess": "Tài khoản của bạn đã được xóa thành công",
+		"deleteError": "Không thể xóa tài khoản",
+		"profile.updateSuccess": "Cập nhật hồ sơ thành công",
+		"profile.updateError": "Không thể cập nhật hồ sơ",
+		"password.updateSuccess": "Cập nhật mật khẩu thành công",
+		"password.updateError": "Không thể cập nhật mật khẩu",
+		"password.help": "Chọn mật khẩu mạnh để bảo vệ tài khoản của bạn",
+		"followers": {
+			"title": "Người theo dõi bạn",
+			"subtitle": "Quản lý những người theo dõi bạn ({{count}} người theo dõi)",
+			"loading": "Đang tải danh sách người theo dõi...",
+			"searchPlaceholder": "Tìm kiếm theo tên người dùng hoặc tiểu sử...",
+			"remove": "Xóa",
+			"empty": "Chưa có người theo dõi",
+			"emptyDesc": "Khi có người theo dõi bạn, họ sẽ xuất hiện ở đây.",
+			"noResults": "Không tìm thấy người theo dõi nào",
+			"noResultsDesc": "Thử điều chỉnh từ khóa tìm kiếm.",
+			"showing": "Hiển thị {{count}} trong tổng số {{total}} người theo dõi",
+			"clearSearch": "Xóa tìm kiếm"
+		},
+		"following": {
+			"title": "Đang theo dõi",
+			"subtitle": "Quản lý những người bạn theo dõi ({{count}} đang theo dõi)",
+			"loading": "Đang tải danh sách theo dõi...",
+			"searchPlaceholder": "Tìm kiếm theo tên người dùng hoặc tiểu sử...",
+			"unfollow": "Bỏ theo dõi",
+			"empty": "Chưa theo dõi ai",
+			"emptyDesc": "Bắt đầu theo dõi người khác để xem họ ở đây.",
+			"noResults": "Không tìm thấy kết quả",
+			"noResultsDesc": "Thử điều chỉnh từ khóa tìm kiếm.",
+			"showing": "Hiển thị {{count}} trong tổng số {{total}} đang theo dõi",
+			"clearSearch": "Xóa tìm kiếm"
+		}
+	},
+
+	"cancel": "Hủy",
+
+	"validate.bioMaxLength": "Tiểu sử quá dài — hãy giữ dưới 500 ký tự"
 }

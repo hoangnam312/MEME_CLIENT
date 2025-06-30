@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import { Path } from 'src/constants/type';
-import { login } from 'src/service/login';
+import { login } from 'src/service/auth';
 import { useBoundStore } from 'src/store/store';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';

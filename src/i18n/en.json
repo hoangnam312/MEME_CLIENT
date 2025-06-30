@@ -29,6 +29,7 @@
 	"joinedIn": "Joined in",
 	"noFollowersYet": "No followers yet",
 	"notFollowingAnyone": "Not following anyone yet",
+	"getBack": "Get back",
 
 	"toast.unexpectedError": "An unexpected error occurred",
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",
@@ -67,10 +68,123 @@
 
 	"requireLogin": "Oops, you are not login",
 
+	"forgotPassword": {
+		"title": "Reset Your Password",
+		"subtitle": "Enter your email to receive a verification code",
+		"getBackToLogin": "Get back to login",
+		"emailStep": {
+			"title": "Reset Password",
+			"subtitle": "Enter your email to receive a verification code",
+			"emailLabel": "Email Address",
+			"sendButton": "Send Verification Code"
+		},
+		"codeStep": {
+			"title": "Enter Verification Code",
+			"subtitle": "We sent a 6-digit code to {{email}}",
+			"codeLabel": "6-Digit Code",
+			"codePlaceholder": "123456",
+			"verifyButton": "Verify Code",
+			"resendCode": "Resend Code",
+			"resendIn": "Resend code in {{time}}",
+			"tooManyAttempts": "Too many attempts. Please request a new code.",
+			"attemptsRemaining": "{{attempts}} attempts remaining"
+		},
+		"resetStep": {
+			"title": "Create New Password",
+			"subtitle": "Enter your new password",
+			"newPasswordLabel": "New Password",
+			"confirmPasswordLabel": "Confirm New Password",
+			"resetButton": "Reset Password",
+			"passwordHint": "Password must be at least 6 characters long"
+		},
+		"success": {
+			"title": "Password Reset Successful!",
+			"message": "Your password has been reset successfully. You can now login with your new password.",
+			"loginButton": "Go to Login"
+		},
+		"messages": {
+			"codeSent": "Verification code sent to your email",
+			"codeResent": "New verification code sent",
+			"invalidCode": "Invalid code. Please try again.",
+			"codeExpired": "Code expired. Please request a new one.",
+			"emailNotFound": "Email not found. Please check and try again.",
+			"tooManyRequests": "Too many requests. Please try again later.",
+			"passwordResetSuccess": "Password reset successfully",
+			"unexpectedError": "An unexpected error occurred. Please try again."
+		}
+	},
+
 	"BoardHomePage.create.isEnd": "No more memes to found",
 	"BoardHomePage.isEnd": "No more memes to show",
 
 	"tab.frequent": "Frequent",
 	"tab.uploadedByMe": "Uploaded by me",
-	"tab.album": "Album"
+	"tab.album": "Album",
+
+	"account": {
+		"title": "Account Settings",
+		"subtitle": "Manage your account information and preferences",
+		"profile": "Profile",
+		"password": "Password",
+		"preferences": "Preferences",
+		"username": "Username",
+		"bio": "Bio",
+		"bio.placeholder": "Tell us about yourself...",
+		"avatar.help": "Click to change your profile picture",
+		"saveChanges": "Save Changes",
+		"currentPassword": "Current Password",
+		"newPassword": "New Password",
+		"updatePassword": "Update Password",
+		"language": "Language",
+		"theme": "Theme",
+		"theme.light": "Light",
+		"theme.dark": "Dark",
+		"theme.auto": "Auto",
+		"notifications": "Notifications",
+		"notifications.email": "Email notifications",
+		"notifications.push": "Push notifications",
+		"notifications.marketing": "Marketing emails",
+		"dangerZone": "Danger Zone",
+		"deleteWarning": "Once you delete your account, there is no going back. Please be certain.",
+		"deleteAccount": "Delete Account",
+		"deleteConfirmation": "Are you sure you want to delete your account? This action cannot be undone.",
+		"confirmDelete": "Yes, Delete Account",
+		"deleteSuccess": "Your account has been deleted successfully",
+		"deleteError": "Failed to delete account",
+		"profile.updateSuccess": "Profile updated successfully",
+		"profile.updateError": "Failed to update profile",
+		"password.updateSuccess": "Password updated successfully",
+		"password.updateError": "Failed to update password",
+		"password.help": "Choose a strong password to keep your account secure",
+		"followers": {
+			"title": "Your Followers",
+			"subtitle": "Manage people who follow you ({{count}} followers)",
+			"loading": "Loading followers...",
+			"searchPlaceholder": "Search followers by username or bio...",
+			"remove": "Remove",
+			"empty": "No followers yet",
+			"emptyDesc": "When people follow you, they'll appear here.",
+			"noResults": "No followers found",
+			"noResultsDesc": "Try adjusting your search terms.",
+			"showing": "Showing {{count}} of {{total}} followers",
+			"clearSearch": "Clear search"
+		},
+		"following": {
+			"title": "Following",
+			"subtitle": "Manage people you follow ({{count}} following)",
+			"loading": "Loading following...",
+			"searchPlaceholder": "Search following by username or bio...",
+			"unfollow": "Unfollow",
+			"empty": "Not following anyone",
+			"emptyDesc": "Start following people to see them here.",
+			"noResults": "No results found",
+			"noResultsDesc": "Try adjusting your search terms.",
+			"showing": "Showing {{count}} of {{total}} following",
+			"clearSearch": "Clear search"
+		}
+	},
+
+	"cancel": "Cancel",
+
+	"validate.bioMaxLength": "Bio is too long — keep it under 500 characters"
 }
