@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Meta, StoryObj } from '@storybook/react';
 import ATabs, { TabItem } from './ATabs';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
