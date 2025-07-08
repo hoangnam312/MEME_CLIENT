@@ -1,19 +1,17 @@
 import { faImage } from '@fortawesome/free-regular-svg-icons';
-import { faCopy, faTrashCan } from '@fortawesome/free-solid-svg-icons';
+import { faCopy, faEye, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import AButton from 'src/component/atoms/AButton/AButton';
 import AModal from 'src/component/atoms/AModal/AModal';
+import MemeAlbumButton from 'src/component/molecules/MMemeAlbumButton/MemeAlbumButton';
+import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
+import MemeDislikeButton from 'src/component/molecules/MMemeDislikeButton/MemeDislikeButton';
+import MemeLikeButton from 'src/component/molecules/MMemeLikeButton/MemeLikeButton';
+import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 import { color } from 'src/config/style';
-import { IImage, StatusCopyImage } from 'src/constants/type';
+import { IImage } from 'src/constants/type';
 import { useAuthen } from 'src/hooks/useAuthen';
-import useCopyImage from 'src/hooks/useCopy';
-import {
-	deleteMeme,
-	getRecommendMemesByImage,
-	trackingMeme,
-} from 'src/service/meme';
+import { getRecommendMemesByImage, trackingMeme } from 'src/service/meme';
 import { OCardImage } from '../OCardImage/OCardImage';
 
 export interface OViewImagePropsType {
@@ -23,12 +21,19 @@ export interface OViewImagePropsType {
 }
 
 const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
-	const { userId } = useAuthen();
-	const [isCopiedImage, setIsCopiedImage] = useState<StatusCopyImage>(
-		StatusCopyImage.UN_COPY
-	);
+	const { isLoggedIn } = useAuthen();
 	const [listImage, setListImage] = useState<IImage[]>([]);
 	const [dataImage, setDataImage] = useState<IImage>(data);
+
+	// change to get creator data from data prop
+	const creatorData = {
+		avatarUrl:
+			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
+		username: 'Creator Name',
+		followCount: 0,
+		followingCount: 0,
+		bio: '',
+	};
 
 	const fetchMemes = async (imageId: string) => {
 		const res = await getRecommendMemesByImage({
@@ -40,42 +45,10 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		}
 	};
 
-	const { copyImage } = useCopyImage();
-
-	async function handleCopyImage() {
-		const awaitCopy = await copyImage(dataImage.location);
-		if (awaitCopy) {
-			setIsCopiedImage(StatusCopyImage.SUCCESS);
-			trackingMeme({
-				memeId: dataImage._id,
-				action: 'copy',
-			});
-		} else setIsCopiedImage(StatusCopyImage.FAIL);
-		setTimeout(() => {
-			setIsCopiedImage(StatusCopyImage.UN_COPY);
-		}, 3000);
-	}
-
-	function renderBtnCopyImage() {
-		switch (isCopiedImage) {
-			case StatusCopyImage.SUCCESS:
-				return t('copy.success');
-			case StatusCopyImage.FAIL:
-				return t('copy.fail');
-			default:
-				return (
-					<>
-						{t('copy')} &nbsp;
-						<FontAwesomeIcon icon={faCopy} />
-					</>
-				);
-		}
-	}
-
-	async function handleDeleteImage() {
-		await deleteMeme({ id: dataImage._id });
-		closeModal();
-	}
+	// async function handleDeleteImage() {
+	// 	await deleteMeme({ id: dataImage._id });
+	// 	closeModal();
+	// }
 
 	const handleClick = (item: IImage) => {
 		trackingMeme({
@@ -116,8 +89,19 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 							/>
 						)}
 					</div>
-					<div className="flex justify-end gap-4 self-center">
-						{userId === dataImage?.userId && (
+
+					<div className="flex justify-between">
+						<div className="flex justify-start gap-4 self-center">
+							{isLoggedIn() && (
+								<>
+									<MemeLikeButton data={data} />
+									<MemeDislikeButton data={data} />
+									<MemeAlbumButton data={data} />
+								</>
+							)}
+						</div>
+						<div className="flex justify-end gap-4 self-center">
+							{/* {userId === dataImage?.userId && (
 							<AButton
 								addClass="bg-red-500 text-white"
 								onClick={handleDeleteImage}
@@ -125,13 +109,53 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								{t('delete')} &nbsp;
 								<FontAwesomeIcon icon={faTrashCan} />
 							</AButton>
-						)}
-						<AButton onClick={handleCopyImage}>{renderBtnCopyImage()}</AButton>
+						)} */}
+							<MemeCopyButton data={dataImage} />
+						</div>
 					</div>
 
-					<div className="ml-5 mt-5">
-						<h2 className="mb-2 text-3xl">{dataImage?.name ?? t('noName')}</h2>
-						<p>{dataImage?.description}</p>
+					<div className="mt-5 rounded-2xl bg-gray-100 p-3">
+						{/* Combined stats and account info in horizontal row */}
+						<div className="flex items-center justify-between">
+							{/* Stats on the left */}
+							<div className="flex items-center gap-6 text-sm text-gray-500">
+								<span className="flex items-center gap-1">
+									<FontAwesomeIcon icon={faEye} size="sm" />
+									{dataImage?.viewCount || 0}
+								</span>
+								<span className="flex items-center gap-1">
+									<FontAwesomeIcon icon={faThumbsUp} size="sm" />
+									{dataImage?.likeCount || 0}
+								</span>
+								<span className="flex items-center gap-1">
+									<FontAwesomeIcon icon={faCopy} size="sm" />
+									{dataImage?.copyCount || 0}
+								</span>
+							</div>
+
+							{/* Account info on the right */}
+							{creatorData && (
+								<div className="w-fit">
+									<MUserCard
+										variant="minimal"
+										user={creatorData}
+										enableFollowModal={false}
+									/>
+								</div>
+							)}
+						</div>
+
+						{dataImage?.name && (
+							<h2 className="mt-4 text-2xl font-bold text-gray-900">
+								{dataImage?.name}
+							</h2>
+						)}
+
+						{dataImage?.description && (
+							<p className="leading-relaxed text-gray-600">
+								{dataImage.description}
+							</p>
+						)}
 					</div>
 				</div>
 				<div className="rounded-lg border bg-gray-200">

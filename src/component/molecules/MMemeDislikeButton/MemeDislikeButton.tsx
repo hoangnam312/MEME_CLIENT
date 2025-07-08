@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
-import AButton from '../atoms/AButton/AButton';
+import AButton from '../../atoms/AButton/AButton';
 import { IImage } from 'src/constants/type';
 import { trackingMeme } from 'src/service/meme';
 

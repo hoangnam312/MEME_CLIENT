@@ -5,8 +5,8 @@ import {
 	faCopy,
 	faCircleXmark,
 } from '@fortawesome/free-solid-svg-icons';
-import AButton from '../atoms/AButton/AButton';
-import ALoading from '../atoms/ALoading/ALoading';
+import AButton from '../../atoms/AButton/AButton';
+import ALoading from '../../atoms/ALoading/ALoading';
 import useCopyImage from 'src/hooks/useCopy';
 import { IImage } from 'src/constants/type';
 import { trackingMeme } from 'src/service/meme';

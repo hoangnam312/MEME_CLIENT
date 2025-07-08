@@ -1,11 +1,7 @@
 import { useState } from 'react';
-import MemeAlbumButton from 'src/component/molecules/MemeAlbumButton';
-import MemeCopyButton from 'src/component/molecules/MemeCopyButton';
-import MemeDislikeButton from 'src/component/molecules/MemeDislikeButton';
-import MemeLikeButton from 'src/component/molecules/MemeLikeButton';
+import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 import { IImage } from 'src/constants/type';
 import './style.css';
-import { useAuthen } from 'src/hooks/useAuthen';
 
 export interface OCardImagePropsType {
 	data: IImage;
@@ -21,7 +17,6 @@ export const OCardImage = ({
 	onClick,
 }: OCardImagePropsType) => {
 	const [isHover, setIsHover] = useState<boolean>(false);
-	const { isLoggedIn } = useAuthen();
 
 	const handleMouseLeave = () => {
 		setIsHover(false);
@@ -46,13 +41,13 @@ export const OCardImage = ({
 			{isHover && (
 				<div className="box-shadow-image absolute inset-0 flex items-end justify-end">
 					<div className="mb-2 mr-2 flex flex-col gap-2">
-						{isLoggedIn() && (
+						{/* {isLoggedIn() && (
 							<>
 								<MemeLikeButton data={data} />
 								<MemeDislikeButton data={data} />
 								<MemeAlbumButton data={data} />
 							</>
-						)}
+						)} */}
 						<MemeCopyButton data={data} />
 					</div>
 				</div>
