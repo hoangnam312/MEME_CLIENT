@@ -218,5 +218,38 @@
 		"retry": "Thử Lại",
 		"seeMore": "Xem Thêm Trending",
 		"uploader": "bởi"
+	},
+
+	"trendingUsers": {
+		"title": "Users Trending",
+		"subtitle": "Những creators phổ biến nhất đang tăng followers",
+		"timeFilters": {
+			"24h": "24 giờ qua",
+			"1w": "Tuần này",
+			"1m": "Tháng này"
+		},
+		"tabs": {
+			"24h": "24h",
+			"1w": "Tuần này",
+			"1m": "Tháng này"
+		},
+		"columns": {
+			"24h": "24 Giờ Qua",
+			"1w": "Tuần Này",
+			"1m": "Tháng Này"
+		},
+		"analytics": {
+			"followers": "{{gained}} followers mới",
+			"memes": "{{count}} memes đã đăng",
+			"likes": "{{count}} likes nhận được",
+			"rank": "#{{rank}}"
+		},
+		"loading": "Đang tải users trending...",
+		"empty": "Không tìm thấy users trending",
+		"emptyDesc": "Quay lại sau để xem các creators hot nhất!",
+		"error": "Không thể tải users trending",
+		"retry": "Thử lại",
+		"follow": "Follow",
+		"following": "Đang follow"
 	}
 }

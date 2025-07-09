@@ -56,6 +56,47 @@ export interface ITrendingResponse {
 	data: ITrendingMeme[];
 }
 
+// Trending Users Types
+export interface ITrendingUserAnalytics {
+	followersGained: number;
+	memesPosted: number;
+	likesReceived: number;
+	copiesReceived: number;
+	viewsReceived: number;
+	totalFollowers: number;
+	totalLikes: number;
+	totalMemes: number;
+	totalCopies: number;
+	totalViews: number;
+	trendingScore: number;
+	timeFrame: TrendingTimeFrame;
+}
+
+export interface ITrendingUser {
+	_id: string;
+	username: string;
+	avatarUrl: string;
+	bio?: string;
+	verified?: boolean;
+	followCount: number;
+	followingCount: number;
+	analytics: ITrendingUserAnalytics;
+	rank: number;
+}
+
+export interface ITrendingUsersParams {
+	timeFrame: TrendingTimeFrame;
+	limit?: number;
+	page?: number;
+}
+
+export interface ITrendingUsersResponse {
+	total: number;
+	page: number;
+	timeFrame: TrendingTimeFrame;
+	data: ITrendingUser[];
+}
+
 export enum StatusCopyImage {
 	SUCCESS,
 	FAIL,

@@ -6,6 +6,8 @@ import {
 	IResponseGetListCursor,
 	ITrendingParams,
 	ITrendingResponse,
+	ITrendingUsersParams,
+	ITrendingUsersResponse,
 } from 'src/constants/type';
 import api from './config';
 
@@ -62,6 +64,9 @@ const trackingMeme = (body?: IBodyTrackingMeme) =>
 const getTrendingMemes = (params?: ITrendingParams) =>
 	api.get<ITrendingResponse>('/meme/trending', { params });
 
+const getTrendingUsers = (params?: ITrendingUsersParams) =>
+	api.get<ITrendingUsersResponse>('/users/trending', { params });
+
 export {
 	createMeme,
 	getMemes,
@@ -70,6 +75,7 @@ export {
 	trackingMeme,
 	getRecommendMemesByImage,
 	getTrendingMemes,
+	getTrendingUsers,
 };
 export type {
 	InterfacePayloadCreateMeme,

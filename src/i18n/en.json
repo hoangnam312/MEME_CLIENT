@@ -220,5 +220,38 @@
 		"retry": "Try Again",
 		"seeMore": "See More Trending",
 		"uploader": "by"
+	},
+
+	"trendingUsers": {
+		"title": "Trending Users",
+		"subtitle": "Most popular creators gaining followers",
+		"timeFilters": {
+			"24h": "Last 24 hours",
+			"1w": "This week",
+			"1m": "This month"
+		},
+		"tabs": {
+			"24h": "24h",
+			"1w": "This Week",
+			"1m": "This Month"
+		},
+		"columns": {
+			"24h": "Last 24 Hours",
+			"1w": "This Week",
+			"1m": "This Month"
+		},
+		"analytics": {
+			"followers": "{{gained}} new followers",
+			"memes": "{{count}} memes posted",
+			"likes": "{{count}} likes received",
+			"rank": "#{{rank}}"
+		},
+		"loading": "Loading trending users...",
+		"empty": "No trending users found",
+		"emptyDesc": "Check back later for the hottest creators!",
+		"error": "Failed to load trending users",
+		"retry": "Try Again",
+		"follow": "Follow",
+		"following": "Following"
 	}
 }

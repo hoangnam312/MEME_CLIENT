@@ -7,6 +7,7 @@ import Account from 'src/containers/Account/Account';
 import Register from 'src/containers/Register/Register';
 import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
 import Trending from 'src/containers/Trending/Trending';
+import TrendingUsers from 'src/containers/TrendingUsers/TrendingUsers';
 
 const AppRoutes = () => {
 	return (
@@ -15,6 +16,7 @@ const AppRoutes = () => {
 				<Route index element={<BoardHomepage />} />
 				<Route path="my-meme" element={<MyMeme />} />
 				<Route path="trending" element={<Trending />} />
+				<Route path="trending-users" element={<TrendingUsers />} />
 				<Route path="account" element={<Account />} />
 			</Route>
 
