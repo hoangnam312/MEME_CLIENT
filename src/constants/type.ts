@@ -113,6 +113,7 @@ export enum Path {
 	HOME_PAGE = '/',
 	MY_MEME = '/my-meme',
 	TRENDING = '/trending',
+	TRENDING_USERS = '/trending-users',
 	ACCOUNT = '/account',
 	LOGIN = '/login',
 	REGISTER = '/register',

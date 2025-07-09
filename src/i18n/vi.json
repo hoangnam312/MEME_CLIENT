@@ -184,6 +184,10 @@
 
 	"cancel": "Hủy",
 
+	"navigation": {
+		"explore": "Khám phá"
+	},
+
 	"validate.bioMaxLength": "Tiểu sử quá dài — hãy giữ dưới 500 ký tự",
 
 	"trending": {

@@ -186,6 +186,10 @@
 
 	"cancel": "Cancel",
 
+	"navigation": {
+		"explore": "Explore"
+	},
+
 	"validate.bioMaxLength": "Bio is too long — keep it under 500 characters",
 
 	"trending": {

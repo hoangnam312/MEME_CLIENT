@@ -6,6 +6,7 @@ import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
 import { Path, typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
 import MUserDropdown from '../MUserDropdown/MUserDropdown';
+import MNavDropdown from '../MNavDropdown/MNavDropdown';
 import { t } from 'i18next';
 import { useAuthen } from 'src/hooks/useAuthen';
 
@@ -59,6 +60,9 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 							/>
 						</div>
 					)}
+					<div className="mr-5">
+						<MNavDropdown />
+					</div>
 					<div className="flex items-center justify-start">
 						<MUserDropdown />
 					</div>
