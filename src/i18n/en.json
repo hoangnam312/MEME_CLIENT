@@ -186,5 +186,39 @@
 
 	"cancel": "Cancel",
 
-	"validate.bioMaxLength": "Bio is too long — keep it under 500 characters"
+	"validate.bioMaxLength": "Bio is too long — keep it under 500 characters",
+
+	"trending": {
+		"title": "Trending Memes",
+		"subtitle": "Most popular memes gaining traction",
+		"timeFilters": {
+			"24h": "Last 24 hours",
+			"1w": "This week",
+			"1m": "This month"
+		},
+		"tabs": {
+			"24h": "24h",
+			"1w": "This Week",
+			"1m": "This Month"
+		},
+		"columns": {
+			"24h": "Last 24 Hours",
+			"1w": "This Week",
+			"1m": "This Month"
+		},
+		"analytics": {
+			"likes": "{{gained}} / {{total}} likes",
+			"copies": "{{gained}} / {{total}} copies",
+			"views": "{{gained}} / {{total}} views",
+			"gained": "+{{count}}",
+			"rank": "#{{rank}}"
+		},
+		"loading": "Loading trending memes...",
+		"empty": "No trending memes found",
+		"emptyDesc": "Check back later for the hottest memes!",
+		"error": "Failed to load trending memes",
+		"retry": "Try Again",
+		"seeMore": "See More Trending",
+		"uploader": "by"
+	}
 }

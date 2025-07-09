@@ -184,5 +184,39 @@
 
 	"cancel": "Hủy",
 
-	"validate.bioMaxLength": "Tiểu sử quá dài — hãy giữ dưới 500 ký tự"
+	"validate.bioMaxLength": "Tiểu sử quá dài — hãy giữ dưới 500 ký tự",
+
+	"trending": {
+		"title": "Meme Trending",
+		"subtitle": "Những meme đang hot nhất",
+		"timeFilters": {
+			"24h": "24 giờ qua",
+			"1w": "Tuần này",
+			"1m": "Tháng này"
+		},
+		"tabs": {
+			"24h": "24h",
+			"1w": "Tuần này",
+			"1m": "Tháng này"
+		},
+		"columns": {
+			"24h": "24 Giờ Qua",
+			"1w": "Tuần Này",
+			"1m": "Tháng Này"
+		},
+		"analytics": {
+			"likes": "{{gained}} / {{total}} lượt thích",
+			"copies": "{{gained}} / {{total}} lượt copy",
+			"views": "{{gained}} / {{total}} lượt xem",
+			"gained": "+{{count}}",
+			"rank": "#{{rank}}"
+		},
+		"loading": "Đang tải meme trending...",
+		"empty": "Không có meme trending nào",
+		"emptyDesc": "Quay lại sau để xem những meme hot nhất!",
+		"error": "Không thể tải meme trending",
+		"retry": "Thử Lại",
+		"seeMore": "Xem Thêm Trending",
+		"uploader": "bởi"
+	}
 }

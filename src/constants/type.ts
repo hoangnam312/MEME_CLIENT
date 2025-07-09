@@ -17,6 +17,45 @@ export interface IImage {
 	copyCount: number;
 }
 
+export interface ITrendingAnalytics {
+	likesGained: number;
+	copiesGained: number;
+	viewsGained: number;
+	totalLikes: number;
+	totalCopies: number;
+	totalViews: number;
+	trendingScore: number;
+	timeFrame: TrendingTimeFrame;
+}
+
+export interface ITrendingMeme extends IImage {
+	analytics: ITrendingAnalytics;
+	uploader: {
+		_id: string;
+		username: string;
+		avatarUrl: string;
+		followCount: number;
+		followingCount: number;
+		verified?: boolean;
+	};
+	rank: number;
+}
+
+export type TrendingTimeFrame = '24h' | '1w' | '1m';
+
+export interface ITrendingParams {
+	timeFrame: TrendingTimeFrame;
+	limit?: number;
+	page?: number;
+}
+
+export interface ITrendingResponse {
+	total: number;
+	page: number;
+	timeFrame: TrendingTimeFrame;
+	data: ITrendingMeme[];
+}
+
 export enum StatusCopyImage {
 	SUCCESS,
 	FAIL,
@@ -32,6 +71,7 @@ export enum typeModal {
 export enum Path {
 	HOME_PAGE = '/',
 	MY_MEME = '/my-meme',
+	TRENDING = '/trending',
 	ACCOUNT = '/account',
 	LOGIN = '/login',
 	REGISTER = '/register',
