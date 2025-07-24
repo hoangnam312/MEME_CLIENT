@@ -1,14 +1,22 @@
 import { StateCreator } from 'zustand';
 import { TBoundStore } from './store';
 import { produce } from 'immer';
+import {
+	UserPreferences,
+	UserProfile,
+	UserStats,
+	UserTimestamps,
+} from 'src/constants/auth.type';
 
 type TStateAuthenSlice = {
-	email: string;
-	username: string;
-	password: string;
 	userId: string;
+	username: string;
+	email: string;
+	profile?: UserProfile;
+	stats: UserStats;
+	preferences: UserPreferences;
+	timestamps: UserTimestamps;
 	token: string;
-	bio: string;
 };
 
 type TActionAuthenSlice = {
@@ -20,12 +28,23 @@ export type TAuthenSlice = TStateAuthenSlice & TActionAuthenSlice;
 export const createAuthen: StateCreator<TBoundStore, [], [], TAuthenSlice> = (
 	set
 ) => ({
-	email: '',
-	username: '',
-	password: '',
 	userId: '',
+	username: '',
+	email: '',
+	profile: undefined,
+	stats: {
+		followersCount: 0,
+		followingCount: 0,
+		memesCount: 0,
+	},
+	preferences: {
+		contentLanguage: 'en',
+	},
+	timestamps: {
+		createdAt: '',
+		updatedAt: '',
+	},
 	token: '',
-	bio: '',
 	updateAuthen: (authen) =>
 		set(
 			produce((draft: TBoundStore) => {

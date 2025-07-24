@@ -12,6 +12,7 @@
 		"preview": "vite preview",
 		"postinstall": "husky install",
 		"lint-staged": "yarn run lint && yarn run format",
+		"lint-staged-npm": "npm run lint && npm run format",
 		"typecheck": "tsc --project tsconfig.json --noEmit",
 		"storybook": "storybook dev -p 6006",
 		"build-storybook": "storybook build"

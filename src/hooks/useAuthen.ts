@@ -4,19 +4,29 @@ import { TBoundStore, useBoundStore } from 'src/store/store';
 import { clearToken } from 'src/utils/token';
 
 export const useAuthen = () => {
-	const { email, username, userId, token, bio, updateAuthen } = useBoundStore(
-		(state: TBoundStore) => state.authen
-	);
+	const { email, username, userId, token, preferences, updateAuthen } =
+		useBoundStore((state: TBoundStore) => state.authen);
 	const navigate = useNavigate();
 
 	const logout = () => {
 		updateAuthen({
 			email: '',
 			username: '',
-			password: '',
 			userId: '',
 			token: '',
-			bio: '',
+			profile: undefined,
+			stats: {
+				followersCount: 0,
+				followingCount: 0,
+				memesCount: 0,
+			},
+			preferences: {
+				contentLanguage: preferences.contentLanguage,
+			},
+			timestamps: {
+				createdAt: '',
+				updatedAt: '',
+			},
 		});
 		clearToken();
 		localStorage.removeItem('authen');
@@ -25,5 +35,5 @@ export const useAuthen = () => {
 
 	const isLoggedIn = (): boolean => !!token;
 
-	return { email, username, userId, token, bio, logout, isLoggedIn };
+	return { email, username, userId, token, preferences, logout, isLoggedIn };
 };

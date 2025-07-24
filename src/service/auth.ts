@@ -1,3 +1,4 @@
+import { LoginResponse, RegisterResponse } from 'src/constants/auth.type';
 import api from './config';
 
 interface InterfacePayloadLogin {
@@ -27,10 +28,10 @@ interface InterfacePayloadResetPassword {
 }
 
 const login = (payload: InterfacePayloadLogin) =>
-	api.post('/auth/login', payload);
+	api.post<LoginResponse>('/auth/login', payload);
 
 const register = (payload: InterfacePayloadRegister) =>
-	api.post('/auth/register', payload);
+	api.post<RegisterResponse>('/auth/register', payload);
 
 const forgotPassword = (payload: InterfacePayloadForgotPassword) =>
 	api.post('/auth/forgot-password', payload);

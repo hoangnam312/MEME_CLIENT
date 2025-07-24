@@ -39,10 +39,10 @@ function FormLogin() {
 				password,
 			}).then((res) => {
 				const newAuthen = {
-					email: res.data.email,
-					username: res.data.username,
-					userId: res.data.userId,
-					...res.data.authentication,
+					...res.data,
+					userId: res.data._id,
+					token: res.data.authentication.token,
+					authentication: undefined,
 				};
 				setToken(newAuthen.token);
 				localStorage.setItem('authen', JSON.stringify(newAuthen));

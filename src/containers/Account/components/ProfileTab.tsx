@@ -9,15 +9,13 @@ import { toast } from 'react-toastify';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AInput from 'src/component/atoms/AInput/AInput';
 import { useAuthen } from 'src/hooks/useAuthen';
-import { useBoundStore } from 'src/store/store';
 import {
 	accountValidationSchema,
 	ProfileFormData,
 } from '../account.validation';
 
 const ProfileTab: React.FC = () => {
-	const { email, username, bio, userId } = useAuthen();
-	const { updateAuthen } = useBoundStore((state) => state.authen);
+	const { email, username } = useAuthen();
 	const [avatarPreview, setAvatarPreview] = useState<string>('');
 
 	// Profile form
@@ -30,7 +28,7 @@ const ProfileTab: React.FC = () => {
 		defaultValues: {
 			username: username || '',
 			email: email || '',
-			bio: bio || '',
+			bio: '',
 		},
 	});
 
@@ -40,14 +38,19 @@ const ProfileTab: React.FC = () => {
 			console.log('Profile update:', data);
 
 			// Update local state
-			updateAuthen({
-				email: data.email,
-				username: data.username,
-				password: '',
-				userId,
-				token: '',
-				bio: '',
-			});
+			// updateAuthen({
+			// 	email: data.email,
+			// 	username: data.username,
+			// 	userId,
+			// 	token: '',
+			// 	preferences: {
+			// 		contentLanguage: preferences.contentLanguage,
+			// 	},
+			// 	timestamps: {
+			// 		createdAt: '',
+			// 		updatedAt: '',
+			// 	},
+			// });
 
 			toast.success(t('account.profile.updateSuccess'));
 		} catch (error) {
