@@ -2,18 +2,12 @@ import * as yup from 'yup';
 
 // Profile form validation
 export const profileValidationSchema = yup.object({
-	username: yup
+	displayName: yup
 		.string()
 		.required('validate.requiredField')
-		.min(3, 'validate.usernameMinLength')
-		.max(50, 'validate.usernameMaxLength'),
-	email: yup
-		.string()
-		.required('validate.requiredField')
-		.email('validate.invalidEmail')
-		.min(5, 'validate.emailMinLength')
-		.max(254, 'validate.emailMaxLength'),
-	bio: yup.string().max(500, 'validate.bioMaxLength').default('').optional(),
+		.min(3, 'validate.displayNameMinLength')
+		.max(50, 'validate.displayNameMaxLength'),
+	bio: yup.string().max(500, 'validate.bioMaxLength').default(''),
 });
 
 // Password form validation

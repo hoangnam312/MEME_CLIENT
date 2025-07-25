@@ -1,8 +1,8 @@
-import { faCamera, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faCopy, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { t } from 'i18next';
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
@@ -13,47 +13,86 @@ import {
 	accountValidationSchema,
 	ProfileFormData,
 } from '../account.validation';
+import {
+	getMyProfile,
+	MyProfileResponse,
+	updateProfile,
+} from 'src/service/user';
+import MInputWithinForm from 'src/component/molecules/MInputWithinForm/MInputWithinForm';
+import { useBoundStore } from 'src/store/store';
 
 const ProfileTab: React.FC = () => {
-	const { email, username } = useAuthen();
+	const { profile } = useAuthen();
 	const [avatarPreview, setAvatarPreview] = useState<string>('');
+	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [userProfile, setUserProfile] = useState<MyProfileResponse | null>(
+		null
+	);
+	const { updateAuthen } = useBoundStore((state) => state.authen);
 
 	// Profile form
 	const {
 		register: registerProfile,
 		handleSubmit: handleSubmitProfile,
+		setValue,
 		formState: { errors: profileErrors, isSubmitting: isSubmittingProfile },
 	} = useForm<ProfileFormData>({
 		resolver: yupResolver(accountValidationSchema.profile),
 		defaultValues: {
-			username: username || '',
-			email: email || '',
-			bio: '',
+			displayName: profile?.displayName || '',
+			bio: profile?.bio || '',
 		},
 	});
 
+	// Load user profile on component mount
+	useEffect(() => {
+		const loadUserProfile = async () => {
+			try {
+				setIsLoading(true);
+				const response = await getMyProfile();
+				const profileData = response.data;
+				setUserProfile(profileData);
+
+				setValue('displayName', profileData.profile?.displayName || '');
+				// setValue('avatar', profileData.profile?.avatar || '');
+				setValue('bio', profileData.profile?.bio || '');
+
+				// Set avatar preview if exists
+				if (profileData.profile?.avatar) {
+					setAvatarPreview(profileData.profile.avatar);
+				}
+			} catch (error) {
+				console.error('Failed to load profile:', error);
+				toast.error(t('account.profile.loadError'));
+			} finally {
+				setIsLoading(false);
+			}
+		};
+
+		loadUserProfile();
+	}, [setValue]);
+
 	const onSubmitProfile: SubmitHandler<ProfileFormData> = async (data) => {
 		try {
-			// TODO: Replace with actual API call
-			console.log('Profile update:', data);
+			const updatePayload = {
+				displayName: data.displayName,
+				bio: data.bio || '',
+				avatar: avatarPreview || undefined,
+			};
+
+			const response = await updateProfile(updatePayload);
+			// const updatedProfile = response.data;
+			const newAuthen = {
+				profile: response.data.profile,
+			};
+			updateAuthen(newAuthen);
 
 			// Update local state
-			// updateAuthen({
-			// 	email: data.email,
-			// 	username: data.username,
-			// 	userId,
-			// 	token: '',
-			// 	preferences: {
-			// 		contentLanguage: preferences.contentLanguage,
-			// 	},
-			// 	timestamps: {
-			// 		createdAt: '',
-			// 		updatedAt: '',
-			// 	},
-			// });
+			// setUserProfile(updatedProfile);
 
 			toast.success(t('account.profile.updateSuccess'));
 		} catch (error) {
+			console.error('Profile update error:', error);
 			toast.error(t('account.profile.updateError'));
 		}
 	};
@@ -61,13 +100,48 @@ const ProfileTab: React.FC = () => {
 	const handleAvatarChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		const file = event.target.files?.[0];
 		if (file) {
+			// Validate file size (max 5MB)
+			if (file.size > 5 * 1024 * 1024) {
+				toast.error('File size too large. Please choose a file under 5MB.');
+				return;
+			}
+
+			// Validate file type
+			if (!file.type.startsWith('image/')) {
+				toast.error('Please select a valid image file.');
+				return;
+			}
+
 			const reader = new FileReader();
 			reader.onload = (e) => {
 				setAvatarPreview(e.target?.result as string);
 			};
 			reader.readAsDataURL(file);
-			// TODO: Upload avatar to server
+			// Note: In a real app, you would upload the file to a service like S3
+			// and get back a URL to store in the avatar field
 		}
+	};
+
+	if (isLoading) {
+		return (
+			<div className="flex items-center justify-center py-8">
+				<div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600"></div>
+			</div>
+		);
+	}
+
+	const copyEmail = (e: React.MouseEvent<HTMLElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+		// console.log(e.target);
+		navigator.clipboard.writeText(userProfile?.email || '');
+	};
+
+	const copyUsername = (e: React.MouseEvent<HTMLElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+		// console.log(e.target);
+		navigator.clipboard.writeText(userProfile?.username || '');
 	};
 
 	return (
@@ -79,7 +153,11 @@ const ProfileTab: React.FC = () => {
                         rounded-2xl border-2 border-main-background"
 				>
 					{avatarPreview ? (
-						<img src={avatarPreview} alt="Avatar" className="object-cover" />
+						<img
+							src={avatarPreview}
+							alt="Avatar"
+							className="h-20 w-20 rounded-2xl object-cover"
+						/>
 					) : (
 						<FontAwesomeIcon icon={faUser} size="xl" />
 					)}
@@ -95,6 +173,7 @@ const ProfileTab: React.FC = () => {
 						accept="image/*"
 						onChange={handleAvatarChange}
 						className="hidden"
+						disabled={isSubmittingProfile}
 					/>
 				</div>
 				<p className="text-sm text-gray-600">{t('account.avatar.help')}</p>
@@ -106,32 +185,51 @@ const ProfileTab: React.FC = () => {
 				className="space-y-4"
 			>
 				<div>
-					<AInput
+					<MInputWithinForm
+						label={t('email')}
+						rest={{
+							value: userProfile?.email || '',
+						}}
+						readOnly={true}
+						addClass="!pl-4"
+						suffix={
+							<div className="absolute bottom-3 right-2.5">
+								<AButton onClick={(e) => copyEmail(e)}>
+									<FontAwesomeIcon icon={faCopy} />
+								</AButton>
+							</div>
+						}
+					/>
+				</div>
+				<div>
+					<MInputWithinForm
 						label={t('account.username')}
 						rest={{
-							...registerProfile('username'),
-							disabled: isSubmittingProfile,
+							value: userProfile?.username || '',
 						}}
+						readOnly={true}
+						addClass="!pl-4"
+						suffix={
+							<div className="absolute bottom-3 right-2.5">
+								<AButton onClick={(e) => copyUsername(e)}>
+									<FontAwesomeIcon icon={faCopy} />
+								</AButton>
+							</div>
+						}
 					/>
-					{profileErrors.username?.message && (
-						<p className="mt-1 text-sm text-red-500">
-							{t(profileErrors.username.message)}
-						</p>
-					)}
 				</div>
 
 				<div>
 					<AInput
-						type="email"
-						label={t('email')}
+						label={t('account.displayName')}
 						rest={{
-							...registerProfile('email'),
-							disabled: isSubmittingProfile,
+							...registerProfile('displayName'),
 						}}
+						disabled={isSubmittingProfile || isLoading}
 					/>
-					{profileErrors.email?.message && (
+					{profileErrors.displayName?.message && (
 						<p className="mt-1 text-sm text-red-500">
-							{t(profileErrors.email.message)}
+							{t(profileErrors.displayName.message)}
 						</p>
 					)}
 				</div>
@@ -142,19 +240,23 @@ const ProfileTab: React.FC = () => {
 					</label>
 					<textarea
 						{...registerProfile('bio')}
-						disabled={isSubmittingProfile}
+						disabled={isSubmittingProfile || isLoading}
 						rows={4}
-						className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+						className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-100"
 						placeholder={t('account.bio.placeholder')}
 					/>
 				</div>
 
 				<div className="flex justify-end">
 					<AButton
-						content={t('account.saveChanges')}
+						content={
+							isSubmittingProfile
+								? t('account.saving')
+								: t('account.saveChanges')
+						}
 						rest={{
 							type: 'submit',
-							disabled: isSubmittingProfile,
+							disabled: isSubmittingProfile || isLoading,
 						}}
 					/>
 				</div>

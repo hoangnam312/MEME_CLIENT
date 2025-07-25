@@ -19,8 +19,19 @@ type TStateAuthenSlice = {
 	token: string;
 };
 
+type TAuthenUpdate = {
+	userId?: string;
+	username?: string;
+	email?: string;
+	profile?: UserProfile;
+	stats?: UserStats;
+	preferences?: UserPreferences;
+	timestamps?: UserTimestamps;
+	token?: string;
+};
+
 type TActionAuthenSlice = {
-	updateAuthen: (authen: TStateAuthenSlice) => void;
+	updateAuthen: (authen: TAuthenUpdate) => void;
 };
 
 export type TAuthenSlice = TStateAuthenSlice & TActionAuthenSlice;

@@ -43,7 +43,9 @@
 		"passwordMaxLength": "Be honest, how long did it take you to type this password?",
 		"passwordsMustMatch": "You already forgot the password you just typed?",
 		"usernameMinLength": "Too short for a name — mash your keyboard a bit more!",
-		"usernameMaxLength": "That name's too long — delete some letters, will you?"
+		"usernameMaxLength": "That name's too long — delete some letters, will you?",
+		"displayNameMinLength": "Too short for a name — mash your keyboard a bit more!",
+		"displayNameMaxLength": "That name's too long — delete some letters, will you?"
 	},
 
 	"upload.link.error": "Oops, we can't find this meme",
@@ -128,10 +130,13 @@
 		"password": "Password",
 		"preferences": "Preferences",
 		"username": "Username",
+		"displayName": "Display Name",
 		"bio": "Bio",
 		"bio.placeholder": "Tell us about yourself...",
 		"avatar.help": "Click to change your profile picture",
 		"saveChanges": "Save Changes",
+		"saving": "Saving...",
+		"profile.loadError": "Failed to load profile",
 		"currentPassword": "Current Password",
 		"newPassword": "New Password",
 		"updatePassword": "Update Password",
