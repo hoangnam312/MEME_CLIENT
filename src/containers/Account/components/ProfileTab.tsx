@@ -9,6 +9,7 @@ import { toast } from 'react-toastify';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ACopyButton from 'src/component/atoms/ACopyButton/ACopyButton';
 import AInput from 'src/component/atoms/AInput/AInput';
+import ALoading from 'src/component/atoms/ALoading/ALoading';
 import MInputWithinForm from 'src/component/molecules/MInputWithinForm/MInputWithinForm';
 import { useAuthen } from 'src/hooks/useAuthen';
 import {
@@ -242,16 +243,17 @@ const ProfileTab: React.FC = () => {
 
 				<div className="flex justify-end">
 					<AButton
-						content={
-							isSubmittingProfile
-								? t('account.saving')
-								: t('account.saveChanges')
-						}
 						rest={{
 							type: 'submit',
 							disabled: isSubmittingProfile || isLoading,
 						}}
-					/>
+					>
+						{isSubmittingProfile ? (
+							<ALoading size="lg" />
+						) : (
+							t('account.saveChanges')
+						)}
+					</AButton>
 				</div>
 			</form>
 		</div>
