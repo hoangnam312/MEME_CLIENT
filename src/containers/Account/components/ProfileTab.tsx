@@ -1,25 +1,26 @@
-import { faCamera, faCopy, faUser } from '@fortawesome/free-solid-svg-icons';
+import { faCamera, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { t } from 'i18next';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { toast } from 'react-toastify';
 
 import AButton from 'src/component/atoms/AButton/AButton';
+import ACopyButton from 'src/component/atoms/ACopyButton/ACopyButton';
 import AInput from 'src/component/atoms/AInput/AInput';
+import MInputWithinForm from 'src/component/molecules/MInputWithinForm/MInputWithinForm';
 import { useAuthen } from 'src/hooks/useAuthen';
-import {
-	accountValidationSchema,
-	ProfileFormData,
-} from '../account.validation';
 import {
 	getMyProfile,
 	MyProfileResponse,
 	updateProfile,
 } from 'src/service/user';
-import MInputWithinForm from 'src/component/molecules/MInputWithinForm/MInputWithinForm';
 import { useBoundStore } from 'src/store/store';
+import {
+	accountValidationSchema,
+	ProfileFormData,
+} from '../account.validation';
 
 const ProfileTab: React.FC = () => {
 	const { profile } = useAuthen();
@@ -130,20 +131,6 @@ const ProfileTab: React.FC = () => {
 		);
 	}
 
-	const copyEmail = (e: React.MouseEvent<HTMLElement>) => {
-		e.preventDefault();
-		e.stopPropagation();
-		// console.log(e.target);
-		navigator.clipboard.writeText(userProfile?.email || '');
-	};
-
-	const copyUsername = (e: React.MouseEvent<HTMLElement>) => {
-		e.preventDefault();
-		e.stopPropagation();
-		// console.log(e.target);
-		navigator.clipboard.writeText(userProfile?.username || '');
-	};
-
 	return (
 		<div className="space-y-6">
 			{/* Avatar Section */}
@@ -194,9 +181,12 @@ const ProfileTab: React.FC = () => {
 						addClass="!pl-4"
 						suffix={
 							<div className="absolute bottom-3 right-2.5">
-								<AButton onClick={(e) => copyEmail(e)}>
-									<FontAwesomeIcon icon={faCopy} />
-								</AButton>
+								<ACopyButton
+									data={{
+										value: userProfile?.email || '',
+										strategy: 'text',
+									}}
+								/>
 							</div>
 						}
 					/>
@@ -211,9 +201,12 @@ const ProfileTab: React.FC = () => {
 						addClass="!pl-4"
 						suffix={
 							<div className="absolute bottom-3 right-2.5">
-								<AButton onClick={(e) => copyUsername(e)}>
-									<FontAwesomeIcon icon={faCopy} />
-								</AButton>
+								<ACopyButton
+									data={{
+										value: userProfile?.username || '',
+										strategy: 'text',
+									}}
+								/>
 							</div>
 						}
 					/>

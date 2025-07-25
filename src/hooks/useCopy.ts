@@ -28,7 +28,7 @@ function useCopyImage() {
 		}
 	}
 
-	async function copyLink(link: string) {
+	async function copyText(link: string) {
 		try {
 			await navigator.clipboard.writeText(link);
 			setIsCopied(true);
@@ -39,7 +39,7 @@ function useCopyImage() {
 		}
 	}
 
-	return { isCopied, isError, copyImage, copyLink };
+	return { isCopied, isError, copyImage, copyText };
 }
 
 export default useCopyImage;
