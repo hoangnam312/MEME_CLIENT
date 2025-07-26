@@ -33,9 +33,9 @@ const OTrendingMemeCard: React.FC<OTrendingMemeCardProps> = ({
 	const userCardData: UserCardData = {
 		avatarUrl: data.uploader.avatarUrl,
 		username: data.uploader.username,
+		displayName: data.uploader.displayName || data.uploader.username,
 		followCount: data.uploader.followCount,
 		followingCount: data.uploader.followingCount,
-		verified: data.uploader.verified,
 	};
 
 	// Render vertical layout (for ranks 1-3)

@@ -1,12 +1,9 @@
-import React from 'react';
+import { faCalendarAlt } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import {
-	faCheckCircle,
-	faCalendarAlt,
-} from '@fortawesome/free-solid-svg-icons';
+import { t } from 'i18next';
+import React from 'react';
 import AFollowButton from 'src/component/atoms/AFollowButton/AFollowButton';
 import { UserCardData } from 'src/hooks/useUserCard';
-import { t } from 'i18next';
 
 export interface UserCardDetailedProps {
 	user: UserCardData;
@@ -37,16 +34,13 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 				<img
 					className="mb-4 h-20 w-20 rounded-2xl"
 					src={user.avatarUrl}
-					alt={user.username}
+					alt={user.displayName || user.username}
 				/>
 
 				<div className="mb-2 flex items-center gap-2">
 					<h3 className="text-xl font-bold text-indigo-800 dark:text-white">
-						{user.username}
+						{user.displayName || user.username}
 					</h3>
-					{user.verified && (
-						<FontAwesomeIcon icon={faCheckCircle} className="text-blue-500" />
-					)}
 				</div>
 
 				{user.bio && (

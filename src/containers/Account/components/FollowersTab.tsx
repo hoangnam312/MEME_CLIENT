@@ -17,41 +17,41 @@ const mockFollowers: UserCardData[] = [
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746097118489_blob',
 		username: 'john_doe',
+		displayName: 'John Doe',
 		followCount: 150,
 		followingCount: 89,
 		bio: 'Meme enthusiast and content creator',
 		joinDate: 'January 2023',
-		verified: true,
 	},
 	{
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1747739691303_image.png',
 		username: 'jane_smith',
+		displayName: 'Jane Smith',
 		followCount: 234,
 		followingCount: 156,
 		bio: 'Digital artist and meme lover',
 		joinDate: 'March 2023',
-		verified: false,
 	},
 	{
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746101012673_image.png',
 		username: 'meme_master',
+		displayName: 'Meme Master',
 		followCount: 567,
 		followingCount: 234,
 		bio: 'Professional meme curator',
 		joinDate: 'December 2022',
-		verified: true,
 	},
 	{
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746097027485_blob',
 		username: 'funny_guy',
+		displayName: 'Funny Guy',
 		followCount: 89,
 		followingCount: 67,
 		bio: 'Making people laugh one meme at a time',
 		joinDate: 'February 2023',
-		verified: false,
 	},
 ];
 

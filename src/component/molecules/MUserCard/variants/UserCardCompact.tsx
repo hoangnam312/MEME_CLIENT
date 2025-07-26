@@ -29,11 +29,11 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 			<img
 				className="h-12 w-12 rounded-xl"
 				src={user.avatarUrl}
-				alt={user.username}
+				alt={user.displayName || user.username}
 			/>
 			<div className="min-w-0 flex-1">
 				<div className="truncate text-xl font-medium text-indigo-800 dark:text-white">
-					{user.username}
+					{user.displayName || user.username}
 				</div>
 				<div className="text-xs text-gray-500 dark:text-gray-400">
 					<span

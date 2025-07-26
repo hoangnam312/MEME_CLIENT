@@ -16,6 +16,7 @@ import {
 	getMyProfile,
 	MyProfileResponse,
 	updateProfile,
+	UpdateProfilePayload,
 } from 'src/service/user';
 import { useBoundStore } from 'src/store/store';
 import {
@@ -27,6 +28,7 @@ const ProfileTab: React.FC = () => {
 	const { profile } = useAuthen();
 	const [avatarPreview, setAvatarPreview] = useState<string>('');
 	const [isLoading, setIsLoading] = useState<boolean>(true);
+	const [avatarFile, setAvatarFile] = useState<File | null>(null);
 	const [userProfile, setUserProfile] = useState<MyProfileResponse | null>(
 		null
 	);
@@ -76,21 +78,34 @@ const ProfileTab: React.FC = () => {
 
 	const onSubmitProfile: SubmitHandler<ProfileFormData> = async (data) => {
 		try {
-			const updatePayload = {
-				displayName: data.displayName,
-				bio: data.bio || '',
-				avatar: avatarPreview || undefined,
-			};
+			let updatePayload: FormData | UpdateProfilePayload;
+
+			// If there's an avatar file, use FormData for multipart upload
+			if (avatarFile) {
+				updatePayload = new FormData();
+				updatePayload.append('displayName', data.displayName);
+				updatePayload.append('bio', data.bio || '');
+				updatePayload.append('avatar', avatarFile);
+			} else {
+				// Use regular JSON payload for text-only updates
+				updatePayload = {
+					displayName: data.displayName,
+					bio: data.bio || '',
+				};
+			}
 
 			const response = await updateProfile(updatePayload);
-			// const updatedProfile = response.data;
+
 			const newAuthen = {
 				profile: response.data.profile,
 			};
 			updateAuthen(newAuthen);
 
 			// Update local state
-			// setUserProfile(updatedProfile);
+			setUserProfile(response.data);
+
+			// Clear avatar file after successful upload
+			setAvatarFile(null);
 
 			toast.success(t('account.profile.updateSuccess'));
 		} catch (error) {
@@ -119,8 +134,7 @@ const ProfileTab: React.FC = () => {
 				setAvatarPreview(e.target?.result as string);
 			};
 			reader.readAsDataURL(file);
-			// Note: In a real app, you would upload the file to a service like S3
-			// and get back a URL to store in the avatar field
+			setAvatarFile(file);
 		}
 	};
 
@@ -138,13 +152,13 @@ const ProfileTab: React.FC = () => {
 			<div className="flex flex-col items-center space-y-4">
 				<div
 					className="relative flex h-20 w-20 cursor-pointer items-center justify-center 
-                        rounded-2xl border-2 border-main-background"
+                        rounded-2xl"
 				>
 					{avatarPreview ? (
 						<img
 							src={avatarPreview}
 							alt="Avatar"
-							className="h-20 w-20 rounded-2xl object-cover"
+							className="rounded-2xl object-cover"
 						/>
 					) : (
 						<FontAwesomeIcon icon={faUser} size="xl" />
@@ -164,6 +178,16 @@ const ProfileTab: React.FC = () => {
 						disabled={isSubmittingProfile}
 					/>
 				</div>
+
+				{avatarFile && (
+					<div className="flex flex-col items-center space-y-2">
+						<p className="text-sm text-gray-600">Selected: {avatarFile.name}</p>
+						<p className="text-xs text-gray-500">
+							Avatar will be uploaded when you save your profile
+						</p>
+					</div>
+				)}
+
 				<p className="text-sm text-gray-600">{t('account.avatar.help')}</p>
 			</div>
 

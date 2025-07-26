@@ -16,7 +16,7 @@ function MyMeme() {
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const authen = useBoundStore((state) => state.authen);
-
+	const authUser = useBoundStore((state) => state.authen);
 	const [activeTab, setActiveTab] = useState('frequent');
 
 	const tabs = [
@@ -24,15 +24,6 @@ function MyMeme() {
 		{ key: 'uploadedByMe', label: t('tab.uploadedByMe') },
 		{ key: 'album', label: t('tab.album') },
 	];
-
-	// TODO: get user data from api
-	const userData = {
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Jese Leos',
-		followCount: 5,
-		followingCount: 5,
-	};
 
 	useEffect(() => {
 		if (!authen.userId) return;
@@ -51,7 +42,17 @@ function MyMeme() {
 					onChange={setActiveTab}
 				/>
 				{/* TODO: show only if user view another user */}
-				<MUserCard variant="compact" user={userData} />
+				<MUserCard
+					variant="compact"
+					user={{
+						avatarUrl: authUser.profile?.avatar || '',
+						username: authUser.username,
+						displayName: authUser.profile?.displayName || '',
+						followCount: authUser.stats.followersCount,
+						followingCount: authUser.stats.followingCount,
+						bio: authUser.profile?.bio,
+					}}
+				/>
 			</div>
 
 			<OBoard imageArray={listImage} />

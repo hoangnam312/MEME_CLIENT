@@ -64,10 +64,10 @@ const mockTrendingMemes: ITrendingMeme[] = Array.from(
 		uploader: {
 			_id: `user-${index + 1}`,
 			username: `TrendingUser${index + 1}`,
-			avatarUrl: `https://picsum.photos/100/100?random=${index + 100}`,
+			displayName: `Trending User ${index + 1}`,
+			avatarUrl: `https://picsum.photos/50/50?random=${index + 100}`,
 			followCount: Math.floor(Math.random() * 1000) + 100,
 			followingCount: Math.floor(Math.random() * 500) + 50,
-			verified: index < 3,
 		},
 	})
 );

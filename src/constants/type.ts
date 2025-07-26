@@ -33,6 +33,7 @@ export interface ITrendingMeme extends IImage {
 	uploader: {
 		_id: string;
 		username: string;
+		displayName: string; // Add for display purposes
 		avatarUrl: string;
 		followCount: number;
 		followingCount: number;
@@ -75,6 +76,7 @@ export interface ITrendingUserAnalytics {
 export interface ITrendingUser {
 	_id: string;
 	username: string;
+	displayName: string; // Add for display purposes
 	avatarUrl: string;
 	bio?: string;
 	verified?: boolean;

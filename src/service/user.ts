@@ -51,8 +51,18 @@ export interface UpdateProfileResponse {
 // API functions
 export const getMyProfile = () => api.get<MyProfileResponse>('/users/me');
 
-export const updateProfile = (payload: UpdateProfilePayload) =>
-	api.put<UpdateProfileResponse>('/users/me/profile', payload);
+export const updateProfile = (payload: UpdateProfilePayload | FormData) => {
+	// Check if payload is FormData (contains avatar file) or regular object
+	if (payload instanceof FormData) {
+		return api.put<UpdateProfileResponse>('/users/me/profile', payload, {
+			headers: {
+				'Content-Type': 'multipart/form-data',
+			},
+		});
+	} else {
+		return api.put<UpdateProfileResponse>('/users/me/profile', payload);
+	}
+};
 
 export const updatePreferences = (payload: { contentLanguage?: string }) =>
 	api.put<UpdateProfileResponse>('/users/me/preferences', payload);

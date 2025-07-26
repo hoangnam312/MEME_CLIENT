@@ -30,6 +30,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Creator Name',
+		displayName: 'Creator Name',
 		followCount: 0,
 		followingCount: 0,
 		bio: '',

@@ -148,6 +148,7 @@ const TrendingUsers: React.FC = () => {
 		return Array.from({ length: 15 }, (_, index) => ({
 			_id: `trending-user-${timeFrame}-${startIndex + index + 1}`,
 			username: `TrendingUser${startIndex + index + 1}`,
+			displayName: `Trending User ${startIndex + index + 1}`,
 			avatarUrl: `https://picsum.photos/100/100?random=${
 				startIndex + index + 200
 			}`,

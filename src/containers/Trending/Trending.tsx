@@ -180,12 +180,12 @@ const Trending: React.FC = () => {
 			uploader: {
 				_id: `user-${startIndex + index + 1}`,
 				username: `User${startIndex + index + 1}`,
-				avatarUrl: `https://picsum.photos/100/100?random=${
+				displayName: `User ${startIndex + index + 1}`,
+				avatarUrl: `https://picsum.photos/50/50?random=${
 					startIndex + index + 100
 				}`,
 				followCount: Math.floor(Math.random() * 1000) + 100,
 				followingCount: Math.floor(Math.random() * 500) + 50,
-				verified: startIndex + index < 3,
 			},
 		}));
 	};

@@ -3,12 +3,12 @@ import { useAuthen } from './useAuthen';
 
 export interface UserCardData {
 	avatarUrl: string;
-	username: string;
+	username: string; // Keep for internal identification
+	displayName: string; // Add for display purposes
 	followCount: number;
 	followingCount: number;
 	bio?: string;
 	joinDate?: string;
-	verified?: boolean;
 }
 
 export interface UseUserCardProps {

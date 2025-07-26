@@ -56,9 +56,10 @@ const sampleTrendingMeme: ITrendingMeme = {
 		timeFrame: '24h',
 	},
 	uploader: {
-		_id: 'uploader1',
+		_id: 'user1',
 		username: 'MemeKing2024',
-		avatarUrl: 'https://picsum.photos/100/100?random=100',
+		displayName: 'Meme King 2024',
+		avatarUrl: 'https://picsum.photos/50/50?random=1',
 		verified: true,
 		followCount: 5280,
 		followingCount: 234,
@@ -81,12 +82,13 @@ const sampleTrendingMeme2: ITrendingMeme = {
 		trendingScore: 87.3,
 	},
 	uploader: {
-		_id: 'uploader2',
+		_id: 'user2',
 		username: 'DoggoMaster',
-		avatarUrl: 'https://picsum.photos/100/100?random=101',
+		displayName: 'Doggo Master',
+		avatarUrl: 'https://picsum.photos/50/50?random=2',
 		verified: false,
-		followCount: 1200,
-		followingCount: 150,
+		followCount: 3420,
+		followingCount: 892,
 	},
 };
 
@@ -106,12 +108,13 @@ const sampleTrendingMeme10: ITrendingMeme = {
 		trendingScore: 45.2,
 	},
 	uploader: {
-		_id: 'uploader10',
+		_id: 'user3',
 		username: 'CasualMemer',
-		avatarUrl: 'https://picsum.photos/100/100?random=110',
+		displayName: 'Casual Memer',
+		avatarUrl: 'https://picsum.photos/50/50?random=3',
 		verified: false,
-		followCount: 150,
-		followingCount: 75,
+		followCount: 890,
+		followingCount: 234,
 	},
 };
 

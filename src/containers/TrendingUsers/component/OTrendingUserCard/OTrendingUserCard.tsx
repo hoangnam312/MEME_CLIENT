@@ -52,7 +52,7 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 				<div className="flex justify-center p-4">
 					<img
 						src={data.avatarUrl}
-						alt={data.username}
+						alt={data.displayName || data.username}
 						className="h-16 w-16 rounded-xl object-cover"
 					/>
 				</div>
@@ -61,7 +61,9 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 				<div className="space-y-3 p-3">
 					{/* Username */}
 					<div className="text-center">
-						<h3 className="text-sm font-bold text-gray-900">{data.username}</h3>
+						<h3 className="text-sm font-bold text-gray-900">
+							{data.displayName || data.username}
+						</h3>
 						{data.bio && (
 							<p className="mt-1 line-clamp-2 text-xs text-gray-600">
 								{data.bio}
@@ -189,7 +191,7 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 				<div className="flex justify-center p-3 sm:justify-start">
 					<img
 						src={data.avatarUrl}
-						alt={data.username}
+						alt={data.displayName || data.username}
 						className="h-12 w-12 rounded-xl object-cover"
 					/>
 				</div>
@@ -200,7 +202,7 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 					<div className="flex items-start justify-between pr-8">
 						<div className="min-w-0 flex-1">
 							<h3 className="truncate text-sm font-medium text-gray-900">
-								{data.username}
+								{data.displayName || data.username}
 							</h3>
 							{data.bio && (
 								<p className="line-clamp-1 text-xs text-gray-600">{data.bio}</p>

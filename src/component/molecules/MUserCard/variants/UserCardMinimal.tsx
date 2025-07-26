@@ -21,10 +21,10 @@ const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 			<img
 				className="h-8 w-8 rounded-lg"
 				src={user.avatarUrl}
-				alt={user.username}
+				alt={user.displayName || user.username}
 			/>
 			<span className="text-sm font-medium text-indigo-800 dark:text-white">
-				{user.username}
+				{user.displayName || user.username}
 			</span>
 		</div>
 	);
