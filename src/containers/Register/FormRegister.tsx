@@ -88,7 +88,7 @@ function FormRegister() {
 			)}
 			<div className="mt-7 flex justify-center align-middle">
 				<AButton
-					content={t('login')}
+					content={t('register')}
 					onClick={handleSubmit(handleRegister)}
 					rest={{
 						type: 'submit',
