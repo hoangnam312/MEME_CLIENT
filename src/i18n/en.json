@@ -30,6 +30,22 @@
 	"noFollowersYet": "No followers yet",
 	"notFollowingAnyone": "Not following anyone yet",
 	"getBack": "Get back",
+	"confirm": "Confirm",
+	"cancel": "Cancel",
+	"loading": "Loading...",
+	"updating": "Updating...",
+
+	"common": {
+		"error": {
+			"authRequired": "Authentication required. Please log in again."
+		}
+	},
+
+	"user": {
+		"error": {
+			"notExist": "User does not exist"
+		}
+	},
 
 	"toast.unexpectedError": "An unexpected error occurred",
 	"toast.cannotGetImageFromLink": "Cannot get data of this image. Please try another link",
@@ -48,6 +64,11 @@
 		"displayNameMaxLength": "That name's too long — delete some letters, will you?"
 	},
 
+	"language": {
+		"en": "English",
+		"vi": "Tiếng Việt"
+	},
+
 	"upload.link.error": "Oops, we can't find this meme",
 	"upload.success": "Upload success",
 	"saveLink.explant": "* Because I don't have budget to store photos, if your photos are from a quality source that hasn't been compressed or the image address changed, you can save the link here.",
@@ -62,6 +83,7 @@
 	"Login.signUp": "Sign up",
 	"Login.forgotPassword": "Forgot Password",
 	"login.success": "Login success",
+	"login.accountDeleted": "This account has been deleted and cannot be used to log in.",
 
 	"logout": "Logout",
 
@@ -160,6 +182,8 @@
 		"profile.updateError": "Failed to update profile",
 		"password.updateSuccess": "Password updated successfully",
 		"password.updateError": "Failed to update password",
+		"preferencesUpdateSuccess": "Language preference updated successfully",
+		"preferencesUpdateError": "Failed to update language preference",
 		"password.help": "Choose a strong password to keep your account secure",
 		"followers": {
 			"title": "Your Followers",

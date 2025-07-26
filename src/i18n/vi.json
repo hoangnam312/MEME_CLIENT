@@ -28,9 +28,30 @@
 	"noFollowersYet": "Chưa có người theo dõi",
 	"notFollowingAnyone": "Chưa theo dõi ai",
 	"getBack": "Quay lại",
+	"confirm": "Xác nhận",
+	"cancel": "Hủy",
+	"loading": "Đang tải...",
+	"updating": "Đang cập nhật...",
+
+	"common": {
+		"error": {
+			"authRequired": "Yêu cầu xác thực. Vui lòng đăng nhập lại."
+		}
+	},
+
+	"user": {
+		"error": {
+			"notExist": "Người dùng không tồn tại"
+		}
+	},
 
 	"toast.unexpectedError": "Đã xảy ra lỗi không mong muốn.",
 	"toast.cannotGetImageFromLink": "Không thể lấy dữ liệu của ảnh này. Hãy thử link khác",
+
+	"language": {
+		"en": "Tiếng Anh",
+		"vi": "Tiếng Việt"
+	},
 
 	"validate": {
 		"requiredField": "Trường này là bắt buộc, Thắc mắc gì, điền đi!",
@@ -58,6 +79,7 @@
 	"Login.signUp": "Đăng ký",
 	"Login.forgotPassword": "Quên mật khẩu",
 	"login.success": "Đăng nhập thành công",
+	"login.accountDeleted": "Tài khoản này đã bị xóa và không thể sử dụng để đăng nhập.",
 
 	"logout": "Đăng xuất",
 
@@ -156,6 +178,8 @@
 		"profile.updateError": "Không thể cập nhật hồ sơ",
 		"password.updateSuccess": "Cập nhật mật khẩu thành công",
 		"password.updateError": "Không thể cập nhật mật khẩu",
+		"preferencesUpdateSuccess": "Cập nhật ngôn ngữ thành công",
+		"preferencesUpdateError": "Không thể cập nhật ngôn ngữ",
 		"password.help": "Chọn mật khẩu mạnh để bảo vệ tài khoản của bạn",
 		"followers": {
 			"title": "Người theo dõi bạn",

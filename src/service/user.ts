@@ -48,6 +48,24 @@ export interface UpdateProfileResponse {
 	timestamps: UserTimestamps;
 }
 
+export interface UpdatePreferencesPayload {
+	contentLanguage?: 'en' | 'vi';
+}
+
+export interface UpdatePreferencesResponse {
+	_id: string;
+	username: string;
+	email: string;
+	profile?: UserProfile;
+	stats: UserStats;
+	preferences: UserPreferences;
+	timestamps: UserTimestamps;
+}
+
+export interface DeleteAccountResponse {
+	message: string;
+}
+
 // API functions
 export const getMyProfile = () => api.get<MyProfileResponse>('/users/me');
 
@@ -64,5 +82,8 @@ export const updateProfile = (payload: UpdateProfilePayload | FormData) => {
 	}
 };
 
-export const updatePreferences = (payload: { contentLanguage?: string }) =>
-	api.put<UpdateProfileResponse>('/users/me/preferences', payload);
+export const updatePreferences = (payload: UpdatePreferencesPayload) =>
+	api.put<UpdatePreferencesResponse>('/users/me/preferences', payload);
+
+export const deleteAccount = () =>
+	api.delete<DeleteAccountResponse>('/users/me');

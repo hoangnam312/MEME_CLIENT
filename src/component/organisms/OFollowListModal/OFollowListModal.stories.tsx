@@ -18,15 +18,16 @@ const sampleUsers = [
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Alice Johnson',
+		displayName: 'Alice Johnson',
 		followCount: 250,
 		followingCount: 180,
 		bio: 'Designer & meme creator',
-		verified: true,
 	},
 	{
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Bob Smith',
+		displayName: 'Bob Smith',
 		followCount: 120,
 		followingCount: 95,
 		bio: 'Comedy enthusiast',
@@ -35,6 +36,7 @@ const sampleUsers = [
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Charlie Brown',
+		displayName: 'Charlie Brown',
 		followCount: 80,
 		followingCount: 200,
 		bio: 'Meme collector',
@@ -43,10 +45,10 @@ const sampleUsers = [
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Diana Prince',
+		displayName: 'Diana Prince',
 		followCount: 500,
 		followingCount: 50,
 		bio: 'Content creator',
-		verified: true,
 	},
 ];
 

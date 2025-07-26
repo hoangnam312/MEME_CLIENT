@@ -10,6 +10,7 @@ import { useBoundStore } from 'src/store/store';
 import AInput from 'src/component/atoms/AInput/AInput';
 import AButton from 'src/component/atoms/AButton/AButton';
 import { setToken } from 'src/utils/token';
+import { initializeLanguage } from 'src/utils/languageUtils';
 import { loginValidationSchema, LoginFormData } from './login.validation';
 import { t } from 'i18next';
 
@@ -37,7 +38,7 @@ function FormLogin() {
 			await login({
 				email,
 				password,
-			}).then((res) => {
+			}).then(async (res) => {
 				const newAuthen = {
 					...res.data,
 					userId: res.data._id,
@@ -47,6 +48,9 @@ function FormLogin() {
 				setToken(newAuthen.token);
 				localStorage.setItem('authen', JSON.stringify(newAuthen));
 				updateAuthen(newAuthen);
+
+				// Initialize language based on user preferences
+				await initializeLanguage(res.data.preferences);
 			});
 			toast.success(t('login.success'));
 			navigate(Path.HOME_PAGE);

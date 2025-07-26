@@ -17,6 +17,31 @@ api.interceptors.request.use((config) => {
 	if (token) {
 		config.headers['Authorization'] = `Bearer ${token}`;
 	}
+
+	// Add user's preferred language to Accept-Language header
+	try {
+		const authen = JSON.parse(localStorage.getItem('authen') ?? '{}');
+		if (authen.preferences?.contentLanguage) {
+			// Send user's preferred language with high priority
+			config.headers[
+				'Accept-Language'
+			] = `${authen.preferences.contentLanguage},en;q=0.8`;
+		} else {
+			// Fallback to browser's default language detection
+			// Browser will automatically send Accept-Language header
+			// but we can enhance it with our supported languages
+			const browserLang = navigator.language.split('-')[0];
+			if (['en', 'vi'].includes(browserLang)) {
+				config.headers['Accept-Language'] = `${browserLang},en;q=0.8`;
+			} else {
+				config.headers['Accept-Language'] = 'en';
+			}
+		}
+	} catch (error) {
+		// If there's any error parsing localStorage, fallback to English
+		config.headers['Accept-Language'] = 'en';
+	}
+
 	return config;
 });
 
