@@ -40,10 +40,11 @@ function FormRegister() {
 				password,
 			});
 			toast.success(t('register.success'));
-			navigate(Path.LOGIN);
+			// Navigate to email verification page with the registered email
+			navigate(Path.VERIFY_EMAIL, { state: { email } });
 		} catch (error) {
 			if (error instanceof AxiosError && error.response) {
-				toast.error(error.response.data);
+				toast.error(error.response.data.message);
 			} else {
 				toast.error(t('toast.unexpectedError'));
 			}

@@ -22,6 +22,11 @@ export interface UserTimestamps {
 	updatedAt: string;
 }
 
+export interface EmailVerificationStatus {
+	isVerified: boolean;
+	verifiedAt?: string; // ISO string
+}
+
 export interface LoginResponse {
 	_id: string;
 	username: string;
@@ -30,6 +35,7 @@ export interface LoginResponse {
 	stats: UserStats;
 	preferences: UserPreferences;
 	timestamps: UserTimestamps;
+	emailVerification: EmailVerificationStatus;
 	authentication: {
 		token: string;
 	};

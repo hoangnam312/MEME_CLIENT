@@ -120,6 +120,7 @@ export enum Path {
 	LOGIN = '/login',
 	REGISTER = '/register',
 	FORGOT_PASSWORD = '/forgot-password',
+	VERIFY_EMAIL = '/verify-email',
 	SERVER_ERROR = '/sever-error',
 }
 

@@ -213,8 +213,6 @@
 		}
 	},
 
-	"cancel": "Cancel",
-
 	"navigation": {
 		"explore": "Explore"
 	},
@@ -286,5 +284,30 @@
 		"retry": "Try Again",
 		"follow": "Follow",
 		"following": "Following"
+	},
+
+	"emailVerification": {
+		"title": "Verify Your Email",
+		"subtitle": "We sent a 6-digit code to {{email}}",
+		"emailRequired": "Email address is required",
+		"pleaseProvideEmail": "Please provide an email address to verify",
+		"invalidCodeLength": "Please enter a 6-digit verification code",
+		"expiresIn": "Expires in",
+		"codeExpired": "Code has expired",
+		"attempts": "Attempts",
+		"verify": "Verify Email",
+		"verifying": "Verifying...",
+		"didntReceive": "Didn't receive the code?",
+		"resendCode": "Resend Code",
+		"resendIn": "Resend in",
+		"sending": "Sending...",
+		"success": "Email verified successfully!",
+		"successMessage": "Your email has been verified successfully",
+		"redirecting": "Redirecting you to login...",
+		"verificationError": "Verification failed. Please try again.",
+		"resendError": "Failed to resend code. Please try again.",
+		"codeSent": "Verification code sent to your email",
+		"backToLogin": "Back to Login",
+		"block": "You have reached the maximum number of attempts. Please try again later."
 	}
 }

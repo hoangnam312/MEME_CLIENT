@@ -7,6 +7,7 @@ export interface AOutlineButtonPropsType {
 	onClick?: (e: React.MouseEvent<HTMLElement>) => void;
 	content?: string;
 	rest?: IRestParameterAttribute;
+	isDisabled?: boolean;
 }
 
 const AOutlineButton = ({
@@ -14,6 +15,7 @@ const AOutlineButton = ({
 	addClass = '',
 	onClick,
 	content = 'AOutlineButton',
+	isDisabled = false,
 	rest = {},
 }: AOutlineButtonPropsType) => {
 	return (
@@ -23,6 +25,7 @@ const AOutlineButton = ({
 				px-5 py-2 font-semibold text-violet-900 shadow-xl hover:bg-emerald-300 ${addClass}
 			`}
 			onClick={onClick}
+			disabled={isDisabled}
 			{...rest}
 		>
 			{children || <p>{content}</p>}

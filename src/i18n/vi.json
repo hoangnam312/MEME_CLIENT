@@ -209,8 +209,6 @@
 		}
 	},
 
-	"cancel": "Hủy",
-
 	"navigation": {
 		"explore": "Khám phá"
 	},
@@ -282,5 +280,30 @@
 		"retry": "Thử lại",
 		"follow": "Follow",
 		"following": "Đang follow"
+	},
+
+	"emailVerification": {
+		"title": "Xác minh Email của bạn",
+		"subtitle": "Chúng tôi đã gửi mã 6 chữ số đến {{email}}",
+		"emailRequired": "Địa chỉ email là bắt buộc",
+		"pleaseProvideEmail": "Vui lòng cung cấp địa chỉ email để xác minh",
+		"invalidCodeLength": "Vui lòng nhập mã xác minh 6 chữ số",
+		"expiresIn": "Hết hạn trong",
+		"codeExpired": "Mã đã hết hạn",
+		"attempts": "Lần thử",
+		"verify": "Xác minh Email",
+		"verifying": "Đang xác minh...",
+		"didntReceive": "Không nhận được mã?",
+		"resendCode": "Gửi lại mã",
+		"resendIn": "Gửi lại trong",
+		"sending": "Đang gửi...",
+		"success": "Email đã được xác minh thành công!",
+		"successMessage": "Email của bạn đã được xác minh thành công",
+		"redirecting": "Đang chuyển hướng đến trang đăng nhập...",
+		"verificationError": "Xác minh thất bại. Vui lòng thử lại.",
+		"resendError": "Không thể gửi lại mã. Vui lòng thử lại.",
+		"codeSent": "Mã xác minh đã được gửi đến email của bạn",
+		"backToLogin": "Quay về trang Đăng nhập",
+		"block": "Bạn đã đạt đến số lần thử tối đa. Vui lòng thử lại sau."
 	}
 }

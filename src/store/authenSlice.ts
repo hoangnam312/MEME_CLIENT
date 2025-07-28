@@ -6,6 +6,7 @@ import {
 	UserProfile,
 	UserStats,
 	UserTimestamps,
+	EmailVerificationStatus,
 } from 'src/constants/auth.type';
 
 type TStateAuthenSlice = {
@@ -16,6 +17,7 @@ type TStateAuthenSlice = {
 	stats: UserStats;
 	preferences: UserPreferences;
 	timestamps: UserTimestamps;
+	emailVerification: EmailVerificationStatus;
 	token: string;
 };
 
@@ -27,6 +29,7 @@ type TAuthenUpdate = {
 	stats?: UserStats;
 	preferences?: UserPreferences;
 	timestamps?: UserTimestamps;
+	emailVerification?: EmailVerificationStatus;
 	token?: string;
 };
 
@@ -56,6 +59,10 @@ export const createAuthen: StateCreator<TBoundStore, [], [], TAuthenSlice> = (
 	timestamps: {
 		createdAt: '',
 		updatedAt: '',
+	},
+	emailVerification: {
+		isVerified: false,
+		verifiedAt: undefined,
 	},
 	token: '',
 	updateAuthen: (authen) =>

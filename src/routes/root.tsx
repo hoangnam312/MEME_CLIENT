@@ -6,6 +6,7 @@ import MyMeme from 'src/containers/MyMeme/MyMeme';
 import Account from 'src/containers/Account/Account';
 import Register from 'src/containers/Register/Register';
 import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
+import EmailVerification from 'src/containers/EmailVerification/EmailVerification';
 import Trending from 'src/containers/Trending/Trending';
 import TrendingUsers from 'src/containers/TrendingUsers/TrendingUsers';
 
@@ -23,6 +24,7 @@ const AppRoutes = () => {
 			<Route path="/login" element={<Login />} />
 			<Route path="/register" element={<Register />} />
 			<Route path="/forgot-password" element={<ForgotPassword />} />
+			<Route path="/verify-email" element={<EmailVerification />} />
 
 			<Route path="*" element={<div>Error Page</div>} />
 		</Routes>

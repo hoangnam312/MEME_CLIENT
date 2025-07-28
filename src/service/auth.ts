@@ -27,6 +27,15 @@ interface InterfacePayloadResetPassword {
 	newPassword: string;
 }
 
+interface InterfacePayloadSendVerificationCode {
+	email?: string;
+}
+
+interface InterfacePayloadVerifyEmail {
+	code: string;
+	email?: string;
+}
+
 const login = (payload: InterfacePayloadLogin) =>
 	api.post<LoginResponse>('/auth/login', payload);
 
@@ -42,7 +51,21 @@ const verifyResetCode = (payload: InterfacePayloadVerifyResetCode) =>
 const resetPassword = (payload: InterfacePayloadResetPassword) =>
 	api.post('/auth/reset-password', payload);
 
-export { login, register, forgotPassword, verifyResetCode, resetPassword };
+const sendVerificationCode = (payload: InterfacePayloadSendVerificationCode) =>
+	api.post('/auth/send-verification-code', payload);
+
+const verifyEmail = (payload: InterfacePayloadVerifyEmail) =>
+	api.post('/auth/verify-email', payload);
+
+export {
+	login,
+	register,
+	forgotPassword,
+	verifyResetCode,
+	resetPassword,
+	sendVerificationCode,
+	verifyEmail,
+};
 
 export type {
 	InterfacePayloadLogin,
@@ -50,4 +73,6 @@ export type {
 	InterfacePayloadForgotPassword,
 	InterfacePayloadVerifyResetCode,
 	InterfacePayloadResetPassword,
+	InterfacePayloadSendVerificationCode,
+	InterfacePayloadVerifyEmail,
 };

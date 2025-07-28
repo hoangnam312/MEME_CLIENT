@@ -57,7 +57,17 @@ function FormLogin() {
 		} catch (error) {
 			localStorage.removeItem('authen');
 			if (error instanceof AxiosError && error.response) {
-				toast.error(error.response.data);
+				const errorData = error.response.data;
+				// Check if email verification is required
+				if (errorData.requiresVerification && errorData.email) {
+					toast.error(errorData.message);
+					// Redirect to email verification page with the email
+					navigate(Path.VERIFY_EMAIL, {
+						state: { email: errorData.email },
+					});
+				} else {
+					toast.error(errorData.message || errorData);
+				}
 			} else {
 				toast.error(t('toast.unexpectedError'));
 			}
