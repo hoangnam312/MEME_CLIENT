@@ -5,10 +5,10 @@ import Login from 'src/containers/Login/Login';
 import MyMeme from 'src/containers/MyMeme/MyMeme';
 import Account from 'src/containers/Account/Account';
 import Register from 'src/containers/Register/Register';
-import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
 import EmailVerification from 'src/containers/EmailVerification/EmailVerification';
 import Trending from 'src/containers/Trending/Trending';
 import TrendingUsers from 'src/containers/TrendingUsers/TrendingUsers';
+import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
 
 const AppRoutes = () => {
 	return (

@@ -1,65 +1,127 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router';
-import { t } from 'i18next';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 
-import MainIcon from 'src/assets/icon/MainIcon';
-import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
-import useNavigateBack from 'src/hooks/useNavigateBack';
-import { Path } from 'src/constants/type';
-import { ForgotPasswordState, StepType } from './forgotPassword.types';
-
-import EmailStep from './components/EmailStep';
-import CodeVerificationStep from './components/CodeVerificationStep';
-import ResetPasswordStep from './components/ResetPasswordStep';
+import VerificationCodeInput from 'src/components/shared/VerificationCodeInput';
+import { forgotPassword, verifyResetCode } from 'src/service/auth';
+import ForgotPasswordEmail from './components/ForgotPasswordEmail';
+import NewResetPassword from './components/ResetPassword';
 import SuccessStep from './components/SuccessStep';
+import { RATE_LIMITS } from 'src/constants/mail';
+
+type ForgotPasswordStep = 'email' | 'verification' | 'reset' | 'success';
+
+interface ForgotPasswordState {
+	step: ForgotPasswordStep;
+	email: string;
+	code: string;
+	expiresAt?: string;
+	canResendAt?: string;
+}
 
 const ForgotPassword: React.FC = () => {
-	const navigate = useNavigate();
-	const goBack = useNavigateBack();
-
 	const [state, setState] = useState<ForgotPasswordState>({
-		step: 'EMAIL',
+		step: 'email',
 		email: '',
 		code: '',
-		timer: 0,
-		attempts: 0,
-		isLocked: false,
-		canResend: false,
 	});
 
 	const updateState = (updates: Partial<ForgotPasswordState>) => {
-		setState((prev) => ({ ...prev, ...updates }));
+		setState((prev: ForgotPasswordState) => ({ ...prev, ...updates }));
 	};
 
-	const getStepNumber = (step: StepType): number => {
-		switch (step) {
-			case 'EMAIL':
-				return 1;
-			case 'CODE_VERIFICATION':
-				return 2;
-			case 'RESET_PASSWORD':
-				return 3;
-			case 'SUCCESS':
-				return 4;
-			default:
-				return 1;
+	// Handle email step completion
+	const handleEmailSubmit = (data: {
+		email: string;
+		expiresAt: string;
+		canResendAt?: string;
+	}) => {
+		updateState({
+			step: 'verification',
+			email: data.email,
+			expiresAt: data.expiresAt,
+			canResendAt: data.canResendAt,
+		});
+	};
+
+	// Handle verification code resend
+	const handleResendCode = async (): Promise<{
+		expiresAt: string;
+		canResendAt?: string;
+		message: string;
+	}> => {
+		const response = await forgotPassword({ email: state.email });
+		const result = response.data;
+
+		updateState({
+			expiresAt: result.expiresAt,
+			canResendAt: result.canResendAt,
+		});
+
+		return {
+			expiresAt: result.expiresAt,
+			canResendAt: result.canResendAt,
+			message: result.message,
+		};
+	};
+
+	// Handle verification code verification
+	const handleVerifyCode = async (
+		code: string
+	): Promise<{ message: string; verified: boolean; resetToken?: string }> => {
+		const response = await verifyResetCode({ email: state.email, code });
+		const result = response.data;
+
+		if (result.verified) {
+			updateState({
+				step: 'reset',
+				code,
+			});
 		}
+
+		return {
+			message: result.message,
+			verified: result.verified,
+			resetToken: result.resetToken,
+		};
 	};
 
+	// Handle verification success
+	const handleVerificationSuccess = () => {
+		// The verification step already updates the state to 'reset'
+		// This is called after successful verification
+	};
+
+	// Handle password reset success
+	const handleResetSuccess = () => {
+		updateState({ step: 'success' });
+	};
+
+	// Handle back navigation
+	const handleBackToEmail = () => {
+		updateState({
+			step: 'email',
+			code: '',
+			expiresAt: undefined,
+			canResendAt: undefined,
+		});
+	};
+
+	const handleBackToVerification = () => {
+		updateState({ step: 'verification' });
+	};
+
+	// Progress indicator
 	const renderProgressIndicator = () => {
-		const currentStep = getStepNumber(state.step);
-		const totalSteps = 4;
+		const steps = ['email', 'verification', 'reset', 'success'];
+		const currentStepIndex = steps.indexOf(state.step);
 
 		return (
 			<div className="mb-6 flex justify-center">
 				<div className="flex space-x-2">
-					{Array.from({ length: totalSteps }, (_, index) => (
+					{steps.map((_, index) => (
 						<div
 							key={index}
 							className={`h-2 w-8 rounded ${
-								index + 1 <= currentStep ? 'bg-violet-600' : 'bg-gray-300'
+								index <= currentStepIndex ? 'bg-violet-600' : 'bg-gray-300'
 							}`}
 						/>
 					))}
@@ -68,65 +130,63 @@ const ForgotPassword: React.FC = () => {
 		);
 	};
 
+	// Render current step
 	const renderStep = () => {
-		const stepProps = {
-			state,
-			onNext: updateState,
-		};
-
 		switch (state.step) {
-			case 'EMAIL':
-				return <EmailStep {...stepProps} />;
-			case 'CODE_VERIFICATION':
-				return <CodeVerificationStep {...stepProps} />;
-			case 'RESET_PASSWORD':
-				return <ResetPasswordStep {...stepProps} />;
-			case 'SUCCESS':
-				return <SuccessStep />;
+			case 'email':
+				return <ForgotPasswordEmail onNext={handleEmailSubmit} />;
+
+			case 'verification':
+				return (
+					<div>
+						{renderProgressIndicator()}
+						<VerificationCodeInput
+							email={state.email}
+							onVerificationSuccess={handleVerificationSuccess}
+							onResendCode={handleResendCode}
+							onVerifyCode={handleVerifyCode}
+							initialTimer={
+								state.canResendAt
+									? Math.ceil(
+											new Date(state.canResendAt).getTime() - Date.now()) / 1000
+									: RATE_LIMITS.SEND_EMAIL_FIRST_TIME
+							}
+							showTitle={true}
+							onBack={handleBackToEmail}
+						/>
+					</div>
+				);
+
+			case 'reset':
+				return (
+					<div>
+						{renderProgressIndicator()}
+						<NewResetPassword
+							email={state.email}
+							code={state.code}
+							onSuccess={handleResetSuccess}
+							onBack={handleBackToVerification}
+						/>
+					</div>
+				);
+
+			case 'success':
+				return (
+					<div>
+						{renderProgressIndicator()}
+						<SuccessStep />
+					</div>
+				);
+
 			default:
-				return <EmailStep {...stepProps} />;
+				return <ForgotPasswordEmail onNext={handleEmailSubmit} />;
 		}
 	};
 
 	return (
-		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
-			<div className="xs:p-0 mx-auto p-10 md:w-full lg:w-2/3 xl:w-1/2">
-				{/* Header with logo */}
-				<div className="mb-5 flex items-center justify-center">
-					<div
-						onClick={() => navigate(Path.HOME_PAGE)}
-						className="cursor-pointer"
-					>
-						<MainIcon />
-					</div>
-				</div>
-
-				{/* Main card */}
-				<div className="w-full rounded-2xl bg-white shadow">
-					<div className="px-10 py-10">
-						{/* Progress indicator (hide on success step) */}
-						{state.step !== 'SUCCESS' && renderProgressIndicator()}
-
-						{/* Step content */}
-						{renderStep()}
-					</div>
-				</div>
-
-				{/* Back button (hide on success step) */}
-				{state.step !== 'SUCCESS' && (
-					<div className="py-5">
-						<div className="grid grid-cols-1">
-							<div className="text-center">
-								<AOutlineButton onClick={goBack}>
-									<FontAwesomeIcon icon={faArrowLeft} />
-									<span className="ml-1 inline-block">
-										{t('forgotPassword.getBackToLogin')}
-									</span>
-								</AOutlineButton>
-							</div>
-						</div>
-					</div>
-				)}
+		<div className="forgot-password-container">
+			<div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+				<div className="w-full max-w-md">{renderStep()}</div>
 			</div>
 		</div>
 	);

@@ -15,23 +15,24 @@ const SuccessStep: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-20 text-center">
-			<div className="flex justify-center">
-				<FontAwesomeIcon
-					icon={faCheckCircle}
-					className="text-6xl text-green-500"
-				/>
-			</div>
+		<div className="space-y-8 text-center">
+			<div className="space-y-20 rounded-lg bg-white px-5 py-7 shadow">
+				<div className="flex justify-center">
+					<FontAwesomeIcon
+						icon={faCheckCircle}
+						className="text-6xl text-green-500"
+					/>
+				</div>
 
-			<div>
-				<h2 className="text-2xl font-semibold text-gray-900">
-					{t('forgotPassword.success.title')}
-				</h2>
-				<p className="mt-2 text-gray-600">
-					{t('forgotPassword.success.message')}
-				</p>
+				<div>
+					<h2 className="text-2xl font-semibold text-gray-900">
+						{t('forgotPassword.success.title')}
+					</h2>
+					<p className="mt-2 text-gray-600">
+						{t('forgotPassword.success.message')}
+					</p>
+				</div>
 			</div>
-
 			<div className="flex justify-center space-y-3">
 				<AButton
 					content={t('forgotPassword.success.loginButton')}
