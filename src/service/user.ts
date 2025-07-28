@@ -66,6 +66,16 @@ export interface DeleteAccountResponse {
 	message: string;
 }
 
+export interface ChangePasswordPayload {
+	currentPassword: string;
+	newPassword: string;
+}
+
+export interface ChangePasswordResponse {
+	message: string;
+	success: boolean;
+}
+
 // API functions
 export const getMyProfile = () => api.get<MyProfileResponse>('/users/me');
 
@@ -84,6 +94,9 @@ export const updateProfile = (payload: UpdateProfilePayload | FormData) => {
 
 export const updatePreferences = (payload: UpdatePreferencesPayload) =>
 	api.put<UpdatePreferencesResponse>('/users/me/preferences', payload);
+
+export const changePassword = (payload: ChangePasswordPayload) =>
+	api.post<ChangePasswordResponse>('/users/me/change-password', payload);
 
 export const deleteAccount = () =>
 	api.delete<DeleteAccountResponse>('/users/me');

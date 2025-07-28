@@ -1,3 +1,4 @@
+/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState } from 'react';
 
 import VerificationCodeInput from 'src/components/shared/VerificationCodeInput';
@@ -148,7 +149,8 @@ const ForgotPassword: React.FC = () => {
 							initialTimer={
 								state.canResendAt
 									? Math.ceil(
-											new Date(state.canResendAt).getTime() - Date.now()) / 1000
+											new Date(state.canResendAt).getTime() - Date.now()
+									  ) / 1000
 									: RATE_LIMITS.SEND_EMAIL_FIRST_TIME
 							}
 							showTitle={true}

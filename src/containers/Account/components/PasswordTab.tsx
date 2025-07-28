@@ -6,12 +6,16 @@ import { toast } from 'react-toastify';
 
 import AButton from 'src/component/atoms/AButton/AButton';
 import AInput from 'src/component/atoms/AInput/AInput';
+import { changePassword } from 'src/service/user';
+import { useAuthen } from 'src/hooks/useAuthen';
 import {
 	accountValidationSchema,
 	PasswordFormData,
 } from '../account.validation';
 
 const PasswordTab: React.FC = () => {
+	const { logout } = useAuthen();
+
 	// Password form
 	const {
 		register: registerPassword,
@@ -24,12 +28,33 @@ const PasswordTab: React.FC = () => {
 
 	const onSubmitPassword: SubmitHandler<PasswordFormData> = async (data) => {
 		try {
-			// TODO: Replace with actual API call
-			console.log('Password update:', data);
+			const response = await changePassword({
+				currentPassword: data.currentPassword,
+				newPassword: data.newPassword,
+			});
+
+			// Clear form fields after successful password update
 			resetPassword();
-			toast.success(t('account.password.updateSuccess'));
-		} catch (error) {
-			toast.error(t('account.password.updateError'));
+
+			// Show success message
+			toast.success(
+				response.data.message || t('account.password.updateSuccess')
+			);
+
+			// Log out user and redirect to login page for security
+			setTimeout(() => {
+				logout();
+			}, 2000); // Give user time to see the success message
+		} catch (error: unknown) {
+			// Handle API error responses
+			if (error && typeof error === 'object' && 'response' in error) {
+				const apiError = error as { response: { data: { message: string } } };
+				toast.error(
+					apiError.response?.data?.message || t('account.password.updateError')
+				);
+			} else {
+				toast.error(t('account.password.updateError'));
+			}
 		}
 	};
 
