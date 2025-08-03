@@ -16,7 +16,6 @@ function MyMeme() {
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const authen = useBoundStore((state) => state.authen);
-	const authUser = useBoundStore((state) => state.authen);
 	const [activeTab, setActiveTab] = useState('frequent');
 
 	const tabs = [
@@ -45,13 +44,13 @@ function MyMeme() {
 				<MUserCard
 					variant="compact"
 					user={{
-						id: authUser.userId,
-						avatarUrl: authUser.profile?.avatar || '',
-						username: authUser.username,
-						displayName: authUser.profile?.displayName || '',
-						followCount: authUser.stats.followersCount,
-						followingCount: authUser.stats.followingCount,
-						bio: authUser.profile?.bio,
+						id: authen.userId,
+						avatarUrl: authen.profile?.avatar || '',
+						username: authen.username,
+						displayName: authen.profile?.displayName || '',
+						followCount: authen.stats.followersCount,
+						followingCount: authen.stats.followingCount,
+						bio: authen.profile?.bio,
 					}}
 				/>
 			</div>
