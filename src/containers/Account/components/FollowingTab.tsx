@@ -1,113 +1,117 @@
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback, useRef } from 'react';
 
+import AButton from 'src/component/atoms/AButton/AButton';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
-import { useAuthen } from 'src/hooks/useAuthen';
-import { UserCardData } from 'src/hooks/useUserCard';
+import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
+import { useBoundStore } from 'src/store/store';
 
 interface FollowingTabProps {
-	onCountUpdate?: (newCount: number) => void;
+	fetchFollowing: (cursor?: string, reset?: boolean) => Promise<void>;
 }
 
-// Mock data - replace with actual API call
-const mockFollowing: UserCardData[] = [
-	{
-		avatarUrl: 'https://via.placeholder.com/80x80?text=User1',
-		username: 'sarah_wilson',
-		displayName: 'Sarah Wilson',
-		followCount: 892,
-		followingCount: 234,
-		bio: 'Lifestyle blogger and meme connoisseur',
-		joinDate: 'November 2022',
-	},
-	{
-		avatarUrl: 'https://via.placeholder.com/80x80?text=User2',
-		username: 'tech_guru',
-		displayName: 'Tech Guru',
-		followCount: 1234,
-		followingCount: 567,
-		bio: 'Tech enthusiast sharing the best tech memes',
-		joinDate: 'August 2022',
-	},
-	{
-		avatarUrl: 'https://via.placeholder.com/80x80?text=User3',
-		username: 'meme_queen',
-		displayName: 'Meme Queen',
-		followCount: 2456,
-		followingCount: 1023,
-		bio: 'Queen of viral memes and internet culture',
-		joinDate: 'June 2022',
-	},
-	{
-		avatarUrl: 'https://via.placeholder.com/80x80?text=User4',
-		username: 'daily_laughs',
-		displayName: 'Daily Laughs',
-		followCount: 345,
-		followingCount: 178,
-		bio: 'Bringing you daily doses of humor',
-		joinDate: 'January 2023',
-	},
-	{
-		avatarUrl: 'https://via.placeholder.com/80x80?text=User5',
-		username: 'creative_mind',
-		displayName: 'Creative Mind',
-		followCount: 678,
-		followingCount: 289,
-		bio: 'Creative content creator and meme artist',
-		joinDate: 'September 2022',
-	},
-];
-
-const FollowingTab: React.FC<FollowingTabProps> = ({ onCountUpdate }) => {
-	const { userId } = useAuthen();
-	const [following, setFollowing] = useState<UserCardData[]>([]);
+const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
+	const [searchQuery, setSearchQuery] = useState('');
 	const [filteredFollowing, setFilteredFollowing] = useState<UserCardData[]>(
 		[]
 	);
-	const [searchQuery, setSearchQuery] = useState('');
-	const [isLoading, setIsLoading] = useState(true);
+	const observerRef = useRef<IntersectionObserver | null>(null);
+	const lastElementRef = useRef<HTMLDivElement | null>(null);
 
+	// Get state from follow slice
+	const { following: followingState } = useBoundStore((state) => state.follow);
+
+	const {
+		users: following,
+		isLoading,
+		isLoadingMore,
+		hasNextPage,
+		nextCursor,
+		totalCount,
+		error,
+	} = followingState;
+
+	// Client-side search filtering
 	useEffect(() => {
-		// TODO: Replace with actual API call
-		const fetchFollowing = async () => {
-			setIsLoading(true);
-			try {
-				// Simulate API delay
-				setFollowing(mockFollowing);
-				setFilteredFollowing(mockFollowing);
-				// Update parent component with initial count
-				onCountUpdate?.(mockFollowing.length);
-			} catch (error) {
-				console.error('Error fetching following:', error);
-			} finally {
-				setIsLoading(false);
+		if (searchQuery.trim() === '') {
+			setFilteredFollowing(following);
+		} else {
+			const filtered = following.filter(
+				(user) =>
+					user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					user.displayName.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					user.bio?.toLowerCase().includes(searchQuery.toLowerCase())
+			);
+			setFilteredFollowing(filtered);
+		}
+	}, [searchQuery, following]);
+
+	// Infinite scroll functionality
+	const loadMoreFollowing = useCallback(() => {
+		if (hasNextPage && !isLoadingMore && !isLoading && nextCursor) {
+			fetchFollowing(nextCursor, false);
+		}
+	}, [hasNextPage, isLoadingMore, isLoading, nextCursor, fetchFollowing]);
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (observerRef.current) {
+			observerRef.current.disconnect();
+		}
+
+		observerRef.current = new IntersectionObserver(
+			(entries) => {
+				const target = entries[0];
+				if (target.isIntersecting) {
+					loadMoreFollowing();
+				}
+			},
+			{ threshold: 1.0 }
+		);
+
+		if (lastElementRef.current) {
+			observerRef.current.observe(lastElementRef.current);
+		}
+
+		return () => {
+			if (observerRef.current) {
+				observerRef.current.disconnect();
 			}
 		};
-
-		fetchFollowing();
-	}, [userId, onCountUpdate]);
-
-	useEffect(() => {
-		const filtered = following.filter(
-			(user) =>
-				user.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				user.bio?.toLowerCase().includes(searchQuery.toLowerCase())
-		);
-		setFilteredFollowing(filtered);
-	}, [searchQuery, following]);
+	}, [loadMoreFollowing]);
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
 	};
 
-	if (isLoading) {
+	if (isLoading && following.length === 0) {
 		return (
 			<div className="flex items-center justify-center py-12">
 				<div className="text-center">
 					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600"></div>
 					<p className="mt-4 text-gray-600">{t('account.following.loading')}</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (error && following.length === 0) {
+		return (
+			<div className="flex items-center justify-center py-12">
+				<div className="text-center">
+					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
+						<FontAwesomeIcon icon={faSearch} className="h-8 w-8 text-red-400" />
+					</div>
+					<h3 className="mb-2 text-lg font-medium text-gray-900">
+						{t('account.following.errorTitle')}
+					</h3>
+					<p className="mb-4 text-gray-600">{error}</p>
+					<AButton
+						content={t('account.following.retry')}
+						onClick={() => fetchFollowing(undefined, true)}
+					/>
 				</div>
 			</div>
 		);
@@ -122,7 +126,7 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ onCountUpdate }) => {
 						{t('account.following.title')}
 					</h3>
 					<p className="text-sm text-gray-600">
-						{t('account.following.subtitle', { count: following.length })}
+						{t('account.following.subtitle', { count: totalCount })}
 					</p>
 				</div>
 			</div>
@@ -162,21 +166,45 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ onCountUpdate }) => {
 					</p>
 				</div>
 			) : (
-				<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
-					{filteredFollowing.map((user) => (
-						<div
-							key={user.username}
-							className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
-						>
-							<div className="flex-1">
-								<MUserCard
-									variant="compact"
-									user={user}
-									enableFollowModal={false}
-								/>
+				<div className="space-y-4">
+					<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
+						{filteredFollowing.map((user, index) => (
+							<div
+								key={user.username}
+								className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
+								ref={
+									index === filteredFollowing.length - 1 ? lastElementRef : null
+								}
+							>
+								<div className="flex-1">
+									<MUserCard
+										variant="compact"
+										user={user}
+										enableFollowModal={false}
+									/>
+								</div>
 							</div>
+						))}
+					</div>
+
+					{/* Loading more indicator */}
+					{isLoadingMore && (
+						<div className="flex items-center justify-center py-4">
+							<div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600"></div>
+							<p className="ml-2 text-sm text-gray-600">
+								{t('account.following.loadingMore')}
+							</p>
 						</div>
-					))}
+					)}
+
+					{/* End of results indicator */}
+					{!hasNextPage && filteredFollowing.length > 0 && (
+						<div className="flex items-center justify-center py-4">
+							<p className="text-sm text-gray-500">
+								{t('account.following.endOfResults')}
+							</p>
+						</div>
+					)}
 				</div>
 			)}
 
@@ -187,7 +215,7 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ onCountUpdate }) => {
 						<span>
 							{t('account.following.showing', {
 								count: filteredFollowing.length,
-								total: following.length,
+								total: totalCount,
 							})}
 						</span>
 						{searchQuery && (

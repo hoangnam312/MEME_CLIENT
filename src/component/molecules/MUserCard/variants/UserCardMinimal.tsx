@@ -1,5 +1,5 @@
 import React from 'react';
-import { UserCardData } from 'src/hooks/useUserCard';
+import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 
 export interface UserCardMinimalProps {
 	user: UserCardData;

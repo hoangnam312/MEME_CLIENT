@@ -1,12 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { t } from 'i18next';
 import { toast } from 'react-toastify';
+import { AxiosError } from 'axios';
 
 import { useAuthen } from 'src/hooks/useAuthen';
 import AButton from 'src/component/atoms/AButton/AButton';
 import ATabs from 'src/component/atoms/ATabs/ATabs';
 import AModal from 'src/component/atoms/AModal/AModal';
 import OModalRequiredAuthen from 'src/component/organisms/OModalRequiredAuthen/OModalRequiredAuthen';
+import {
+	getFollowers,
+	getFollowing,
+	transformFollowUserToUserCardData,
+} from 'src/service/follow';
+import { useBoundStore } from 'src/store/store';
 import ProfileTab from './components/ProfileTab';
 import PasswordTab from './components/PasswordTab';
 import PreferencesTab from './components/PreferencesTab';
@@ -19,44 +26,28 @@ interface UserCounts {
 }
 
 const Account: React.FC = () => {
-	const { logout, userId } = useAuthen();
+	const { logout, stats, userId } = useAuthen();
 	const [activeTab, setActiveTab] = useState('profile');
 	const [showDeleteModal, setShowDeleteModal] = useState(false);
 	const [userCounts, setUserCounts] = useState<UserCounts>({
-		followersCount: 0,
-		followingCount: 0,
+		followersCount: stats.followersCount,
+		followingCount: stats.followingCount,
 	});
-	const [isLoadingCounts, setIsLoadingCounts] = useState(true);
 
-	// Fetch user counts on component mount
-	useEffect(() => {
-		const fetchUserCounts = async () => {
-			setIsLoadingCounts(true);
-			try {
-				// TODO: Replace with actual API call
-				// Simulate API delay
-				await new Promise((resolve) => setTimeout(resolve, 500));
-
-				// Mock data - replace with actual API response
-				const mockCounts = {
-					followersCount: 4, // Number of mock followers
-					followingCount: 5, // Number of mock following
-				};
-
-				setUserCounts(mockCounts);
-			} catch (error) {
-				console.error('Error fetching user counts:', error);
-				// Set default counts on error
-				setUserCounts({ followersCount: 0, followingCount: 0 });
-			} finally {
-				setIsLoadingCounts(false);
-			}
-		};
-
-		if (userId) {
-			fetchUserCounts();
-		}
-	}, [userId]);
+	// Get state from follow slice
+	const {
+		followers: followersState,
+		following: followingState,
+		setFollowers,
+		setFollowing,
+		setFollowersLoading,
+		setFollowingLoading,
+		setFollowersError,
+		setFollowingError,
+		setFollowersPagination,
+		setFollowingPagination,
+		batchSetFollowRelationships,
+	} = useBoundStore((state) => state.follow);
 
 	const tabs = [
 		{ key: 'profile', label: t('account.profile') },
@@ -64,15 +55,11 @@ const Account: React.FC = () => {
 		{ key: 'preferences', label: t('account.preferences') },
 		{
 			key: 'followers',
-			label: isLoadingCounts
-				? `${t('followers')} (...)`
-				: `${t('followers')} (${userCounts.followersCount})`,
+			label: `${t('followers')} (${userCounts.followersCount})`,
 		},
 		{
 			key: 'following',
-			label: isLoadingCounts
-				? `${t('following')} (...)`
-				: `${t('following')} (${userCounts.followingCount})`,
+			label: `${t('following')} (${userCounts.followingCount})`,
 		},
 	];
 
@@ -87,13 +74,177 @@ const Account: React.FC = () => {
 	};
 
 	// Function to update counts when users are removed/unfollowed
-	const updateFollowersCount = (newCount: number) => {
+	const updateFollowersCount = useCallback((newCount: number) => {
 		setUserCounts((prev) => ({ ...prev, followersCount: newCount }));
-	};
+	}, []);
 
-	const updateFollowingCount = (newCount: number) => {
+	const updateFollowingCount = useCallback((newCount: number) => {
 		setUserCounts((prev) => ({ ...prev, followingCount: newCount }));
-	};
+	}, []);
+
+	// Fetch followers function
+	const fetchFollowers = useCallback(
+		async (cursor?: string, reset = false) => {
+			if (!userId) return;
+
+			// Update loading states
+			if (reset || !cursor) {
+				setFollowersLoading(true, false);
+			} else {
+				setFollowersLoading(false, true);
+			}
+
+			setFollowersError(null);
+
+			try {
+				const response = await getFollowers(userId, {
+					limit: 20,
+					cursor: cursor,
+				});
+
+				const transformedUsers = response.data.data.map(
+					transformFollowUserToUserCardData
+				);
+
+				// Update followers in store
+				setFollowers(transformedUsers, reset || !cursor);
+
+				// Update pagination info
+				setFollowersPagination(
+					response.data.hasNextPage,
+					response.data.nextCursor,
+					reset || !cursor
+						? transformedUsers.length
+						: followersState.totalCount + transformedUsers.length
+				);
+
+				// Update parent component with current total count
+				const newTotalCount =
+					reset || !cursor
+						? transformedUsers.length
+						: followersState.totalCount + transformedUsers.length;
+				updateFollowersCount(newTotalCount);
+			} catch (err) {
+				const errorMessage =
+					err instanceof AxiosError && err.response?.data?.message
+						? err.response.data.message
+						: t('account.followers.errorLoading');
+
+				setFollowersError(errorMessage);
+				toast.error(errorMessage);
+			} finally {
+				setFollowersLoading(false, false);
+			}
+		},
+		[
+			userId,
+			followersState.totalCount,
+			setFollowers,
+			setFollowersLoading,
+			setFollowersError,
+			setFollowersPagination,
+			updateFollowersCount,
+		]
+	);
+
+	// Fetch following function
+	const fetchFollowing = useCallback(
+		async (cursor?: string, reset = false) => {
+			if (!userId) return;
+
+			// Update loading states
+			if (reset || !cursor) {
+				setFollowingLoading(true, false);
+			} else {
+				setFollowingLoading(false, true);
+			}
+
+			setFollowingError(null);
+
+			try {
+				const response = await getFollowing(userId, {
+					limit: 20,
+					cursor: cursor,
+				});
+
+				const transformedUsers = response.data.data.map(
+					transformFollowUserToUserCardData
+				);
+
+				// Update following in store
+				setFollowing(transformedUsers, reset || !cursor);
+
+				// Batch set follow relationships for all users in the following list
+				const followRelationships: Record<
+					string,
+					{ isFollowing: boolean; isFollowedBy: boolean }
+				> = {};
+				transformedUsers.forEach((user) => {
+					followRelationships[user.username] = {
+						isFollowing: true, // Since these are users we're following
+						isFollowedBy: false, // We don't have this info from the API response
+					};
+				});
+				batchSetFollowRelationships(followRelationships);
+
+				// Update pagination info
+				setFollowingPagination(
+					response.data.hasNextPage,
+					response.data.nextCursor,
+					reset || !cursor
+						? transformedUsers.length
+						: followingState.totalCount + transformedUsers.length
+				);
+
+				// Update parent component with current total count
+				const newTotalCount =
+					reset || !cursor
+						? transformedUsers.length
+						: followingState.totalCount + transformedUsers.length;
+				updateFollowingCount(newTotalCount);
+			} catch (err) {
+				const errorMessage =
+					err instanceof AxiosError && err.response?.data?.message
+						? err.response.data.message
+						: t('account.following.errorLoading');
+
+				setFollowingError(errorMessage);
+				toast.error(errorMessage);
+			} finally {
+				setFollowingLoading(false, false);
+			}
+		},
+		[
+			userId,
+			followingState.totalCount,
+			setFollowing,
+			setFollowingLoading,
+			setFollowingError,
+			setFollowingPagination,
+			batchSetFollowRelationships,
+			updateFollowingCount,
+		]
+	);
+
+	// Load both followers and following data when Account screen is accessed
+	useEffect(() => {
+		if (!userId) return;
+
+		// Load followers data if not already loaded
+		if (
+			followersState.users.length === 0 &&
+			followingState.users.length === 0
+		) {
+			fetchFollowers(undefined, true);
+			fetchFollowing(undefined, true);
+		}
+	}, [
+		userId,
+		followersState.users.length,
+		followingState.users.length,
+		fetchFollowers,
+		fetchFollowing,
+	]);
 
 	const renderTabContent = () => {
 		switch (activeTab) {
@@ -106,9 +257,9 @@ const Account: React.FC = () => {
 					<PreferencesTab onDeleteAccount={() => setShowDeleteModal(true)} />
 				);
 			case 'followers':
-				return <FollowersTab onCountUpdate={updateFollowersCount} />;
+				return <FollowersTab fetchFollowers={fetchFollowers} />;
 			case 'following':
-				return <FollowingTab onCountUpdate={updateFollowingCount} />;
+				return <FollowingTab fetchFollowing={fetchFollowing} />;
 			default:
 				return <ProfileTab />;
 		}

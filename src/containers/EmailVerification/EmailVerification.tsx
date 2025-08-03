@@ -45,12 +45,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 		'idle' | 'success' | 'error'
 	>('idle');
 	const [isBlock, setIsBlock] = useState(false);
-	console.log(
-		'🚀 ~ EmailVerification ~ verificationStatus:',
-		verificationStatus
-	);
 	const [attempts, setAttempts] = useState(0);
-	console.log('🚀 ~ EmailVerification ~ attempts:', attempts);
 	const [expiresAt, setExpiresAt] = useState<Date | null>(null);
 	const [timeLeft, setTimeLeft] = useState<string>('');
 

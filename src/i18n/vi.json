@@ -192,7 +192,15 @@
 			"noResults": "Không tìm thấy người theo dõi nào",
 			"noResultsDesc": "Thử điều chỉnh từ khóa tìm kiếm.",
 			"showing": "Hiển thị {{count}} trong tổng số {{total}} người theo dõi",
-			"clearSearch": "Xóa tìm kiếm"
+			"clearSearch": "Xóa tìm kiếm",
+			"errorTitle": "Không thể tải danh sách người theo dõi",
+			"errorLoading": "Không thể tải danh sách người theo dõi. Vui lòng thử lại.",
+			"retry": "Thử lại",
+			"userNotFound": "Không tìm thấy người dùng",
+			"removeSuccess": "Đã xóa {{username}} khỏi danh sách người theo dõi",
+			"removeError": "Không thể xóa người theo dõi. Vui lòng thử lại.",
+			"loadingMore": "Đang tải thêm người theo dõi...",
+			"endOfResults": "Bạn đã xem hết danh sách"
 		},
 		"following": {
 			"title": "Đang theo dõi",
@@ -205,7 +213,14 @@
 			"noResults": "Không tìm thấy kết quả",
 			"noResultsDesc": "Thử điều chỉnh từ khóa tìm kiếm.",
 			"showing": "Hiển thị {{count}} trong tổng số {{total}} đang theo dõi",
-			"clearSearch": "Xóa tìm kiếm"
+			"clearSearch": "Xóa tìm kiếm",
+			"errorTitle": "Không thể tải danh sách theo dõi",
+			"errorLoading": "Không thể tải danh sách theo dõi. Vui lòng thử lại.",
+			"retry": "Thử lại",
+			"unfollowSuccess": "Đã bỏ theo dõi {{username}}",
+			"unfollowError": "Không thể bỏ theo dõi. Vui lòng thử lại.",
+			"loadingMore": "Đang tải thêm người dùng...",
+			"endOfResults": "Bạn đã xem hết danh sách"
 		}
 	},
 
@@ -305,5 +320,28 @@
 		"codeSent": "Mã xác minh đã được gửi đến email của bạn",
 		"backToLogin": "Quay về trang Đăng nhập",
 		"block": "Bạn đã đạt đến số lần thử tối đa. Vui lòng thử lại sau."
+	},
+
+	"follow": {
+		"followSuccess": "Đã theo dõi {{username}} thành công",
+		"unfollowSuccess": "Đã bỏ theo dõi {{username}} thành công",
+		"followError": "Không thể theo dõi người dùng. Vui lòng thử lại.",
+		"unfollowError": "Không thể bỏ theo dõi người dùng. Vui lòng thử lại.",
+		"cannotFollowSelf": "Bạn không thể theo dõi chính mình"
+	},
+
+	"modal": {
+		"loading": "Đang tải...",
+		"retry": "Thử lại",
+		"followers": {
+			"errorLoading": "Không thể tải danh sách người theo dõi. Vui lòng thử lại."
+		},
+		"following": {
+			"errorLoading": "Không thể tải danh sách theo dõi. Vui lòng thử lại."
+		}
+	},
+
+	"auth": {
+		"loginRequired": "Vui lòng đăng nhập để tiếp tục"
 	}
 }

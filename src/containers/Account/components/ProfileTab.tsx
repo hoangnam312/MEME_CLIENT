@@ -55,6 +55,10 @@ const ProfileTab: React.FC = () => {
 				setIsLoading(true);
 				const response = await getMyProfile();
 				const profileData = response.data;
+				updateAuthen({
+					...profileData,
+					userId: profileData._id,
+				});
 				setUserProfile(profileData);
 
 				setValue('displayName', profileData.profile?.displayName || '');
@@ -74,7 +78,7 @@ const ProfileTab: React.FC = () => {
 		};
 
 		loadUserProfile();
-	}, [setValue]);
+	}, [setValue, updateAuthen]);
 
 	const onSubmitProfile: SubmitHandler<ProfileFormData> = async (data) => {
 		try {

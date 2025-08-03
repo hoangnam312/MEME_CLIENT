@@ -4,8 +4,16 @@ import { TBoundStore, useBoundStore } from 'src/store/store';
 import { clearToken } from 'src/utils/token';
 
 export const useAuthen = () => {
-	const { email, username, userId, token, preferences, profile, updateAuthen } =
-		useBoundStore((state: TBoundStore) => state.authen);
+	const {
+		email,
+		username,
+		userId,
+		token,
+		preferences,
+		profile,
+		stats,
+		updateAuthen,
+	} = useBoundStore((state: TBoundStore) => state.authen);
 	const navigate = useNavigate();
 
 	const logout = () => {
@@ -42,6 +50,7 @@ export const useAuthen = () => {
 		token,
 		preferences,
 		profile,
+		stats,
 		logout,
 		isLoggedIn,
 	};

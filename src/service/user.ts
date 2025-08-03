@@ -1,3 +1,4 @@
+import { SupportedLanguages } from 'src/constants/type';
 import api from './config';
 
 // Types based on backend API structure
@@ -14,7 +15,7 @@ export interface UserStats {
 }
 
 export interface UserPreferences {
-	contentLanguage: string;
+	contentLanguage: 'en' | 'vi';
 }
 
 export interface UserTimestamps {
@@ -49,7 +50,7 @@ export interface UpdateProfileResponse {
 }
 
 export interface UpdatePreferencesPayload {
-	contentLanguage?: 'en' | 'vi';
+	contentLanguage?: SupportedLanguages;
 }
 
 export interface UpdatePreferencesResponse {

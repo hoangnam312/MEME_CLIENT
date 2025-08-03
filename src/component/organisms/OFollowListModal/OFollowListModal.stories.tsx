@@ -13,51 +13,11 @@ export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-const sampleUsers = [
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Alice Johnson',
-		displayName: 'Alice Johnson',
-		followCount: 250,
-		followingCount: 180,
-		bio: 'Designer & meme creator',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Bob Smith',
-		displayName: 'Bob Smith',
-		followCount: 120,
-		followingCount: 95,
-		bio: 'Comedy enthusiast',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Charlie Brown',
-		displayName: 'Charlie Brown',
-		followCount: 80,
-		followingCount: 200,
-		bio: 'Meme collector',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Diana Prince',
-		displayName: 'Diana Prince',
-		followCount: 500,
-		followingCount: 50,
-		bio: 'Content creator',
-	},
-];
-
 export const WithFollowersAndFollowing: Story = {
 	args: {
 		isOpen: true,
 		onClose: () => console.log('Modal closed'),
-		followers: sampleUsers,
-		following: sampleUsers.slice(0, 2),
+		userId: 'sample-user-id',
 		defaultTab: 'followers',
 	},
 };
@@ -66,8 +26,7 @@ export const DefaultToFollowing: Story = {
 	args: {
 		isOpen: true,
 		onClose: () => console.log('Modal closed'),
-		followers: sampleUsers,
-		following: sampleUsers.slice(0, 3),
+		userId: 'sample-user-id',
 		defaultTab: 'following',
 	},
 };
@@ -76,8 +35,7 @@ export const EmptyFollowers: Story = {
 	args: {
 		isOpen: true,
 		onClose: () => console.log('Modal closed'),
-		followers: [],
-		following: sampleUsers.slice(0, 2),
+		userId: 'sample-user-id',
 		defaultTab: 'followers',
 	},
 };
@@ -86,8 +44,7 @@ export const EmptyFollowing: Story = {
 	args: {
 		isOpen: true,
 		onClose: () => console.log('Modal closed'),
-		followers: sampleUsers.slice(0, 2),
-		following: [],
+		userId: 'sample-user-id',
 		defaultTab: 'following',
 	},
 };
@@ -96,8 +53,7 @@ export const BothEmpty: Story = {
 	args: {
 		isOpen: true,
 		onClose: () => console.log('Modal closed'),
-		followers: [],
-		following: [],
+		userId: 'sample-user-id',
 		defaultTab: 'followers',
 	},
 };

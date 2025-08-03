@@ -196,7 +196,15 @@
 			"noResults": "No followers found",
 			"noResultsDesc": "Try adjusting your search terms.",
 			"showing": "Showing {{count}} of {{total}} followers",
-			"clearSearch": "Clear search"
+			"clearSearch": "Clear search",
+			"errorTitle": "Failed to Load Followers",
+			"errorLoading": "Unable to load followers. Please try again.",
+			"retry": "Try Again",
+			"userNotFound": "User not found",
+			"removeSuccess": "Successfully removed {{username}} from followers",
+			"removeError": "Failed to remove follower. Please try again.",
+			"loadingMore": "Loading more followers...",
+			"endOfResults": "You've reached the end of the list"
 		},
 		"following": {
 			"title": "Following",
@@ -209,7 +217,14 @@
 			"noResults": "No results found",
 			"noResultsDesc": "Try adjusting your search terms.",
 			"showing": "Showing {{count}} of {{total}} following",
-			"clearSearch": "Clear search"
+			"clearSearch": "Clear search",
+			"errorTitle": "Failed to Load Following",
+			"errorLoading": "Unable to load following list. Please try again.",
+			"retry": "Try Again",
+			"unfollowSuccess": "Successfully unfollowed {{username}}",
+			"unfollowError": "Failed to unfollow user. Please try again.",
+			"loadingMore": "Loading more users...",
+			"endOfResults": "You've reached the end of the list"
 		}
 	},
 
@@ -309,5 +324,28 @@
 		"codeSent": "Verification code sent to your email",
 		"backToLogin": "Back to Login",
 		"block": "You have reached the maximum number of attempts. Please try again later."
+	},
+
+	"followToast": {
+		"followSuccess": "Successfully followed {{username}}",
+		"unfollowSuccess": "Successfully unfollowed {{username}}",
+		"followError": "Failed to follow user. Please try again.",
+		"unfollowError": "Failed to unfollow user. Please try again.",
+		"cannotFollowSelf": "You cannot follow yourself"
+	},
+
+	"modal": {
+		"loading": "Loading...",
+		"retry": "Try Again",
+		"followers": {
+			"errorLoading": "Unable to load followers. Please try again."
+		},
+		"following": {
+			"errorLoading": "Unable to load following list. Please try again."
+		}
+	},
+
+	"auth": {
+		"loginRequired": "Please log in to continue"
 	}
 }

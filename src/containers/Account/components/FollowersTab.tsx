@@ -1,134 +1,119 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 import AButton from 'src/component/atoms/AButton/AButton';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
-import { UserCardData } from 'src/hooks/useUserCard';
-import { useAuthen } from 'src/hooks/useAuthen';
+import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
+import { useBoundStore } from 'src/store/store';
 
 interface FollowersTabProps {
-	onCountUpdate?: (newCount: number) => void;
+	fetchFollowers: (cursor?: string, reset?: boolean) => Promise<void>;
 }
 
-const mockFollowers: UserCardData[] = [
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746097118489_blob',
-		username: 'john_doe',
-		displayName: 'John Doe',
-		followCount: 150,
-		followingCount: 89,
-		bio: 'Meme enthusiast and content creator',
-		joinDate: 'January 2023',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1747739691303_image.png',
-		username: 'jane_smith',
-		displayName: 'Jane Smith',
-		followCount: 234,
-		followingCount: 156,
-		bio: 'Digital artist and meme lover',
-		joinDate: 'March 2023',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746101012673_image.png',
-		username: 'meme_master',
-		displayName: 'Meme Master',
-		followCount: 567,
-		followingCount: 234,
-		bio: 'Professional meme curator',
-		joinDate: 'December 2022',
-	},
-	{
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1746097027485_blob',
-		username: 'funny_guy',
-		displayName: 'Funny Guy',
-		followCount: 89,
-		followingCount: 67,
-		bio: 'Making people laugh one meme at a time',
-		joinDate: 'February 2023',
-	},
-];
-
-const FollowersTab: React.FC<FollowersTabProps> = ({ onCountUpdate }) => {
-	const { userId } = useAuthen();
-	const [followers, setFollowers] = useState<UserCardData[]>([]);
+const FollowersTab: React.FC<FollowersTabProps> = ({ fetchFollowers }) => {
+	const [searchQuery, setSearchQuery] = useState('');
 	const [filteredFollowers, setFilteredFollowers] = useState<UserCardData[]>(
 		[]
 	);
-	const [searchQuery, setSearchQuery] = useState('');
-	const [isLoading, setIsLoading] = useState(true);
+	const observerRef = useRef<IntersectionObserver | null>(null);
+	const lastElementRef = useRef<HTMLDivElement | null>(null);
 
-	// Mock data - replace with actual API call
+	// Get state from follow slice
+	const { followers: followersState } = useBoundStore((state) => state.follow);
 
+	const {
+		users: followers,
+		isLoading,
+		isLoadingMore,
+		hasNextPage,
+		nextCursor,
+		totalCount,
+		error,
+	} = followersState;
+
+	// Client-side search filtering
 	useEffect(() => {
-		// TODO: Replace with actual API call
-		const fetchFollowers = async () => {
-			setIsLoading(true);
-			try {
-				// Simulate API delay
-				setFollowers(mockFollowers);
-				setFilteredFollowers(mockFollowers);
-				// Update parent component with initial count
-				onCountUpdate?.(mockFollowers.length);
-			} catch (error) {
-				console.error('Error fetching followers:', error);
-			} finally {
-				setIsLoading(false);
-			}
-		};
-
-		fetchFollowers();
-	}, [userId, onCountUpdate]);
-
-	useEffect(() => {
-		const filtered = followers.filter(
-			(follower) =>
-				follower.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
-				follower.bio?.toLowerCase().includes(searchQuery.toLowerCase())
-		);
-		setFilteredFollowers(filtered);
+		if (searchQuery.trim() === '') {
+			setFilteredFollowers(followers);
+		} else {
+			const filtered = followers.filter(
+				(follower) =>
+					follower.username.toLowerCase().includes(searchQuery.toLowerCase()) ||
+					follower.displayName
+						.toLowerCase()
+						.includes(searchQuery.toLowerCase()) ||
+					follower.bio?.toLowerCase().includes(searchQuery.toLowerCase())
+			);
+			setFilteredFollowers(filtered);
+		}
 	}, [searchQuery, followers]);
 
-	const handleRemoveFollower = async (username: string) => {
-		try {
-			// TODO: Replace with actual API call
-			console.log('Removing follower:', username);
-
-			const updatedFollowers = followers.filter((f) => f.username !== username);
-			setFollowers(updatedFollowers);
-			setFilteredFollowers(
-				updatedFollowers.filter(
-					(follower) =>
-						follower.username
-							.toLowerCase()
-							.includes(searchQuery.toLowerCase()) ||
-						follower.bio?.toLowerCase().includes(searchQuery.toLowerCase())
-				)
-			);
-
-			// Update parent component with new count
-			onCountUpdate?.(updatedFollowers.length);
-		} catch (error) {
-			console.error('Error removing follower:', error);
+	// Infinite scroll functionality
+	const loadMoreFollowers = useCallback(() => {
+		if (hasNextPage && !isLoadingMore && !isLoading && nextCursor) {
+			fetchFollowers(nextCursor, false);
 		}
-	};
+	}, [hasNextPage, isLoadingMore, isLoading, nextCursor, fetchFollowers]);
+
+	// Intersection Observer for infinite scroll
+	useEffect(() => {
+		if (observerRef.current) {
+			observerRef.current.disconnect();
+		}
+
+		observerRef.current = new IntersectionObserver(
+			(entries) => {
+				const target = entries[0];
+				if (target.isIntersecting) {
+					loadMoreFollowers();
+				}
+			},
+			{ threshold: 1.0 }
+		);
+
+		if (lastElementRef.current) {
+			observerRef.current.observe(lastElementRef.current);
+		}
+
+		return () => {
+			if (observerRef.current) {
+				observerRef.current.disconnect();
+			}
+		};
+	}, [loadMoreFollowers]);
 
 	const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
 		setSearchQuery(event.target.value);
 	};
 
-	if (isLoading) {
+	if (isLoading && followers.length === 0) {
 		return (
 			<div className="flex items-center justify-center py-12">
 				<div className="text-center">
 					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600"></div>
 					<p className="mt-4 text-gray-600">{t('account.followers.loading')}</p>
+				</div>
+			</div>
+		);
+	}
+
+	if (error && followers.length === 0) {
+		return (
+			<div className="flex items-center justify-center py-12">
+				<div className="text-center">
+					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
+						<FontAwesomeIcon icon={faSearch} className="h-8 w-8 text-red-400" />
+					</div>
+					<h3 className="mb-2 text-lg font-medium text-gray-900">
+						{t('account.followers.errorTitle')}
+					</h3>
+					<p className="mb-4 text-gray-600">{error}</p>
+					<AButton
+						content={t('account.followers.retry')}
+						onClick={() => fetchFollowers(undefined, true)}
+					/>
 				</div>
 			</div>
 		);
@@ -143,7 +128,7 @@ const FollowersTab: React.FC<FollowersTabProps> = ({ onCountUpdate }) => {
 						{t('account.followers.title')}
 					</h3>
 					<p className="text-sm text-gray-600">
-						{t('account.followers.subtitle', { count: followers.length })}
+						{t('account.followers.subtitle', { count: totalCount })}
 					</p>
 				</div>
 			</div>
@@ -183,28 +168,45 @@ const FollowersTab: React.FC<FollowersTabProps> = ({ onCountUpdate }) => {
 					</p>
 				</div>
 			) : (
-				<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
-					{filteredFollowers.map((follower) => (
-						<div
-							key={follower.username}
-							className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
-						>
-							<div className="flex-1">
-								<MUserCard
-									variant="compact"
-									user={follower}
-									enableFollowModal={false}
-								/>
+				<div className="space-y-4">
+					<div className="grid gap-4 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-1">
+						{filteredFollowers.map((follower, index) => (
+							<div
+								key={follower.username}
+								className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
+								ref={
+									index === filteredFollowers.length - 1 ? lastElementRef : null
+								}
+							>
+								<div className="flex-1">
+									<MUserCard
+										variant="compact"
+										user={follower}
+										enableFollowModal={false}
+									/>
+								</div>
 							</div>
-							<div className="ml-4">
-								<AButton
-									content={t('account.followers.remove')}
-									addClass="!bg-red-100 !text-red-700 hover:!bg-red-200 !border-red-200"
-									onClick={() => handleRemoveFollower(follower.username)}
-								/>
-							</div>
+						))}
+					</div>
+
+					{/* Loading more indicator */}
+					{isLoadingMore && (
+						<div className="flex items-center justify-center py-4">
+							<div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600"></div>
+							<p className="ml-2 text-sm text-gray-600">
+								{t('account.followers.loadingMore')}
+							</p>
 						</div>
-					))}
+					)}
+
+					{/* End of results indicator */}
+					{!hasNextPage && filteredFollowers.length > 0 && (
+						<div className="flex items-center justify-center py-4">
+							<p className="text-sm text-gray-500">
+								{t('account.followers.endOfResults')}
+							</p>
+						</div>
+					)}
 				</div>
 			)}
 
@@ -215,7 +217,7 @@ const FollowersTab: React.FC<FollowersTabProps> = ({ onCountUpdate }) => {
 						<span>
 							{t('account.followers.showing', {
 								count: filteredFollowers.length,
-								total: followers.length,
+								total: totalCount,
 							})}
 						</span>
 						{searchQuery && (

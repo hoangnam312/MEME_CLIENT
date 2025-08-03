@@ -45,6 +45,7 @@ function MyMeme() {
 				<MUserCard
 					variant="compact"
 					user={{
+						id: authUser.userId,
 						avatarUrl: authUser.profile?.avatar || '',
 						username: authUser.username,
 						displayName: authUser.profile?.displayName || '',

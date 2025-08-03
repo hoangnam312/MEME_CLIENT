@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 import { ITrendingMeme } from 'src/constants/type';
-import { UserCardData } from 'src/hooks/useUserCard';
+import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 import { trackingMeme } from 'src/service/meme';
 import { OCardImage } from '../../../../component/organisms/OCardImage/OCardImage';
 
@@ -31,6 +31,7 @@ const OTrendingMemeCard: React.FC<OTrendingMemeCardProps> = ({
 	};
 
 	const userCardData: UserCardData = {
+		id: data.uploader._id,
 		avatarUrl: data.uploader.avatarUrl,
 		username: data.uploader.username,
 		displayName: data.uploader.displayName || data.uploader.username,

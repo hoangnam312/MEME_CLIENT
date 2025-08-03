@@ -1,7 +1,7 @@
 import { t } from 'i18next';
 import React from 'react';
 import AFollowButton from 'src/component/atoms/AFollowButton/AFollowButton';
-import { UserCardData } from 'src/hooks/useUserCard';
+import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 
 export interface UserCardCompactProps {
 	user: UserCardData;

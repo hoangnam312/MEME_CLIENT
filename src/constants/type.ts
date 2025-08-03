@@ -151,3 +151,5 @@ export interface IResponseGetListCursor<T> {
 	isEnd: boolean;
 	data: T[];
 }
+
+export type SupportedLanguages = 'en' | 'vi';

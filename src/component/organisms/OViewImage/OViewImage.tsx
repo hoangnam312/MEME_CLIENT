@@ -27,6 +27,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 
 	// change to get creator data from data prop
 	const creatorData = {
+		id: 'creator-id',
 		avatarUrl:
 			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 		username: 'Creator Name',

@@ -20,6 +20,7 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const sampleUser = {
+	id: 'sample-user-id-123',
 	avatarUrl:
 		'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
 	username: 'Jese Leos',
