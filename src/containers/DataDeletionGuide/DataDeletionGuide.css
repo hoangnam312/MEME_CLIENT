@@ -1,0 +1,328 @@
+/* Data Deletion Guide Container */
+.deletion-guide-container {
+	display: flex;
+	min-height: 100vh;
+	background: linear-gradient(135deg, #68d69d 0%, #401d83 100%);
+	font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+		sans-serif;
+}
+
+/* Navigation Sidebar */
+.deletion-nav {
+	width: 280px;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	padding: 2rem 0;
+	position: sticky;
+	top: 0;
+	height: 100vh;
+	overflow-y: auto;
+	box-shadow: 2px 0 20px rgba(0, 0, 0, 0.1);
+}
+
+.nav-header {
+	padding: 0 2rem 2rem;
+	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	margin-bottom: 2rem;
+}
+
+.nav-header h3 {
+	color: #401d83;
+	font-size: 1.5rem;
+	font-weight: 700;
+	margin: 0 0 0.5rem 0;
+}
+
+.last-updated {
+	color: #718096;
+	font-size: 0.875rem;
+	margin: 0;
+}
+
+.nav-links {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+}
+
+.nav-links li {
+	margin: 0;
+}
+
+.nav-links button {
+	width: 100%;
+	padding: 1rem 2rem;
+	background: none;
+	border: none;
+	text-align: left;
+	color: #4a5568;
+	font-size: 0.95rem;
+	font-weight: 500;
+	cursor: pointer;
+	transition: all 0.3s ease;
+	border-left: 3px solid transparent;
+}
+
+.nav-links button:hover {
+	background: rgba(104, 214, 157, 0.1);
+	color: #68d69d;
+	border-left-color: #68d69d;
+}
+
+.nav-links button.active {
+	background: rgba(104, 214, 157, 0.15);
+	color: #68d69d;
+	border-left-color: #68d69d;
+	font-weight: 600;
+}
+
+/* Main Content */
+.deletion-content {
+	flex: 1;
+	padding: 3rem 4rem;
+	overflow-y: auto;
+	background: rgba(255, 255, 255, 0.95);
+	backdrop-filter: blur(10px);
+	margin: 2rem;
+	border-radius: 20px;
+	box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+}
+
+.deletion-section {
+	margin-bottom: 4rem;
+	scroll-margin-top: 2rem;
+}
+
+.deletion-section h1 {
+	color: #401d83;
+	font-size: 2.5rem;
+	font-weight: 800;
+	margin: 0 0 1.5rem 0;
+	background: linear-gradient(135deg, #68d69d, #401d83);
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+}
+
+.deletion-section h2 {
+	color: #401d83;
+	font-size: 1.875rem;
+	font-weight: 700;
+	margin: 0 0 1.5rem 0;
+	padding-bottom: 0.5rem;
+	border-bottom: 2px solid #e2e8f0;
+}
+
+.deletion-intro {
+	font-size: 1.125rem;
+	line-height: 1.7;
+	color: #4a5568;
+	margin-bottom: 2rem;
+	padding: 1.5rem;
+	background: rgba(104, 214, 157, 0.05);
+	border-radius: 12px;
+	border-left: 4px solid #68d69d;
+}
+
+/* Important Notice */
+.important-notice {
+	background: rgba(254, 226, 226, 0.9);
+	padding: 2rem;
+	border-radius: 16px;
+	border: 1px solid rgba(220, 38, 38, 0.3);
+	margin: 2rem 0;
+}
+
+.important-notice h2 {
+	color: #dc2626;
+	margin-bottom: 1rem;
+}
+
+.important-notice p {
+	color: #4a5568;
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* Your Rights */
+.your-rights {
+	margin: 2rem 0;
+}
+
+.rights-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+	gap: 1.5rem;
+	margin: 1.5rem 0;
+}
+
+.right-card {
+	background: rgba(255, 255, 255, 0.95);
+	padding: 1.5rem;
+	border-radius: 12px;
+	border: 1px solid rgba(104, 214, 157, 0.2);
+	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+	transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.right-card:hover {
+	transform: translateY(-2px);
+	box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+.right-card h4 {
+	color: #68d69d;
+	margin-bottom: 0.75rem;
+	font-size: 1.125rem;
+	font-weight: 600;
+}
+
+.right-card p {
+	color: #4a5568;
+	line-height: 1.6;
+	margin: 0;
+}
+
+/* Deletion Footer */
+.deletion-footer {
+	background: rgba(255, 255, 255, 0.9);
+	padding: 2rem;
+	border-radius: 16px;
+	border: 1px solid rgba(104, 214, 157, 0.2);
+	margin-top: 3rem;
+	text-align: center;
+}
+
+.deletion-footer p {
+	color: #4a5568;
+	font-size: 0.875rem;
+	line-height: 1.6;
+	margin: 0.5rem 0;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+	.deletion-guide-container {
+		flex-direction: column;
+	}
+
+	.deletion-nav {
+		width: 100%;
+		height: auto;
+		position: relative;
+		padding: 1rem;
+	}
+
+	.nav-links {
+		display: flex;
+		overflow-x: auto;
+		gap: 1rem;
+	}
+
+	.nav-links li {
+		flex-shrink: 0;
+	}
+
+	.nav-links button {
+		padding: 0.75rem 1.5rem;
+		white-space: nowrap;
+	}
+
+	.deletion-content {
+		margin: 1rem;
+		padding: 2rem;
+	}
+}
+
+@media (max-width: 768px) {
+	.deletion-content {
+		padding: 1.5rem;
+		margin: 0.5rem;
+	}
+
+	.deletion-section h1 {
+		font-size: 2rem;
+	}
+
+	.deletion-section h2 {
+		font-size: 1.5rem;
+	}
+
+	.rights-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.nav-links {
+		flex-wrap: wrap;
+	}
+}
+
+@media (max-width: 480px) {
+	.deletion-content {
+		padding: 1rem;
+	}
+
+	.deletion-section h1 {
+		font-size: 1.75rem;
+	}
+}
+
+/* Scrollbar Styling */
+.deletion-nav::-webkit-scrollbar,
+.deletion-content::-webkit-scrollbar {
+	width: 6px;
+}
+
+.deletion-nav::-webkit-scrollbar-track,
+.deletion-content::-webkit-scrollbar-track {
+	background: rgba(0, 0, 0, 0.1);
+	border-radius: 3px;
+}
+
+.deletion-nav::-webkit-scrollbar-thumb,
+.deletion-content::-webkit-scrollbar-thumb {
+	background: rgba(104, 214, 157, 0.5);
+	border-radius: 3px;
+}
+
+.deletion-nav::-webkit-scrollbar-thumb:hover,
+.deletion-content::-webkit-scrollbar-thumb:hover {
+	background: rgba(104, 214, 157, 0.7);
+}
+
+/* Animation for smooth transitions */
+@keyframes fadeInUp {
+	from {
+		opacity: 0;
+		transform: translateY(20px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+
+.deletion-section {
+	animation: fadeInUp 0.6s ease-out;
+}
+
+/* Focus states for accessibility */
+.nav-links button:focus {
+	outline: 2px solid #68d69d;
+	outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+	.deletion-nav {
+		display: none;
+	}
+
+	.deletion-content {
+		margin: 0;
+		padding: 1rem;
+		background: white;
+		box-shadow: none;
+	}
+}

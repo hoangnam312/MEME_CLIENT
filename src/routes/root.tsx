@@ -9,6 +9,9 @@ import EmailVerification from 'src/containers/EmailVerification/EmailVerificatio
 import Trending from 'src/containers/Trending/Trending';
 import TrendingUsers from 'src/containers/TrendingUsers/TrendingUsers';
 import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
+import PrivacyPolicy from 'src/containers/PrivacyPolicy/PrivacyPolicy';
+import TermsOfService from 'src/containers/TermsOfService/TermsOfService';
+import DataDeletionGuide from 'src/containers/DataDeletionGuide/DataDeletionGuide';
 
 const AppRoutes = () => {
 	return (
@@ -25,6 +28,9 @@ const AppRoutes = () => {
 			<Route path="/register" element={<Register />} />
 			<Route path="/forgot-password" element={<ForgotPassword />} />
 			<Route path="/verify-email" element={<EmailVerification />} />
+			<Route path="/privacy-policy" element={<PrivacyPolicy />} />
+			<Route path="/terms-of-service" element={<TermsOfService />} />
+			<Route path="/data-deletion-guide" element={<DataDeletionGuide />} />
 
 			<Route path="*" element={<div>Error Page</div>} />
 		</Routes>
