@@ -11,6 +11,7 @@ import i18n from './i18n/i18next.config.ts';
 
 import 'src/assets/css/main.css';
 import 'react-toastify/dist/ReactToastify.css';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 
 // React scan for dev. Ref: https://github.com/aidenybai/react-scan
 if (process.env.NODE_ENV !== 'production') {
@@ -22,10 +23,12 @@ if (process.env.NODE_ENV !== 'production') {
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
 	<I18nextProvider i18n={i18n} defaultNS={'translation'}>
-		<BrowserRouter>
-			<AppRoutes />
-			<App />
-		</BrowserRouter>
+		<GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+			<BrowserRouter>
+				<AppRoutes />
+				<App />
+			</BrowserRouter>
+		</GoogleOAuthProvider>
 		<ToastContainer hideProgressBar={true} autoClose={4000} />
 	</I18nextProvider>
 );

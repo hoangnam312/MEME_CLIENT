@@ -1,25 +1,27 @@
 import { t } from 'i18next';
 import { useNavigate } from 'react-router';
 
-import { Path } from 'src/constants/type';
-import MainIcon from 'src/assets/icon/MainIcon';
-import GoogleIcon from 'src/assets/icon/GoogleIcon';
-import ALink from 'src/component/atoms/Alink/ALink';
-import FacebookIcon from 'src/assets/icon/FacebookIcon';
-import AButton from 'src/component/atoms/AButton/AButton';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 import {
 	faArrowLeft,
 	faUnlockKeyhole,
 } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FacebookIcon from 'src/assets/icon/FacebookIcon';
+import GoogleIcon from 'src/assets/icon/GoogleIcon';
+import MainIcon from 'src/assets/icon/MainIcon';
+import AButton from 'src/component/atoms/AButton/AButton';
+import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
+import { Path } from 'src/constants/type';
 
-import FormLogin from './FormLogin';
+import ASquareOutlineButton from 'src/component/atoms/ASquareOutlineButton/ASquareOutlineButton';
 import useNavigateBack from 'src/hooks/useNavigateBack';
+import FormLogin from './FormLogin';
+import useLoginWithGoogle from './useLoginWithGoogle';
 
 function Login() {
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
+	const { loginWithGoogle } = useLoginWithGoogle();
 
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
@@ -36,14 +38,14 @@ function Login() {
 					<div className="p-5">
 						<div className="grid">
 							<div className="flex w-full justify-center gap-5 ">
-								<ALink addClass="mt-4">
+								<ASquareOutlineButton onClick={loginWithGoogle} addClass="mt-4">
 									<GoogleIcon />
 									<span>{t('google')}</span>
-								</ALink>
-								<ALink addClass="mt-4">
+								</ASquareOutlineButton>
+								<ASquareOutlineButton addClass="mt-4">
 									<FacebookIcon />
 									<span>{t('facebook')}</span>
-								</ALink>
+								</ASquareOutlineButton>
 							</div>
 						</div>
 						<div className="mt-2 flex flex-col items-center p-5 sm:flex-row">

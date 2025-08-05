@@ -61,7 +61,7 @@ const MUserDropdown = () => {
 		<div className="flex items-center justify-start">
 			<ADropdown
 				buttonOutside={
-					isLoggedIn() ? (
+					isLoggedIn() && profile?.avatar ? (
 						<div
 							className={`flex h-14 w-14 cursor-pointer items-center justify-center rounded-2xl `}
 							onClick={isOpen ? closeDropdown : openDropdown}

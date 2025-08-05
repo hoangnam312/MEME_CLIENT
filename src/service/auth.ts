@@ -36,6 +36,10 @@ interface InterfacePayloadVerifyEmail {
 	email?: string;
 }
 
+interface InterfacePayloadGoogleOAuth {
+	access_token: string;
+}
+
 const login = (payload: InterfacePayloadLogin) =>
 	api.post<LoginResponse>('/auth/login', payload);
 
@@ -57,6 +61,9 @@ const sendVerificationCode = (payload: InterfacePayloadSendVerificationCode) =>
 const verifyEmail = (payload: InterfacePayloadVerifyEmail) =>
 	api.post('/auth/verify-email', payload);
 
+const googleOAuth = (payload: InterfacePayloadGoogleOAuth) =>
+	api.post('/auth/google-oauth', payload);
+
 export {
 	login,
 	register,
@@ -65,6 +72,7 @@ export {
 	resetPassword,
 	sendVerificationCode,
 	verifyEmail,
+	googleOAuth,
 };
 
 export type {
