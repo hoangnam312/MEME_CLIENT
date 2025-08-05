@@ -1,4 +1,10 @@
-import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
+import {
+	CredentialResponse,
+	TokenResponse,
+	useGoogleLogin,
+	useGoogleOneTapLogin,
+} from '@react-oauth/google';
+import { t } from 'i18next';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -10,7 +16,7 @@ import {
 	UserTimestamps,
 } from 'src/constants/auth.type';
 import { Path } from 'src/constants/type';
-import { googleOAuth } from 'src/service/auth';
+import { googleOAuth, googleOneTap } from 'src/service/auth';
 import { useBoundStore } from 'src/store/store';
 import { getErrorFromAxiosError } from 'src/utils/error';
 import { initializeLanguage } from 'src/utils/languageUtils';
@@ -112,6 +118,45 @@ const handleGoogleOAuthSuccess = async (
 	}
 };
 
+// Handle successful Google OAuth authentication
+const handleGoogleOneTapSuccess = async (
+	credentialResponse: CredentialResponse,
+	updateAuthentication: (data: Partial<AuthenticationData>) => void,
+	navigate: (path: string) => void,
+	setIsLoading: (loading: boolean) => void
+): Promise<void> => {
+	try {
+		console.log(
+			'🚀 ~ handleGoogleOneTapSuccess ~ credentialResponse:',
+			credentialResponse
+		);
+		setIsLoading(true);
+		if (!credentialResponse.credential) {
+			throw new Error(t('auth.google.idTokenRequired'));
+		}
+		const response = await googleOneTap({
+			idToken: credentialResponse.credential,
+		});
+
+		// Process the response
+		const authenticationData = processGoogleOAuthResponse(response);
+
+		// Store authentication data
+		storeAuthenticationData(authenticationData, updateAuthentication);
+
+		// Initialize language based on user preferences
+		await initializeLanguage(response.data.preferences);
+
+		// Navigate to homepage
+		navigate(Path.HOME_PAGE);
+	} catch (error: unknown) {
+		const errorMessage = getErrorFromAxiosError(error);
+		toast.error(errorMessage);
+	} finally {
+		// setIsLoading(false);
+	}
+};
+
 // Handle Google OAuth errors
 const handleGoogleOAuthError = (error: unknown): void => {
 	const errorMessage = getErrorFromAxiosError(error);
@@ -140,6 +185,17 @@ const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
 				setIsLoading
 			),
 		onError: (error) => handleGoogleOAuthError(error),
+	});
+
+	useGoogleOneTapLogin({
+		onSuccess: (credentialResponse) =>
+			handleGoogleOneTapSuccess(
+				credentialResponse,
+				updateAuthentication,
+				navigate,
+				setIsLoading
+			),
+		onError: () => toast.error(t('auth.google.error')),
 	});
 
 	return {

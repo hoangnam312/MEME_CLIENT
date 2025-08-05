@@ -40,6 +40,10 @@ interface InterfacePayloadGoogleOAuth {
 	access_token: string;
 }
 
+interface InterfacePayloadGoogleOneTap {
+	idToken: string;
+}
+
 interface InterfacePayloadFacebookOAuth {
 	access_token: string;
 }
@@ -68,6 +72,9 @@ const verifyEmail = (payload: InterfacePayloadVerifyEmail) =>
 const googleOAuth = (payload: InterfacePayloadGoogleOAuth) =>
 	api.post('/auth/google-oauth', payload);
 
+const googleOneTap = (payload: InterfacePayloadGoogleOneTap) =>
+	api.post('/auth/google-one-tap', payload);
+
 const facebookOAuth = (payload: InterfacePayloadFacebookOAuth) =>
 	api.post('/auth/facebook-oauth', payload);
 
@@ -81,6 +88,7 @@ export {
 	verifyEmail,
 	googleOAuth,
 	facebookOAuth,
+	googleOneTap,
 };
 
 export type {
@@ -93,4 +101,5 @@ export type {
 	InterfacePayloadVerifyEmail,
 	InterfacePayloadGoogleOAuth,
 	InterfacePayloadFacebookOAuth,
+	InterfacePayloadGoogleOneTap,
 };
