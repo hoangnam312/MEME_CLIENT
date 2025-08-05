@@ -1,4 +1,3 @@
-import { TokenResponse, useGoogleLogin } from '@react-oauth/google';
 import { useState } from 'react';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
@@ -10,13 +9,15 @@ import {
 	UserTimestamps,
 } from 'src/constants/auth.type';
 import { Path } from 'src/constants/type';
-import { googleOAuth } from 'src/service/auth';
+import { facebookOAuth } from 'src/service/auth';
 import { useBoundStore } from 'src/store/store';
 import { getErrorFromAxiosError } from 'src/utils/error';
 import { initializeLanguage } from 'src/utils/languageUtils';
 import { setToken } from 'src/utils/token';
+import { SuccessResponse as FacebookSuccessResponse } from '@greatsumini/react-facebook-login';
 
-interface GoogleOAuthResponse {
+// Types for better type safety
+interface FacebookOAuthResponse {
 	data: {
 		_id: string;
 		username: string;
@@ -30,7 +31,7 @@ interface GoogleOAuthResponse {
 			token: string;
 		};
 		isNewUser: boolean;
-		oauthProvider: 'google';
+		oauthProvider: 'facebook';
 	};
 }
 
@@ -46,17 +47,18 @@ interface AuthenticationData {
 	emailVerification: EmailVerificationStatus;
 	token: string;
 	isNewUser: boolean;
-	oauthProvider: 'google';
+	oauthProvider: 'facebook';
 }
 
-interface UseLoginWithGoogleReturn {
-	loginWithGoogle: () => void;
+interface UseLoginWithFacebookReturn {
 	isLoading: boolean;
+	onSuccess: (response: FacebookSuccessResponse) => void;
+	onError: (error: unknown) => void;
 }
 
-// Process Google OAuth API response
-const processGoogleOAuthResponse = (
-	response: GoogleOAuthResponse
+// Process Facebook OAuth API response
+const processFacebookOAuthResponse = (
+	response: FacebookOAuthResponse
 ): AuthenticationData => {
 	const newAuthenticationData: AuthenticationData = {
 		...response.data,
@@ -76,12 +78,9 @@ const storeAuthenticationData = (
 	updateAuthentication(authenticationData);
 };
 
-// Handle successful Google OAuth authentication
-const handleGoogleOAuthSuccess = async (
-	tokenResponse: Omit<
-		TokenResponse,
-		'error' | 'error_description' | 'error_uri'
-	>,
+// Handle successful Facebook OAuth authentication
+const handleFacebookOAuthSuccess = async (
+	accessToken: string,
 	updateAuthentication: (data: Partial<AuthenticationData>) => void,
 	navigate: (path: string) => void,
 	setIsLoading: (loading: boolean) => void
@@ -89,12 +88,12 @@ const handleGoogleOAuthSuccess = async (
 	try {
 		setIsLoading(true);
 
-		const response = await googleOAuth({
-			access_token: tokenResponse.access_token,
+		const response = await facebookOAuth({
+			access_token: accessToken,
 		});
 
 		// Process the response
-		const authenticationData = processGoogleOAuthResponse(response);
+		const authenticationData = processFacebookOAuthResponse(response);
 
 		// Store authentication data
 		storeAuthenticationData(authenticationData, updateAuthentication);
@@ -112,40 +111,38 @@ const handleGoogleOAuthSuccess = async (
 	}
 };
 
-// Handle Google OAuth errors
-const handleGoogleOAuthError = (error: unknown): void => {
+// Handle Facebook OAuth errors
+const handleFacebookOAuthError = (error: unknown): void => {
 	const errorMessage = getErrorFromAxiosError(error);
 	toast.error(errorMessage);
 };
 
-// work with localhost http://localhost:5173 not https
-const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
+// work with localhost https://localhost:5173 not http
+const useLoginWithFacebook = (): UseLoginWithFacebookReturn => {
 	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 	const updateAuthentication = useBoundStore(
 		(state) => state.authen.updateAuthen
 	);
 
-	const login = useGoogleLogin({
-		onSuccess: (
-			tokenResponse: Omit<
-				TokenResponse,
-				'error' | 'error_description' | 'error_uri'
-			>
-		) =>
-			handleGoogleOAuthSuccess(
-				tokenResponse,
-				updateAuthentication,
-				navigate,
-				setIsLoading
-			),
-		onError: (error) => handleGoogleOAuthError(error),
-	});
+	const onSuccess = (response: FacebookSuccessResponse) => {
+		handleFacebookOAuthSuccess(
+			response.accessToken,
+			updateAuthentication,
+			navigate,
+			setIsLoading
+		);
+	};
+
+	const onError = (error: unknown) => {
+		handleFacebookOAuthError(error);
+	};
 
 	return {
-		loginWithGoogle: login,
 		isLoading,
+		onSuccess,
+		onError,
 	};
 };
 
-export default useLoginWithGoogle;
+export default useLoginWithFacebook;

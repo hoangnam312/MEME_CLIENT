@@ -40,6 +40,10 @@ interface InterfacePayloadGoogleOAuth {
 	access_token: string;
 }
 
+interface InterfacePayloadFacebookOAuth {
+	access_token: string;
+}
+
 const login = (payload: InterfacePayloadLogin) =>
 	api.post<LoginResponse>('/auth/login', payload);
 
@@ -64,6 +68,9 @@ const verifyEmail = (payload: InterfacePayloadVerifyEmail) =>
 const googleOAuth = (payload: InterfacePayloadGoogleOAuth) =>
 	api.post('/auth/google-oauth', payload);
 
+const facebookOAuth = (payload: InterfacePayloadFacebookOAuth) =>
+	api.post('/auth/facebook-oauth', payload);
+
 export {
 	login,
 	register,
@@ -73,6 +80,7 @@ export {
 	sendVerificationCode,
 	verifyEmail,
 	googleOAuth,
+	facebookOAuth,
 };
 
 export type {
@@ -83,4 +91,6 @@ export type {
 	InterfacePayloadResetPassword,
 	InterfacePayloadSendVerificationCode,
 	InterfacePayloadVerifyEmail,
+	InterfacePayloadGoogleOAuth,
+	InterfacePayloadFacebookOAuth,
 };

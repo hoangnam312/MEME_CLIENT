@@ -1,27 +1,31 @@
-import { t } from 'i18next';
-import { useNavigate } from 'react-router';
-
 import {
 	faArrowLeft,
 	faUnlockKeyhole,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import FacebookLogin from '@greatsumini/react-facebook-login';
+import { t } from 'i18next';
+import { useNavigate } from 'react-router';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import MainIcon from 'src/assets/icon/MainIcon';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
-import { Path } from 'src/constants/type';
-
 import ASquareOutlineButton from 'src/component/atoms/ASquareOutlineButton/ASquareOutlineButton';
+import { Path } from 'src/constants/type';
 import useNavigateBack from 'src/hooks/useNavigateBack';
 import FormLogin from './FormLogin';
+import useLoginWithFacebook from './useLoginWithFacebook';
 import useLoginWithGoogle from './useLoginWithGoogle';
+
+const FACEBOOK_APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
 
 function Login() {
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
 	const { loginWithGoogle } = useLoginWithGoogle();
+	const { onSuccess: onSuccessFacebook, onError: onErrorFacebook } =
+		useLoginWithFacebook();
 
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
@@ -42,10 +46,21 @@ function Login() {
 									<GoogleIcon />
 									<span>{t('google')}</span>
 								</ASquareOutlineButton>
-								<ASquareOutlineButton addClass="mt-4">
-									<FacebookIcon />
-									<span>{t('facebook')}</span>
-								</ASquareOutlineButton>
+								<FacebookLogin
+									appId={FACEBOOK_APP_ID}
+									onSuccess={(response) => {
+										onSuccessFacebook(response);
+									}}
+									onFail={(error) => {
+										onErrorFacebook(error);
+									}}
+									render={({ onClick }) => (
+										<ASquareOutlineButton onClick={onClick} addClass="mt-4">
+											<FacebookIcon />
+											<span>{t('facebook')}</span>
+										</ASquareOutlineButton>
+									)}
+								/>
 							</div>
 						</div>
 						<div className="mt-2 flex flex-col items-center p-5 sm:flex-row">
