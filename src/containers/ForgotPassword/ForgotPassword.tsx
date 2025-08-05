@@ -1,7 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState } from 'react';
 
-import VerificationCodeInput from 'src/components/shared/VerificationCodeInput';
+import VerificationCodeInput from 'src/component/organisms/VerificationCodeInput/VerificationCodeInput';
 import { forgotPassword, verifyResetCode } from 'src/service/auth';
 import ForgotPasswordEmail from './components/ForgotPasswordEmail';
 import NewResetPassword from './components/ResetPassword';
