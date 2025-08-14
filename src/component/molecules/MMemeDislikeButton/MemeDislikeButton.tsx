@@ -20,27 +20,61 @@ const MemeDislikeButton = ({ data }: MemeDislikeButtonProps) => {
 	const [disliked, setDisliked] = useState(false);
 	const [dislikeBounce, setDislikeBounce] = useState(DislikeBounceState.None);
 
-	const handleDislike = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+	const handleDislike = async (
+		e: React.MouseEvent<HTMLElement, MouseEvent>
+	) => {
 		e.stopPropagation();
-		// TODO: call api to dislike
-		// TODO: call api to tracking
-		// fake api
-		trackingMeme({
-			memeId: data._id,
-			action: 'dislike',
-		});
-		if (!disliked) {
-			setDislikeBounce(DislikeBounceState.Dislike);
-			setTimeout(() => {
-				setDislikeBounce(DislikeBounceState.None);
-				setDisliked(true);
-			}, 1000);
-		} else {
-			setDislikeBounce(DislikeBounceState.Undislike);
-			setTimeout(() => {
-				setDislikeBounce(DislikeBounceState.None);
-				setDisliked(false);
-			}, 1000);
+
+		try {
+			// Track the dislike action with metadata
+			await trackingMeme({
+				memeId: data._id,
+				action: 'dislike',
+				metadata: {
+					deviceType:
+						window.innerWidth < 768
+							? 'mobile'
+							: window.innerWidth < 1024
+							? 'tablet'
+							: 'desktop',
+					sourceType: 'feed', // Can be enhanced to detect actual source
+					userAgent: navigator.userAgent,
+					userPreferences: {
+						language: navigator.language || 'en',
+					},
+				},
+			});
+
+			// Update local state
+			if (!disliked) {
+				setDislikeBounce(DislikeBounceState.Dislike);
+				setTimeout(() => {
+					setDislikeBounce(DislikeBounceState.None);
+					setDisliked(true);
+				}, 1000);
+			} else {
+				setDislikeBounce(DislikeBounceState.Undislike);
+				setTimeout(() => {
+					setDislikeBounce(DislikeBounceState.None);
+					setDisliked(false);
+				}, 1000);
+			}
+		} catch (error) {
+			console.error('Error tracking dislike action:', error);
+			// Fallback to local state change even if tracking fails
+			if (!disliked) {
+				setDislikeBounce(DislikeBounceState.Dislike);
+				setTimeout(() => {
+					setDislikeBounce(DislikeBounceState.None);
+					setDisliked(true);
+				}, 1000);
+			} else {
+				setDislikeBounce(DislikeBounceState.Undislike);
+				setTimeout(() => {
+					setDislikeBounce(DislikeBounceState.None);
+					setDisliked(false);
+				}, 1000);
+			}
 		}
 	};
 

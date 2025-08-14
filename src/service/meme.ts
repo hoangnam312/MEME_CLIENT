@@ -31,6 +31,16 @@ interface InterfaceResponseGetMemes {
 interface IBodyTrackingMeme {
 	memeId: string;
 	action: 'like' | 'copy' | 'view' | 'dislike' | 'add-to-album';
+	metadata?: {
+		deviceType?: 'desktop' | 'mobile' | 'tablet';
+		userAgent?: string;
+		viewDuration?: number;
+		sourceType?: 'feed' | 'search' | 'trending' | 'user_profile' | 'other';
+		referrer?: string;
+		userPreferences?: {
+			language?: string;
+		};
+	};
 }
 
 interface IParamsGetRecommendMemesByImage extends IParamsGetListCursor {
