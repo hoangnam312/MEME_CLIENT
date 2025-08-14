@@ -47,9 +47,26 @@ const mockTrendingMemes: ITrendingMeme[] = Array.from(
 		__v: 0,
 		imageMedium: `https://picsum.photos/800/1200?random=${index + 1}`,
 		imageSmall: `https://picsum.photos/400/600?random=${index + 1}`,
+		imageOrigin: `https://picsum.photos/1200/1800?random=${index + 1}`,
 		viewCount: Math.floor(Math.random() * 10000) + 1000,
 		likeCount: Math.floor(Math.random() * 5000) + 500,
 		copyCount: Math.floor(Math.random() * 2000) + 200,
+		dislikeCount: Math.floor(Math.random() * 500) + 50,
+		// Add missing required properties
+		image: {
+			imageOrigin: `https://picsum.photos/1200/1800?random=${index + 1}`,
+			imageMedium: `https://picsum.photos/800/1200?random=${index + 1}`,
+			imageSmall: `https://picsum.photos/400/600?random=${index + 1}`,
+		},
+		stats: {
+			viewCount: Math.floor(Math.random() * 10000) + 1000,
+			likeCount: Math.floor(Math.random() * 5000) + 500,
+			copyCount: Math.floor(Math.random() * 2000) + 200,
+			dislikeCount: Math.floor(Math.random() * 500) + 50,
+		},
+		status: 'active' as const,
+		createdAt: new Date().toISOString(),
+		updatedAt: new Date().toISOString(),
 		rank: index + 1,
 		analytics: {
 			likesGained: Math.floor(Math.random() * 1000) + 100,

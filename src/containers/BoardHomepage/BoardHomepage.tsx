@@ -4,7 +4,7 @@ import { useSearchParams } from 'react-router';
 import { debounce } from 'lodash';
 import ALoading from 'src/component/atoms/ALoading/ALoading';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
-import { IImage, IParamsGetListCursor } from 'src/constants/type';
+import { IMeme, IParamsGetListCursor } from 'src/constants/type';
 import { getMemes, getRecommendMemes } from 'src/service/meme';
 import { t } from 'i18next';
 
@@ -13,7 +13,7 @@ const initialParamsList: IParamsGetListCursor = {
 };
 
 export const BoardHomepage = () => {
-	const [listImage, setListImage] = useState<IImage[]>([]);
+	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const [isLoading, setIsLoading] = useState(false);

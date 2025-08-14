@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
-import { IImage } from 'src/constants/type';
-import { trackingMeme } from 'src/service/meme';
+import { IMeme } from 'src/constants/type';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 
 // Dislike bounce state enum
 export enum DislikeBounceState {
@@ -13,10 +13,11 @@ export enum DislikeBounceState {
 }
 
 interface MemeDislikeButtonProps {
-	data: IImage;
+	data: IMeme;
+	sourceType?: ESourceType;
 }
 
-const MemeDislikeButton = ({ data }: MemeDislikeButtonProps) => {
+const MemeDislikeButton = ({ data, sourceType }: MemeDislikeButtonProps) => {
 	const [disliked, setDisliked] = useState(false);
 	const [dislikeBounce, setDislikeBounce] = useState(DislikeBounceState.None);
 
@@ -27,23 +28,15 @@ const MemeDislikeButton = ({ data }: MemeDislikeButtonProps) => {
 
 		try {
 			// Track the dislike action with metadata
-			await trackingMeme({
-				memeId: data._id,
-				action: 'dislike',
-				metadata: {
-					deviceType:
-						window.innerWidth < 768
-							? 'mobile'
-							: window.innerWidth < 1024
-							? 'tablet'
-							: 'desktop',
-					sourceType: 'feed', // Can be enhanced to detect actual source
-					userAgent: navigator.userAgent,
-					userPreferences: {
-						language: navigator.language || 'en',
-					},
+			await trackingMeme(
+				{
+					memeId: data._id,
+					action: 'dislike',
 				},
-			});
+				{
+					sourceType: sourceType,
+				}
+			);
 
 			// Update local state
 			if (!disliked) {

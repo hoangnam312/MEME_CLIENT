@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
-import { IImage } from 'src/constants/type';
-import { trackingMeme } from 'src/service/meme';
+import { IMeme } from 'src/constants/type';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 
 // Like bounce state enum
 export enum LikeBounceState {
@@ -13,10 +13,11 @@ export enum LikeBounceState {
 }
 
 interface MemeLikeButtonProps {
-	data: IImage;
+	data: IMeme;
+	sourceType?: ESourceType;
 }
 
-const MemeLikeButton = ({ data }: MemeLikeButtonProps) => {
+const MemeLikeButton = ({ data, sourceType }: MemeLikeButtonProps) => {
 	const [liked, setLiked] = useState(false);
 	const [likeBounce, setLikeBounce] = useState(LikeBounceState.None);
 
@@ -25,10 +26,15 @@ const MemeLikeButton = ({ data }: MemeLikeButtonProps) => {
 		// TODO: call api to like
 		// TODO: call api to tracking
 		// fake api
-		trackingMeme({
-			memeId: data._id,
-			action: 'like',
-		});
+		trackingMeme(
+			{
+				memeId: data._id,
+				action: 'like',
+			},
+			{
+				sourceType: sourceType,
+			}
+		);
 		if (!liked) {
 			setLikeBounce(LikeBounceState.Like);
 			setTimeout(() => {
@@ -47,28 +53,28 @@ const MemeLikeButton = ({ data }: MemeLikeButtonProps) => {
 	if (!liked && likeBounce === LikeBounceState.None) {
 		return (
 			<AButton onClick={handleLike} isDisabled={false}>
-				<FontAwesomeIcon icon={faThumbsUp} className="text-white" />
+				<FontAwesomeIcon icon={faHeart} className="text-white" />
 			</AButton>
 		);
 	}
 	if (!liked && likeBounce === LikeBounceState.Like) {
 		return (
 			<AButton isDisabled={true}>
-				<FontAwesomeIcon icon={faThumbsUp} bounce />
+				<FontAwesomeIcon icon={faHeart} bounce />
 			</AButton>
 		);
 	}
 	if (liked && likeBounce === LikeBounceState.None) {
 		return (
 			<AButton onClick={handleLike} isDisabled={false}>
-				<FontAwesomeIcon icon={faThumbsUp} />
+				<FontAwesomeIcon icon={faHeart} />
 			</AButton>
 		);
 	}
 	if (liked && likeBounce === LikeBounceState.Unlike) {
 		return (
 			<AButton isDisabled={true}>
-				<FontAwesomeIcon icon={faThumbsUp} bounce />
+				<FontAwesomeIcon icon={faHeart} bounce />
 			</AButton>
 		);
 	}

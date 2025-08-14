@@ -8,8 +8,8 @@ import {
 import AButton from '../../atoms/AButton/AButton';
 import ALoading from '../../atoms/ALoading/ALoading';
 import useCopyImage from 'src/hooks/useCopy';
-import { IImage } from 'src/constants/type';
-import { trackingMeme } from 'src/service/meme';
+import { IMeme } from 'src/constants/type';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 
 export enum CopyState {
 	Idle = 'idle',
@@ -19,10 +19,11 @@ export enum CopyState {
 }
 
 interface MemeCopyButtonProps {
-	data: IImage;
+	data: IMeme;
+	sourceType?: ESourceType;
 }
 
-const MemeCopyButton = ({ data }: MemeCopyButtonProps) => {
+const MemeCopyButton = ({ data, sourceType }: MemeCopyButtonProps) => {
 	const [copyState, setCopyState] = useState<CopyState>(CopyState.Idle);
 	const { copyImage } = useCopyImage();
 	let copyTimeout: NodeJS.Timeout | null = null;
@@ -31,13 +32,18 @@ const MemeCopyButton = ({ data }: MemeCopyButtonProps) => {
 		e.stopPropagation();
 		setCopyState(CopyState.Copying);
 		try {
-			const result = await copyImage(data.location);
+			const result = await copyImage(data.image.imageOrigin);
 			if (result) {
 				setCopyState(CopyState.Success);
-				trackingMeme({
-					memeId: data._id,
-					action: 'copy',
-				});
+				trackingMeme(
+					{
+						memeId: data._id,
+						action: 'copy',
+					},
+					{
+						sourceType: sourceType,
+					}
+				);
 			} else {
 				setCopyState(CopyState.Failure);
 			}

@@ -5,7 +5,7 @@ import {
 	faFire,
 	faExclamationTriangle,
 } from '@fortawesome/free-solid-svg-icons';
-import { ITrendingMeme, IImage, TrendingTimeFrame } from 'src/constants/type';
+import { ITrendingMeme, IMeme, TrendingTimeFrame } from 'src/constants/type';
 import OTrendingMemeCard from '../OTrendingMemeCard/OTrendingMemeCard';
 import OViewImage from '../../../../component/organisms/OViewImage/OViewImage';
 import AButton from 'src/component/atoms/AButton/AButton';
@@ -29,11 +29,11 @@ const OTrendingColumn: React.FC<OTrendingColumnProps> = ({
 	addClass = '',
 }) => {
 	const { isOpen, openModal, closeModal } = useOpen();
-	const [selectedMeme, setSelectedMeme] = useState<IImage | null>(null);
+	const [selectedMeme, setSelectedMeme] = useState<IMeme | null>(null);
 
 	const handleMemeClick = (meme: ITrendingMeme) => {
-		// Convert ITrendingMeme to IImage for compatibility with OViewImage
-		const imageData: IImage = {
+		// Convert ITrendingMeme to IMeme for compatibility with OViewImage
+		const memeData: IMeme = {
 			_id: meme._id,
 			name: meme.name,
 			description: meme.description,
@@ -41,14 +41,30 @@ const OTrendingColumn: React.FC<OTrendingColumnProps> = ({
 			userId: meme.userId,
 			location: meme.location,
 			__v: meme.__v,
+			imageOrigin: meme.imageOrigin,
 			imageMedium: meme.imageMedium,
 			imageSmall: meme.imageSmall,
 			viewCount: meme.viewCount,
 			likeCount: meme.likeCount,
 			copyCount: meme.copyCount,
+			dislikeCount: meme.dislikeCount,
+			image: {
+				imageOrigin: meme.imageOrigin,
+				imageMedium: meme.imageMedium,
+				imageSmall: meme.imageSmall,
+			},
+			stats: {
+				viewCount: meme.viewCount,
+				likeCount: meme.likeCount,
+				copyCount: meme.copyCount,
+				dislikeCount: meme.dislikeCount,
+			},
+			status: meme.status,
+			createdAt: meme.createdAt,
+			updatedAt: meme.updatedAt,
 		};
 
-		setSelectedMeme(imageData);
+		setSelectedMeme(memeData);
 		openModal();
 	};
 

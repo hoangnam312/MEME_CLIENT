@@ -9,21 +9,25 @@ import MemeDislikeButton from 'src/component/molecules/MMemeDislikeButton/MemeDi
 import MemeLikeButton from 'src/component/molecules/MMemeLikeButton/MemeLikeButton';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 import { color } from 'src/config/style';
-import { IImage } from 'src/constants/type';
+import { IMeme } from 'src/constants/type';
 import { useAuthen } from 'src/hooks/useAuthen';
-import { getRecommendMemesByImage, trackingMeme } from 'src/service/meme';
+import {
+	ESourceType,
+	getRecommendMemesByImage,
+	trackingMeme,
+} from 'src/service/meme';
 import { OCardImage } from '../OCardImage/OCardImage';
 
 export interface OViewImagePropsType {
 	isOpen: boolean;
-	data: IImage;
+	data: IMeme;
 	closeModal: () => void;
 }
 
 const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	const { isLoggedIn } = useAuthen();
-	const [listImage, setListImage] = useState<IImage[]>([]);
-	const [dataImage, setDataImage] = useState<IImage>(data);
+	const [listImage, setListImage] = useState<IMeme[]>([]);
+	const [dataImage, setDataImage] = useState<IMeme>(data);
 
 	// change to get creator data from data prop
 	const creatorData = {
@@ -52,11 +56,16 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	// 	closeModal();
 	// }
 
-	const handleClick = (item: IImage) => {
-		trackingMeme({
-			memeId: item._id,
-			action: 'view',
-		});
+	const handleClick = (item: IMeme) => {
+		trackingMeme(
+			{
+				memeId: item._id,
+				action: 'view',
+			},
+			{
+				sourceType: ESourceType.Detail,
+			}
+		);
 		const newData = listImage.find((image) => image._id === item._id);
 		if (newData) {
 			setDataImage(newData);
@@ -76,10 +85,10 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 			<div className="grid grid-cols-3 gap-4">
 				<div className="relative col-span-2">
 					<div className="mb-3 mt-10 flex items-center justify-center rounded-lg text-5xl">
-						{dataImage?.imageMedium ? (
+						{dataImage?.image.imageMedium ? (
 							<img
-								src={dataImage.imageMedium}
-								alt={dataImage.imageMedium}
+								src={dataImage.image.imageMedium}
+								alt={dataImage.image.imageMedium}
 								className="max-xl max-h-96"
 							/>
 						) : (
@@ -96,9 +105,18 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 						<div className="flex justify-start gap-4 self-center">
 							{isLoggedIn() && (
 								<>
-									<MemeLikeButton data={data} />
-									<MemeDislikeButton data={data} />
-									<MemeAlbumButton data={data} />
+									<MemeLikeButton
+										data={dataImage}
+										sourceType={ESourceType.Detail}
+									/>
+									<MemeDislikeButton
+										data={dataImage}
+										sourceType={ESourceType.Detail}
+									/>
+									<MemeAlbumButton
+										data={dataImage}
+										sourceType={ESourceType.Detail}
+									/>
 								</>
 							)}
 						</div>
@@ -112,7 +130,10 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								<FontAwesomeIcon icon={faTrashCan} />
 							</AButton>
 						)} */}
-							<MemeCopyButton data={dataImage} />
+							<MemeCopyButton
+								data={dataImage}
+								sourceType={ESourceType.Detail}
+							/>
 						</div>
 					</div>
 
@@ -123,15 +144,15 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 							<div className="flex items-center gap-6 text-sm text-gray-500">
 								<span className="flex items-center gap-1">
 									<FontAwesomeIcon icon={faEye} size="sm" />
-									{dataImage?.viewCount || 0}
+									{dataImage?.stats.viewCount || 0}
 								</span>
 								<span className="flex items-center gap-1">
 									<FontAwesomeIcon icon={faThumbsUp} size="sm" />
-									{dataImage?.likeCount || 0}
+									{dataImage?.stats.likeCount || 0}
 								</span>
 								<span className="flex items-center gap-1">
 									<FontAwesomeIcon icon={faCopy} size="sm" />
-									{dataImage?.copyCount || 0}
+									{dataImage?.stats.copyCount || 0}
 								</span>
 							</div>
 

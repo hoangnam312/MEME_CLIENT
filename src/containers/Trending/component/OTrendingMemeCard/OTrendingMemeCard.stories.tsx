@@ -41,9 +41,26 @@ const sampleTrendingMeme: ITrendingMeme = {
 	__v: 0,
 	imageMedium: 'https://picsum.photos/800/1200?random=1',
 	imageSmall: 'https://picsum.photos/400/600?random=1',
+	imageOrigin: 'https://picsum.photos/1200/1800?random=1',
 	viewCount: 1500,
 	likeCount: 1200,
 	copyCount: 450,
+	dislikeCount: 50,
+	// Add missing required properties
+	image: {
+		imageOrigin: 'https://picsum.photos/1200/1800?random=1',
+		imageMedium: 'https://picsum.photos/800/1200?random=1',
+		imageSmall: 'https://picsum.photos/400/600?random=1',
+	},
+	stats: {
+		viewCount: 1500,
+		likeCount: 1200,
+		copyCount: 450,
+		dislikeCount: 50,
+	},
+	status: 'active' as const,
+	createdAt: new Date().toISOString(),
+	updatedAt: new Date().toISOString(),
 	rank: 1,
 	analytics: {
 		likesGained: 300,
@@ -140,7 +157,7 @@ export const WithoutName: Story = {
 	args: {
 		data: {
 			...sampleTrendingMeme,
-			name: undefined,
+			name: 'Unnamed Meme',
 		},
 	},
 };

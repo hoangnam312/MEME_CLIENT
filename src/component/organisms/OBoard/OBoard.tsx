@@ -1,12 +1,12 @@
 import useOpen from 'src/hooks/useOpen';
 import { OCardImage } from '../OCardImage/OCardImage';
-import { IImage } from 'src/constants/type';
+import { IMeme } from 'src/constants/type';
 import OViewImage from '../OViewImage/OViewImage';
 import { useState } from 'react';
-import { trackingMeme } from 'src/service/meme';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 
 export interface OBoardPropsType {
-	imageArray: IImage[];
+	imageArray: IMeme[];
 	addClass?: string;
 	addClassWrapperImage?: string;
 }
@@ -17,13 +17,18 @@ export const OBoard = ({
 	addClassWrapperImage = 'mb-4',
 }: OBoardPropsType) => {
 	const { isOpen, openModal, closeModal } = useOpen();
-	const [dataImage, setDataImage] = useState<IImage>();
+	const [dataImage, setDataImage] = useState<IMeme>();
 
-	const handleClick = (item: IImage) => {
-		trackingMeme({
-			memeId: item._id,
-			action: 'view',
-		});
+	const handleClick = (item: IMeme) => {
+		trackingMeme(
+			{
+				memeId: item._id,
+				action: 'view',
+			},
+			{
+				sourceType: ESourceType.Feed,
+			}
+		);
 		openModal();
 		setDataImage(item);
 	};

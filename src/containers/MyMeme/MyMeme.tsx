@@ -3,7 +3,7 @@ import { t } from 'i18next';
 
 import { useSearchParams } from 'react-router';
 
-import { IImage } from 'src/constants/type';
+import { IMeme } from 'src/constants/type';
 import { getMemes } from 'src/service/meme';
 import { useBoundStore } from 'src/store/store';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
@@ -12,7 +12,7 @@ import ATabs from 'src/component/atoms/ATabs/ATabs';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 
 function MyMeme() {
-	const [listImage, setListImage] = useState<IImage[]>([]);
+	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const authen = useBoundStore((state) => state.authen);
@@ -59,5 +59,4 @@ function MyMeme() {
 		</OModalRequiredAuthen>
 	);
 }
-
 export default MyMeme;

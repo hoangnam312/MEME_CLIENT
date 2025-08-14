@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
 import { ITrendingMeme } from 'src/constants/type';
 import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
-import { trackingMeme } from 'src/service/meme';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 import { OCardImage } from '../../../../component/organisms/OCardImage/OCardImage';
 
 export interface OTrendingMemeCardProps {
@@ -23,10 +23,15 @@ const OTrendingMemeCard: React.FC<OTrendingMemeCardProps> = ({
 	const [isHover, setIsHover] = useState(false);
 
 	const handleClick = () => {
-		trackingMeme({
-			memeId: data._id,
-			action: 'view',
-		});
+		trackingMeme(
+			{
+				memeId: data._id,
+				action: 'view',
+			},
+			{
+				sourceType: ESourceType.Trending,
+			}
+		);
 		if (onClick) onClick();
 	};
 

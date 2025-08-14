@@ -2,8 +2,8 @@ import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPlusSquare, faSquareCheck } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
-import { IImage } from 'src/constants/type';
-import { trackingMeme } from 'src/service/meme';
+import { IMeme } from 'src/constants/type';
+import { ESourceType, trackingMeme } from 'src/service/meme';
 
 // Album bounce state enum
 export enum AlbumBounceState {
@@ -13,10 +13,11 @@ export enum AlbumBounceState {
 }
 
 interface MemeAlbumButtonProps {
-	data: IImage;
+	data: IMeme;
+	sourceType?: ESourceType;
 }
 
-const MemeAlbumButton = ({ data }: MemeAlbumButtonProps) => {
+const MemeAlbumButton = ({ data, sourceType }: MemeAlbumButtonProps) => {
 	const [addedToAlbum, setAddedToAlbum] = useState(false);
 	const [albumBounce, setAlbumBounce] = useState(AlbumBounceState.None);
 
@@ -24,10 +25,15 @@ const MemeAlbumButton = ({ data }: MemeAlbumButtonProps) => {
 		// TODO: call api add to album
 		// TODO: call api to tracking
 		// fake api
-		trackingMeme({
-			memeId: data._id,
-			action: 'add-to-album',
-		});
+		trackingMeme(
+			{
+				memeId: data._id,
+				action: 'add-to-album',
+			},
+			{
+				sourceType: sourceType,
+			}
+		);
 		e.stopPropagation();
 		if (!addedToAlbum) {
 			setAlbumBounce(AlbumBounceState.Add);
