@@ -1,4 +1,4 @@
-import { BulkErrorResponse, ApiError } from '../types';
+import { ApiError, BulkErrorResponse } from '../types/api';
 
 export interface NetworkError {
 	response?: {
