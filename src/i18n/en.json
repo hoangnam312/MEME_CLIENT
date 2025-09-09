@@ -347,5 +347,69 @@
 
 	"auth": {
 		"loginRequired": "Please log in to continue"
+	},
+
+	"bulkUpload": {
+		"button": "Got many memes? Upload them here.",
+		"title": "Bulk Meme Upload",
+		"subtitle": "Upload up to 50 memes at once",
+		"dropZone": {
+			"title": "Drop your memes here",
+			"subtitle": "or click to browse",
+			"constraints": "Max 50 files • 10MB per file • Images only"
+		},
+		"addMore": "Add More",
+		"fileSelected": "file",
+		"filesSelected": "files",
+		"selected": "selected",
+		"mbTotal": "MB total",
+		"clearAll": "Clear All",
+		"uploadAll": "Upload All Memes",
+		"goBack": "Go back",
+		"removeFile": "Remove file",
+		"editMetadata": "Edit metadata",
+		"mb": "MB",
+		"errors": {
+			"notImage": "{{fileName}} is not an image file",
+			"exceedsSize": "{{fileName}} exceeds 10MB size limit",
+			"maxFiles": "Maximum {{max}} files allowed. Only first {{max}} files added.",
+			"noFiles": "Please select files to upload",
+			"trackingLost": "Upload tracking connection lost",
+			"initFailed": "Failed to initiate bulk upload",
+			"uploadFailed": "Failed to upload memes"
+		},
+		"fileMetadata": {
+			"title": "Edit Meme Details",
+			"close": "Close",
+			"memeName": "Meme Name",
+			"namePlaceholder": "Enter a name for this meme",
+			"description": "Description",
+			"descriptionPlaceholder": "Add a description (optional)",
+			"cancel": "Cancel",
+			"saveChanges": "Save Changes"
+		},
+		"progress": {
+			"uploadComplete": "Upload Complete!",
+			"uploadFailed": "Upload Failed",
+			"uploadingMemes": "Uploading Your Memes...",
+			"progress": "Progress:",
+			"success": "Success:",
+			"failed": "Failed:",
+			"timeRemaining": "Time Remaining:",
+			"processingMemes": "Processing your memes...",
+			"processingDescription": "This may take a few minutes depending on the number of files. You can leave this page right now.",
+			"noResultsYet": "No results yet",
+			"successfullyUploaded": "Successfully uploaded {{successCount}} out of {{totalFiles}} memes!",
+			"filesFailedToUpload": "{{failedCount}} file{{plural}} failed to upload.",
+			"totalTime": "Total time: {{time}}",
+			"uploadProcessError": "Upload process encountered an error",
+			"tryAgainMessage": "Please try uploading your memes again.",
+			"tryAgain": "Try Again",
+			"goToMyMemes": "Go to My Memes",
+			"milestoneAnnouncement": "Upload progress: {{percentage}}% complete",
+			"completedAnnouncement": "Upload completed. {{successCount}} out of {{totalFiles}} memes uploaded successfully.",
+			"errorAnnouncement": "Upload process encountered an error.",
+			"processingAnnouncement": "Processing memes has started."
+		}
 	}
 }

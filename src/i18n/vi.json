@@ -322,7 +322,7 @@
 		"block": "Bạn đã đạt đến số lần thử tối đa. Vui lòng thử lại sau."
 	},
 
-	"follow": {
+	"followToast": {
 		"followSuccess": "Đã theo dõi {{username}} thành công",
 		"unfollowSuccess": "Đã bỏ theo dõi {{username}} thành công",
 		"followError": "Không thể theo dõi người dùng. Vui lòng thử lại.",
@@ -343,5 +343,69 @@
 
 	"auth": {
 		"loginRequired": "Vui lòng đăng nhập để tiếp tục"
+	},
+
+	"bulkUpload": {
+		"button": "Bạn có nhiều meme? Upload ở đây",
+		"title": "Tải lên hàng loạt Meme",
+		"subtitle": "Tải lên tối đa 50 meme cùng lúc",
+		"dropZone": {
+			"title": "Thả meme của bạn vào đây",
+			"subtitle": "hoặc nhấp để duyệt",
+			"constraints": "Tối đa 50 tệp • 10MB mỗi tệp • Chỉ hình ảnh"
+		},
+		"addMore": "Thêm nữa",
+		"fileSelected": "tệp",
+		"filesSelected": "tệp",
+		"selected": "đã chọn",
+		"mbTotal": "MB tổng cộng",
+		"clearAll": "Xóa tất cả",
+		"uploadAll": "Tải lên tất cả Meme",
+		"goBack": "Quay lại",
+		"removeFile": "Xóa tệp",
+		"editMetadata": "Chỉnh sửa thông tin",
+		"mb": "MB",
+		"errors": {
+			"notImage": "{{fileName}} không phải là tệp hình ảnh",
+			"exceedsSize": "{{fileName}} vượt quá giới hạn 10MB",
+			"maxFiles": "Tối đa {{max}} tệp được phép. Chỉ {{max}} tệp đầu tiên được thêm.",
+			"noFiles": "Vui lòng chọn tệp để tải lên",
+			"trackingLost": "Mất kết nối theo dõi tải lên",
+			"initFailed": "Không thể khởi tạo tải lên hàng loạt",
+			"uploadFailed": "Không thể tải lên meme"
+		},
+		"fileMetadata": {
+			"title": "Chỉnh sửa chi tiết Meme",
+			"close": "Đóng",
+			"memeName": "Tên Meme",
+			"namePlaceholder": "Nhập tên cho meme này",
+			"description": "Mô tả",
+			"descriptionPlaceholder": "Thêm mô tả (tùy chọn)",
+			"cancel": "Hủy",
+			"saveChanges": "Lưu thay đổi"
+		},
+		"progress": {
+			"uploadComplete": "Tải lên hoàn tất!",
+			"uploadFailed": "Tải lên thất bại",
+			"uploadingMemes": "Đang tải lên Meme của bạn...",
+			"progress": "Tiến trình:",
+			"success": "Thành công:",
+			"failed": "Thất bại:",
+			"timeRemaining": "Thời gian còn lại:",
+			"processingMemes": "Đang xử lý meme của bạn...",
+			"processingDescription": "Quá trình này có thể mất vài phút tùy thuộc vào số lượng tệp. Bạn có thể rời khỏi trang này ngay bây giờ.",
+			"noResultsYet": "Chưa có kết quả",
+			"successfullyUploaded": "Đã tải lên thành công {{successCount}} trong số {{totalFiles}} meme!",
+			"filesFailedToUpload": "{{failedCount}} tệp{{plural}} tải lên thất bại.",
+			"totalTime": "Tổng thời gian: {{time}}",
+			"uploadProcessError": "Quá trình tải lên gặp lỗi",
+			"tryAgainMessage": "Vui lòng thử tải lên meme của bạn lần nữa.",
+			"tryAgain": "Thử lại",
+			"goToMyMemes": "Đi đến Meme của tôi",
+			"milestoneAnnouncement": "Tiến trình tải lên: {{percentage}}% hoàn thành",
+			"completedAnnouncement": "Tải lên hoàn tất. {{successCount}} trong số {{totalFiles}} meme đã được tải lên thành công.",
+			"errorAnnouncement": "Quá trình tải lên gặp lỗi.",
+			"processingAnnouncement": "Đã bắt đầu xử lý meme."
+		}
 	}
 }

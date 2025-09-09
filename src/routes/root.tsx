@@ -12,6 +12,7 @@ import ForgotPassword from 'src/containers/ForgotPassword/ForgotPassword';
 import PrivacyPolicy from 'src/containers/PrivacyPolicy/PrivacyPolicy';
 import TermsOfService from 'src/containers/TermsOfService/TermsOfService';
 import DataDeletionGuide from 'src/containers/DataDeletionGuide/DataDeletionGuide';
+import BulkUpload from 'src/containers/BulkUpload/BulkUpload';
 
 const AppRoutes = () => {
 	return (
@@ -19,6 +20,8 @@ const AppRoutes = () => {
 			<Route element={<Layout />}>
 				<Route index element={<BoardHomepage />} />
 				<Route path="my-meme" element={<MyMeme />} />
+				<Route path="bulk-upload" element={<BulkUpload />} />
+				<Route path="bulk-upload/:uploadId" element={<BulkUpload />} />
 				<Route path="trending" element={<Trending />} />
 				<Route path="trending-users" element={<TrendingUsers />} />
 				<Route path="account" element={<Account />} />

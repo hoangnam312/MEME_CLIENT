@@ -1,7 +1,12 @@
+import { faImages } from '@fortawesome/free-solid-svg-icons';
 import { t } from 'i18next';
+import { useNavigate } from 'react-router';
 
 import AModal from 'src/component/atoms/AModal/AModal';
+import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Path } from 'src/constants/type';
 import UploadImage from './UploadImage';
 
 export interface OUploadModalPropsType {
@@ -10,6 +15,13 @@ export interface OUploadModalPropsType {
 }
 
 const OUploadModal = ({ isOpen, closeModal }: OUploadModalPropsType) => {
+	const navigate = useNavigate();
+
+	const handleBulkUpload = () => {
+		closeModal();
+		navigate(Path.BULK_UPLOAD);
+	};
+
 	return (
 		<AModal
 			isOpen={isOpen}
@@ -22,6 +34,16 @@ const OUploadModal = ({ isOpen, closeModal }: OUploadModalPropsType) => {
 				</h3>
 
 				<UploadImage closeModal={closeModal} />
+
+				<div className="mt-3 flex justify-end">
+					<AOutlineButton
+						onClick={handleBulkUpload}
+						addClass="text-sm flex items-center gap-2"
+					>
+						<FontAwesomeIcon icon={faImages} className="text-base" />
+						{t('bulkUpload.button')}
+					</AOutlineButton>
+				</div>
 			</div>
 		</AModal>
 	);

@@ -134,6 +134,7 @@ export enum typeModal {
 export enum Path {
 	HOME_PAGE = '/',
 	MY_MEME = '/my-meme',
+	BULK_UPLOAD = '/bulk-upload',
 	TRENDING = '/trending',
 	TRENDING_USERS = '/trending-users',
 	ACCOUNT = '/account',
