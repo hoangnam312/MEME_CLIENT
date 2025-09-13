@@ -1,4 +1,4 @@
-import { faBars, faFire, faUsers } from '@fortawesome/free-solid-svg-icons';
+import { faBars, faFire, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
 import { useNavigate } from 'react-router';
@@ -23,6 +23,11 @@ const MNavDropdown = () => {
 			value: 'trending-users',
 			icon: <FontAwesomeIcon icon={faUsers} className="mr-2" />,
 		},
+		{
+			label: t('bulkUpload.title'),
+			value: 'bulk-upload',
+			icon: <FontAwesomeIcon icon={faImages} className="mr-2" />,
+		},
 	];
 
 	// Options for guests (not logged in)
@@ -46,6 +51,9 @@ const MNavDropdown = () => {
 				break;
 			case 'trending-users':
 				navigate(Path.TRENDING_USERS);
+				break;
+			case 'bulk-upload':
+				navigate(Path.BULK_UPLOAD);
 				break;
 			default:
 				break;
