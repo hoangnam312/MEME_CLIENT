@@ -1,4 +1,9 @@
-import { faBars, faFire, faUsers, faImages } from '@fortawesome/free-solid-svg-icons';
+import {
+	faBars,
+	faFire,
+	faUsers,
+	faImages,
+} from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
 import { useNavigate } from 'react-router';

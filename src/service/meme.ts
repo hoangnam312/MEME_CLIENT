@@ -53,6 +53,23 @@ interface IParamsGetRecommendMemesByImage extends IParamsGetListCursor {
 	imageId: string;
 }
 
+// New types for recommendation API
+interface IRecommendationParams {
+	limit?: number;
+	cursor?: string;
+}
+
+interface IRecommendationPagination {
+	hasNext: boolean;
+	nextCursor: string | null;
+	total?: number;
+}
+
+interface IRecommendationResponse {
+	data: IMeme[];
+	pagination: IRecommendationPagination;
+}
+
 const createMeme = (payload: FormData) =>
 	api.post('/meme', payload, {
 		headers: {
@@ -66,8 +83,13 @@ const getMemes = (params?: InterfaceParamsGetMemes) =>
 const deleteMeme = (params?: InterfaceId) =>
 	api.delete<InterfaceResponseGetMemes>(`/meme/${params?.id}`);
 
-const getRecommendMemes = (params?: IParamsGetListCursor) =>
+// Legacy recommendation endpoint (to be deprecated)
+const getRecommendMemesLegacy = (params?: IParamsGetListCursor) =>
 	api.get<IResponseGetListCursor<IMeme>>('/meme/recommend', { params });
+
+// New recommendation endpoint with cursor pagination
+const getRecommendMemes = (params?: IRecommendationParams) =>
+	api.get<IRecommendationResponse>('/recommend', { params });
 
 const getRecommendMemesByImage = (params?: IParamsGetRecommendMemesByImage) =>
 	api.get<IResponseGetListCursor<IMeme>>('/meme/recommend/by-image', {
@@ -105,6 +127,7 @@ export {
 	getMemes,
 	deleteMeme,
 	getRecommendMemes,
+	getRecommendMemesLegacy,
 	trackingMeme,
 	getRecommendMemesByImage,
 	getTrendingMemes,
@@ -117,4 +140,7 @@ export type {
 	InterfaceResponseGetMemes,
 	IBodyTrackingMeme,
 	IParamsGetRecommendMemesByImage,
+	IRecommendationParams,
+	IRecommendationResponse,
+	IRecommendationPagination,
 };

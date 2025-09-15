@@ -4,11 +4,15 @@ import { useSearchParams } from 'react-router';
 import { debounce } from 'lodash';
 import ALoading from 'src/component/atoms/ALoading/ALoading';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
-import { IMeme, IParamsGetListCursor } from 'src/constants/type';
-import { getMemes, getRecommendMemes } from 'src/service/meme';
+import { IMeme } from 'src/constants/type';
+import {
+	getMemes,
+	getRecommendMemes,
+	IRecommendationParams,
+} from 'src/service/meme';
 import { t } from 'i18next';
 
-const initialParamsList: IParamsGetListCursor = {
+const initialParams: IRecommendationParams = {
 	limit: 50,
 };
 
@@ -17,31 +21,46 @@ export const BoardHomepage = () => {
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const [isLoading, setIsLoading] = useState(false);
-	const [isEnd, setIsEnd] = useState(false);
-	const [paramsList, setParamsList] =
-		useState<IParamsGetListCursor>(initialParamsList);
+	const [hasNext, setHasNext] = useState(true);
+	const [nextCursor, setNextCursor] = useState<string | null>(null);
+	const [params, setParams] = useState<IRecommendationParams>(initialParams);
 
 	const debouncedFetchMemes = debounce(
-		async (currentParamsList: IParamsGetListCursor) => {
+		async (currentParams: IRecommendationParams) => {
 			setIsLoading(true);
-			const res = await getRecommendMemes(currentParamsList);
-			if (res?.data) {
-				setListImage((prev) => [...prev, ...(res?.data?.data ?? [])]);
-				setParamsList((prev) => ({
-					...prev,
-					lastScore: res?.data?.lastScore,
-					lastId: res?.data?.lastId,
-				}));
-				setIsEnd(res.data.isEnd);
+			try {
+				const res = await getRecommendMemes(currentParams);
+				if (res?.data) {
+					if (currentParams.cursor) {
+						// Append to existing list when paginating
+						setListImage((prev) => [...prev, ...(res.data.data ?? [])]);
+					} else {
+						// Replace list when starting fresh
+						setListImage(res.data.data ?? []);
+					}
+					setHasNext(res.data.pagination.hasNext);
+					setNextCursor(res.data.pagination.nextCursor);
+				}
+			} catch (error) {
+				console.error('Failed to fetch recommendations:', error);
+				// On error, disable further pagination
+				setHasNext(false);
 			}
 			setIsLoading(false);
 		},
 		300
 	);
 
-	const fetchMemes = useCallback(() => {
-		debouncedFetchMemes(paramsList);
-	}, [paramsList, debouncedFetchMemes]);
+	const fetchMemes = useCallback(
+		(useCursor = false) => {
+			const fetchParams: IRecommendationParams = {
+				...params,
+				...(useCursor && nextCursor ? { cursor: nextCursor } : {}),
+			};
+			debouncedFetchMemes(fetchParams);
+		},
+		[params, nextCursor, debouncedFetchMemes]
+	);
 
 	const fetchSearchMemes = async () => {
 		setIsLoading(true);
@@ -55,28 +74,32 @@ export const BoardHomepage = () => {
 		if (searchValue) {
 			fetchSearchMemes();
 		} else {
-			setParamsList(initialParamsList);
-			fetchMemes();
+			// Reset state and fetch fresh recommendations
+			setParams(initialParams);
+			setNextCursor(null);
+			setHasNext(true);
+			setListImage([]);
+			fetchMemes(false);
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchValue]);
 
 	useEffect(() => {
-		if (isEnd) return;
+		if (!hasNext || searchValue) return;
 		const handleScroll = () => {
 			if (
 				window.innerHeight + document.documentElement.scrollTop >=
 					document.documentElement.offsetHeight - 250 &&
-				!isLoading
+				!isLoading &&
+				hasNext
 			) {
-				setIsLoading(true);
-				fetchMemes();
+				fetchMemes(true);
 			}
 		};
 
 		window.addEventListener('scroll', handleScroll);
 		return () => window.removeEventListener('scroll', handleScroll);
-	}, [isLoading, isEnd, fetchMemes]);
+	}, [isLoading, hasNext, searchValue, fetchMemes]);
 
 	return (
 		<>
@@ -86,7 +109,7 @@ export const BoardHomepage = () => {
 					<ALoading isLoading={isLoading} />
 				</div>
 			)}
-			{isEnd && (
+			{!hasNext && listImage.length > 0 && (
 				<div className="my-4 flex justify-center">
 					<p className="text-sm text-gray-500">
 						{searchValue
