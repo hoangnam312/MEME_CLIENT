@@ -7,13 +7,14 @@ import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import { IMeme } from 'src/constants/type';
 import {
 	getMemes,
-	getRecommendMemes,
-	IRecommendationParams,
+	getRandomRecommendMemes,
+	IRandomRecommendationParams,
 } from 'src/service/meme';
 import { t } from 'i18next';
 
-const initialParams: IRecommendationParams = {
+const initialParams: IRandomRecommendationParams = {
 	limit: 50,
+	excludeViewed: false,
 };
 
 export const BoardHomepage = () => {
@@ -22,28 +23,29 @@ export const BoardHomepage = () => {
 	const searchValue = searchParams.get('search');
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasNext, setHasNext] = useState(true);
-	const [nextCursor, setNextCursor] = useState<string | null>(null);
-	const [params, setParams] = useState<IRecommendationParams>(initialParams);
+	const [params, setParams] =
+		useState<IRandomRecommendationParams>(initialParams);
 
 	const debouncedFetchMemes = debounce(
-		async (currentParams: IRecommendationParams) => {
+		async (currentParams: IRandomRecommendationParams) => {
 			setIsLoading(true);
 			try {
-				const res = await getRecommendMemes(currentParams);
-				if (res?.data) {
-					if (currentParams.cursor) {
-						// Append to existing list when paginating
-						setListImage((prev) => [...prev, ...(res.data.data ?? [])]);
-					} else {
-						// Replace list when starting fresh
-						setListImage(res.data.data ?? []);
-					}
-					setHasNext(res.data.pagination.hasNext);
-					setNextCursor(res.data.pagination.nextCursor);
+				const res = await getRandomRecommendMemes(currentParams);
+				if (res?.data?.success) {
+					const memes = res.data.data.memes.map((meme) => ({
+						...meme,
+						imageMedium: meme.image.imageMedium,
+						imageSmall: meme.image.imageSmall,
+						imageOrigin: meme.image.imageOrigin,
+						viewCount: meme.stats.viewCount,
+						likeCount: meme.stats.likeCount,
+						copyCount: meme.stats.copyCount,
+						dislikeCount: meme.stats.dislikeCount,
+					})) as IMeme[];
+					setListImage((prev) => [...prev, ...memes]);
+					setHasNext(memes.length === currentParams.limit);
 				}
 			} catch (error) {
-				console.error('Failed to fetch recommendations:', error);
-				// On error, disable further pagination
 				setHasNext(false);
 			}
 			setIsLoading(false);
@@ -51,16 +53,9 @@ export const BoardHomepage = () => {
 		300
 	);
 
-	const fetchMemes = useCallback(
-		(useCursor = false) => {
-			const fetchParams: IRecommendationParams = {
-				...params,
-				...(useCursor && nextCursor ? { cursor: nextCursor } : {}),
-			};
-			debouncedFetchMemes(fetchParams);
-		},
-		[params, nextCursor, debouncedFetchMemes]
-	);
+	const fetchMemes = useCallback(() => {
+		debouncedFetchMemes(params);
+	}, [params, debouncedFetchMemes]);
 
 	const fetchSearchMemes = async () => {
 		setIsLoading(true);
@@ -74,12 +69,10 @@ export const BoardHomepage = () => {
 		if (searchValue) {
 			fetchSearchMemes();
 		} else {
-			// Reset state and fetch fresh recommendations
 			setParams(initialParams);
-			setNextCursor(null);
 			setHasNext(true);
 			setListImage([]);
-			fetchMemes(false);
+			fetchMemes();
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchValue]);
@@ -93,7 +86,7 @@ export const BoardHomepage = () => {
 				!isLoading &&
 				hasNext
 			) {
-				fetchMemes(true);
+				fetchMemes();
 			}
 		};
 

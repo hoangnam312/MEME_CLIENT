@@ -26,22 +26,23 @@ export const useFrequentMemes = (userId: string): UseFrequentMemesReturn => {
 			if (!userId) return;
 
 			setIsLoading(true);
+
 			try {
+				const hasCursorData = nextCursor?.lastPoint && nextCursor?.lastMemeId;
+				const shouldUseCursor = loadMore && hasCursorData;
+
 				const params: IGetFrequentMemesParams = {
 					limit: 50,
-					...(loadMore && nextCursor?.lastPoint && nextCursor?.lastMemeId
-						? {
-							lastPoint: nextCursor.lastPoint,
-							lastMemeId: nextCursor.lastMemeId,
-						}
-						: {}),
+					...(shouldUseCursor && {
+						lastPoint: nextCursor.lastPoint,
+						lastMemeId: nextCursor.lastMemeId,
+					}),
 				};
 
 				const res = await getUserFrequentMemes(userId, params);
+				const newMemes = res.data.data;
 
-				setMemes((prev) =>
-					loadMore ? [...prev, ...res.data.data] : res.data.data
-				);
+				setMemes((prev) => (loadMore ? [...prev, ...newMemes] : newMemes));
 				setHasNext(res.data.hasNext);
 				setNextCursor(res.data.nextCursor || null);
 			} catch (error) {

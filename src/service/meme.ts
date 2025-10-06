@@ -53,7 +53,6 @@ interface IParamsGetRecommendMemesByImage extends IParamsGetListCursor {
 	imageId: string;
 }
 
-// New types for recommendation API
 interface IRecommendationParams {
 	limit?: number;
 	cursor?: string;
@@ -68,6 +67,48 @@ interface IRecommendationPagination {
 interface IRecommendationResponse {
 	data: IMeme[];
 	pagination: IRecommendationPagination;
+}
+
+interface IRandomRecommendationParams {
+	limit?: number;
+	excludeViewed?: boolean;
+	category?: string;
+}
+
+interface IRandomMemeItem {
+	_id: string;
+	name: string;
+	description?: string;
+	image: {
+		imageOrigin: string;
+		imageMedium: string;
+		imageSmall: string;
+	};
+	userId: string;
+	imageAnalysis?: {
+		tags: string[];
+		captions: string[];
+		text: string[];
+	};
+	stats: {
+		viewCount: number;
+		likeCount: number;
+		copyCount: number;
+		dislikeCount: number;
+	};
+	status: string;
+	createdAt: string;
+	updatedAt: string;
+}
+
+interface IRandomRecommendationResponse {
+	success: boolean;
+	data: {
+		memes: IRandomMemeItem[];
+		count: number;
+		totalAvailable: number;
+		timestamp: string;
+	};
 }
 
 const createMeme = (payload: FormData) =>
@@ -187,6 +228,11 @@ const getUserFrequentMemes = (
 const getUserMemes = (userId: string, params?: IGetUserMemesParams) =>
 	api.get<IGetUserMemesResponse>(`/meme/user/${userId}`, { params });
 
+const getRandomRecommendMemes = (params?: IRandomRecommendationParams) =>
+	api.get<IRandomRecommendationResponse>('/meme/recommend/random', {
+		params,
+	});
+
 export {
 	createMeme,
 	getMemes,
@@ -199,6 +245,7 @@ export {
 	getTrendingUsers,
 	getUserFrequentMemes,
 	getUserMemes,
+	getRandomRecommendMemes,
 	ESourceType,
 };
 export type {
@@ -216,4 +263,7 @@ export type {
 	IGetUserMemesParams,
 	IGetUserMemesResponse,
 	IUserInfo,
+	IRandomRecommendationParams,
+	IRandomRecommendationResponse,
+	IRandomMemeItem,
 };

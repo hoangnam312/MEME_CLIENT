@@ -30,29 +30,30 @@ export const useUserMemes = ({
 		lastCreatedAt?: string;
 	} | null>(null);
 
-	const fetchMemes = async (loadMore?: boolean) => {
+	const fetchMemes = async (loadMore = false) => {
 		if (!userId) return;
 
 		setIsLoading(true);
+
 		try {
+			const hasCursorData = nextCursor?.lastId && nextCursor?.lastCreatedAt;
+			const shouldUseCursor = loadMore && hasCursorData;
+
 			const params: IGetUserMemesParams = {
 				limit: 50,
 				sortBy,
 				sortOrder,
 				search,
-				...(loadMore && nextCursor?.lastId && nextCursor?.lastCreatedAt
-					? {
-						lastId: nextCursor.lastId,
-						lastCreatedAt: nextCursor.lastCreatedAt,
-					}
-					: {}),
+				...(shouldUseCursor && {
+					lastId: nextCursor.lastId,
+					lastCreatedAt: nextCursor.lastCreatedAt,
+				}),
 			};
 
 			const res = await getUserMemes(userId, params);
+			const newMemes = res.data.data;
 
-			setMemes((prev) =>
-				loadMore ? [...prev, ...res.data.data] : res.data.data
-			);
+			setMemes((prev) => (loadMore ? [...prev, ...newMemes] : newMemes));
 			setHasNext(res.data.hasNext);
 			setNextCursor(res.data.nextCursor || null);
 		} catch (error) {
