@@ -14,7 +14,7 @@ interface OCardImageProps {
 }
 
 export const OCardImage = ({
-	index,
+	// index,
 	data,
 	addClassWrapper = '',
 	addClassImage = '',
@@ -71,9 +71,10 @@ export const OCardImage = ({
 					</div>
 				)}
 			</div>
-			<div className="absolute left-2 top-2 z-10 rounded-md bg-black/50 px-2 py-1 text-xs text-white">
+			{/* For debug */}
+			{/* <div className="absolute left-2 top-2 z-10 rounded-md bg-black/50 px-2 py-1 text-xs text-white">
 				{data._id} - {index}
-			</div>
+			</div> */}
 			{isHover && isLoaded && (
 				<div className="box-shadow-image absolute inset-0 flex items-end justify-end">
 					<div className="mb-2 mr-2 flex flex-col gap-2">
