@@ -16,6 +16,7 @@ type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
 	args: {
+		index: 0,
 		data: {
 			_id: '1',
 			name: 'Sample Meme',

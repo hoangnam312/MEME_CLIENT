@@ -122,6 +122,71 @@ const getTrendingMemes = (params?: ITrendingParams) =>
 const getTrendingUsers = (params?: ITrendingUsersParams) =>
 	api.get<ITrendingUsersResponse>('/users/trending', { params });
 
+interface IFrequentMeme extends IMeme {
+	point: number;
+	interactions: {
+		views: number;
+		likes: number;
+		copies: number;
+		dislikes: number;
+	};
+}
+
+interface IGetFrequentMemesParams {
+	limit?: number;
+	lastPoint?: number;
+	lastMemeId?: string;
+}
+
+interface IGetFrequentMemesResponse {
+	total: number;
+	data: IFrequentMeme[];
+	hasNext: boolean;
+	nextCursor: {
+		lastPoint: number;
+		lastMemeId: string;
+	} | null;
+}
+
+interface IGetUserMemesParams {
+	search?: string;
+	limit?: number;
+	lastId?: string;
+	lastCreatedAt?: string;
+	sortBy?: 'createdAt' | 'viewCount' | 'likeCount' | 'copyCount';
+	sortOrder?: 'asc' | 'desc';
+	status?: 'active' | 'pending' | 'flagged' | 'deleted';
+}
+
+interface IUserInfo {
+	_id: string;
+	username: string;
+	displayName?: string;
+	avatar?: string;
+}
+
+interface IGetUserMemesResponse {
+	total: number;
+	data: IMeme[];
+	hasNext: boolean;
+	nextCursor: {
+		lastId: string;
+		lastCreatedAt: string;
+	} | null;
+	user?: IUserInfo;
+}
+
+const getUserFrequentMemes = (
+	userId: string,
+	params?: IGetFrequentMemesParams
+) =>
+	api.get<IGetFrequentMemesResponse>(`/user/meme/frequent/${userId}`, {
+		params,
+	});
+
+const getUserMemes = (userId: string, params?: IGetUserMemesParams) =>
+	api.get<IGetUserMemesResponse>(`/meme/user/${userId}`, { params });
+
 export {
 	createMeme,
 	getMemes,
@@ -132,6 +197,8 @@ export {
 	getRecommendMemesByImage,
 	getTrendingMemes,
 	getTrendingUsers,
+	getUserFrequentMemes,
+	getUserMemes,
 	ESourceType,
 };
 export type {
@@ -143,4 +210,10 @@ export type {
 	IRecommendationParams,
 	IRecommendationResponse,
 	IRecommendationPagination,
+	IFrequentMeme,
+	IGetFrequentMemesParams,
+	IGetFrequentMemesResponse,
+	IGetUserMemesParams,
+	IGetUserMemesResponse,
+	IUserInfo,
 };

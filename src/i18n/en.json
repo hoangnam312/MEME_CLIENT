@@ -145,6 +145,13 @@
 	"tab.uploadedByMe": "Uploaded by me",
 	"tab.album": "Album",
 
+	"sort.label": "Sort",
+	"sort.newest": "Newest First",
+	"sort.oldest": "Oldest First",
+	"sort.mostViewed": "Most Viewed",
+	"sort.mostLiked": "Most Liked",
+	"sort.mostCopied": "Most Copied",
+
 	"account": {
 		"title": "Account Settings",
 		"subtitle": "Manage your account information and preferences",

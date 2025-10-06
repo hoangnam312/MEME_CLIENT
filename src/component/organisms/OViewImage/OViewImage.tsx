@@ -184,9 +184,10 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 				<div className="rounded-lg border bg-gray-200">
 					<div className="mx-auto max-w-md p-4">
 						<div className="max-h-[35rem] space-y-4 overflow-y-auto">
-							{listImage?.map((item) => (
+							{listImage?.map((item, index) => (
 								<OCardImage
 									key={item._id}
+									index={index}
 									data={item}
 									addClassImage={'w-full'}
 									onClick={() => handleClick(item)}

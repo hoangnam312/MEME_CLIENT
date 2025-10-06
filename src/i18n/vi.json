@@ -138,8 +138,15 @@
 	"BoardHomePage.isEnd": "Hết meme rồi, lướt ít thôi",
 
 	"tab.frequent": "Thường xuyên",
-	"tab.uploadedByMe": "Upload bởi tôi",
+	"tab.uploadedByMe": "Đã tải lên",
 	"tab.album": "Album",
+
+	"sort.label": "Sắp xếp",
+	"sort.newest": "Mới nhất",
+	"sort.oldest": "Cũ nhất",
+	"sort.mostViewed": "Xem nhiều nhất",
+	"sort.mostLiked": "Thích nhiều nhất",
+	"sort.mostCopied": "Sao chép nhiều nhất",
 
 	"account": {
 		"title": "Cài đặt tài khoản",

@@ -54,7 +54,7 @@ const OTrendingMemeCard: React.FC<OTrendingMemeCardProps> = ({
 				onClick={handleClick}
 			>
 				{/* Clean Image - No Overlays */}
-				<OCardImage data={data} onClick={handleClick} />
+				<OCardImage index={data.rank} data={data} onClick={handleClick} />
 
 				{/* Metadata Section - Outside Image */}
 				<div className="space-y-3 p-3">
@@ -166,7 +166,7 @@ const OTrendingMemeCard: React.FC<OTrendingMemeCardProps> = ({
 			{/* Horizontal Layout: Image Left, Details Right */}
 			<div className="flex flex-col sm:flex-row">
 				{/* Image Column */}
-				<OCardImage data={data} onClick={handleClick} />
+				<OCardImage index={data.rank} data={data} onClick={handleClick} />
 
 				{/* Details Column */}
 				<div className="flex-1 space-y-2 p-3">

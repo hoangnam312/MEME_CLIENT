@@ -1,62 +1,34 @@
-import { useEffect, useState } from 'react';
-import { t } from 'i18next';
-
-import { useSearchParams } from 'react-router';
-
-import { IMeme } from 'src/constants/type';
-import { getMemes } from 'src/service/meme';
+import { useState } from 'react';
 import { useBoundStore } from 'src/store/store';
-import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import OModalRequiredAuthen from 'src/component/organisms/OModalRequiredAuthen/OModalRequiredAuthen';
-import ATabs from 'src/component/atoms/ATabs/ATabs';
-import MUserCard from 'src/component/molecules/MUserCard/MUserCard';
+import { MemeHeader, FrequentMemesTab, UploadedMemesTab } from './components';
 
-function MyMeme() {
-	const [listImage, setListImage] = useState<IMeme[]>([]);
-	const [searchParams] = useSearchParams();
-	const searchValue = searchParams.get('search');
+const MyMeme = () => {
 	const authen = useBoundStore((state) => state.authen);
 	const [activeTab, setActiveTab] = useState('frequent');
 
-	const tabs = [
-		{ key: 'frequent', label: t('tab.frequent') },
-		{ key: 'uploadedByMe', label: t('tab.uploadedByMe') },
-		{ key: 'album', label: t('tab.album') },
-	];
-
-	useEffect(() => {
-		if (!authen.userId) return;
-		getMemes({ search: searchValue ?? undefined, userId: authen.userId }).then(
-			(res) => setListImage(res.data.data)
-		);
-	}, [searchValue, authen]);
-
 	return (
 		<OModalRequiredAuthen>
-			<div className="mb-6 flex justify-between ">
-				<ATabs
-					addClass="!w-1/2"
-					tabs={tabs}
-					value={activeTab}
-					onChange={setActiveTab}
-				/>
-				{/* TODO: show only if user view another user */}
-				<MUserCard
-					variant="compact"
-					user={{
-						id: authen.userId,
-						avatarUrl: authen.profile?.avatar || '',
-						username: authen.username,
-						displayName: authen.profile?.displayName || '',
-						followCount: authen.stats.followersCount,
-						followingCount: authen.stats.followingCount,
-						bio: authen.profile?.bio,
-					}}
-				/>
-			</div>
-
-			<OBoard imageArray={listImage} />
+			<MemeHeader
+				activeTab={activeTab}
+				onTabChange={setActiveTab}
+				user={{
+					id: authen.userId,
+					avatarUrl: authen.profile?.avatar || '',
+					username: authen.username,
+					displayName: authen.profile?.displayName || '',
+					followCount: authen.stats.followersCount,
+					followingCount: authen.stats.followingCount,
+					bio: authen.profile?.bio,
+				}}
+				showSortDropdown={activeTab === 'uploadedByMe'}
+			/>
+			{activeTab === 'frequent' && <FrequentMemesTab userId={authen.userId} />}
+			{activeTab === 'uploadedByMe' && (
+				<UploadedMemesTab userId={authen.userId} />
+			)}
 		</OModalRequiredAuthen>
 	);
-}
+};
+
 export default MyMeme;
