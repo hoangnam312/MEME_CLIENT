@@ -1,7 +1,6 @@
 import { useState } from 'react';
 import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 import { IMeme } from 'src/constants/type';
-import './style.css';
 import { ESourceType } from 'src/service/meme';
 import { AImageSkeleton } from 'src/component/atoms/AImageSkeleton/AImageSkeleton';
 
@@ -76,7 +75,7 @@ export const OCardImage = ({
 				{data._id} - {index}
 			</div> */}
 			{isHover && isLoaded && (
-				<div className="box-shadow-image absolute inset-0 flex items-end justify-end">
+				<div className="absolute inset-0 flex items-end justify-end [box-shadow:inset_-40px_-40px_20px_rgba(0,0,0,0.25)]">
 					<div className="mb-2 mr-2 flex flex-col gap-2">
 						<MemeCopyButton data={data} sourceType={ESourceType.Feed} />
 					</div>

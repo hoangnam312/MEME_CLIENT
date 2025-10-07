@@ -5,7 +5,6 @@ import OViewImage from '../OViewImage/OViewImage';
 import { useState } from 'react';
 import { ESourceType, trackingMeme } from 'src/service/meme';
 import Masonry from 'react-masonry-css';
-import './style.css';
 
 export interface OBoardPropsType {
 	imageArray: IMeme[];
@@ -13,7 +12,7 @@ export interface OBoardPropsType {
 	addClassWrapperImage?: string;
 }
 
-export const OBoard = ({ imageArray, addClass = '' }: OBoardPropsType) => {
+export const OBoard = ({ imageArray, addClass = '', addClassWrapperImage }: OBoardPropsType) => {
 	const { isOpen, openModal, closeModal } = useOpen();
 	const [dataImage, setDataImage] = useState<IMeme>();
 
@@ -44,14 +43,13 @@ export const OBoard = ({ imageArray, addClass = '' }: OBoardPropsType) => {
 		<>
 			<Masonry
 				breakpointCols={breakpointColumns}
-				className={`masonry-grid ${addClass}`}
-				columnClassName="masonry-grid_column"
+				className={`flex -ml-8 w-auto ${addClass}`}
+				columnClassName="pl-8 [background-clip:padding-box] [&>div]:mb-8"
 			>
 				{imageArray?.map((item, index) => (
 					<div
 						key={item._id}
-						// className={addClassWrapperImage}
-						className="aspect-auto h-auto"
+						className={`aspect-auto h-auto ${addClassWrapperImage}`}
 					>
 						<OCardImage
 							index={index}
