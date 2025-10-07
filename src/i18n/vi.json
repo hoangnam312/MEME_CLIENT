@@ -36,7 +36,10 @@
 	"common": {
 		"error": {
 			"authRequired": "Yêu cầu xác thực. Vui lòng đăng nhập lại."
-		}
+		},
+		"errorOccurred": "Đã xảy ra lỗi",
+		"retry": "Thử lại",
+		"noData": "Không có dữ liệu"
 	},
 
 	"user": {

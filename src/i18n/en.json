@@ -38,7 +38,10 @@
 	"common": {
 		"error": {
 			"authRequired": "Authentication required. Please log in again."
-		}
+		},
+		"errorOccurred": "An error occurred",
+		"retry": "Try Again",
+		"noData": "No data available"
 	},
 
 	"user": {

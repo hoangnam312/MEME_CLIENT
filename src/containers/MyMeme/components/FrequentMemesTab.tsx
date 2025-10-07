@@ -1,19 +1,15 @@
 import { useEffect, memo } from 'react';
-import { useFrequentMemes, useInfiniteScroll } from '../hooks';
-import { MemeList } from './MemeList';
+import { useFrequentMemes } from '../hooks';
+import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfiniteScroll';
+import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 
 interface FrequentMemesTabProps {
 	userId: string;
 }
 
 export const FrequentMemesTab = memo(({ userId }: FrequentMemesTabProps) => {
-	const { memes, isLoading, hasNext, fetchMemes } = useFrequentMemes(userId);
-
-	useInfiniteScroll({
-		isLoading,
-		hasNext,
-		onLoadMore: () => fetchMemes(true),
-	});
+	const { memes, isLoading, hasNext, error, fetchMemes } =
+		useFrequentMemes(userId);
 
 	useEffect(() => {
 		if (!userId) return;
@@ -21,7 +17,22 @@ export const FrequentMemesTab = memo(({ userId }: FrequentMemesTabProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <MemeList memes={memes} isLoading={isLoading} hasNext={hasNext} />;
+	return (
+		<OInfiniteScroll
+			state={{
+				isLoading,
+				hasNext,
+				isEmpty: memes.length === 0,
+				error,
+			}}
+			callbacks={{
+				onLoadMore: () => fetchMemes(true),
+				onRetry: () => fetchMemes(false),
+			}}
+		>
+			<OBoard imageArray={memes} />
+		</OInfiniteScroll>
+	);
 });
 
 FrequentMemesTab.displayName = 'FrequentMemesTab';

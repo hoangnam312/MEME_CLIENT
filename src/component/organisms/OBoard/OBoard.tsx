@@ -12,7 +12,11 @@ export interface OBoardPropsType {
 	addClassWrapperImage?: string;
 }
 
-export const OBoard = ({ imageArray, addClass = '', addClassWrapperImage }: OBoardPropsType) => {
+export const OBoard = ({
+	imageArray,
+	addClass = '',
+	addClassWrapperImage,
+}: OBoardPropsType) => {
 	const { isOpen, openModal, closeModal } = useOpen();
 	const [dataImage, setDataImage] = useState<IMeme>();
 
@@ -43,7 +47,7 @@ export const OBoard = ({ imageArray, addClass = '', addClassWrapperImage }: OBoa
 		<>
 			<Masonry
 				breakpointCols={breakpointColumns}
-				className={`flex -ml-8 w-auto ${addClass}`}
+				className={`-ml-8 flex w-auto ${addClass}`}
 				columnClassName="pl-8 [background-clip:padding-box] [&>div]:mb-8"
 			>
 				{imageArray?.map((item, index) => (

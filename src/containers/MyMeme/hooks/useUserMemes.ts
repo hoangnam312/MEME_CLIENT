@@ -13,6 +13,7 @@ interface UseUserMemesReturn {
 	memes: IMeme[];
 	isLoading: boolean;
 	hasNext: boolean;
+	error: Error | null;
 	fetchMemes: (loadMore?: boolean) => Promise<void>;
 }
 
@@ -25,6 +26,7 @@ export const useUserMemes = ({
 	const [memes, setMemes] = useState<IMeme[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasNext, setHasNext] = useState(false);
+	const [error, setError] = useState<Error | null>(null);
 	const [nextCursor, setNextCursor] = useState<{
 		lastId?: string;
 		lastCreatedAt?: string;
@@ -34,6 +36,7 @@ export const useUserMemes = ({
 		if (!userId) return;
 
 		setIsLoading(true);
+		setError(null);
 
 		try {
 			const hasCursorData = nextCursor?.lastId && nextCursor?.lastCreatedAt;
@@ -56,7 +59,8 @@ export const useUserMemes = ({
 			setMemes((prev) => (loadMore ? [...prev, ...newMemes] : newMemes));
 			setHasNext(res.data.hasNext);
 			setNextCursor(res.data.nextCursor || null);
-		} catch (error) {
+		} catch (err) {
+			setError(err instanceof Error ? err : new Error('Failed to fetch memes'));
 			setHasNext(false);
 		} finally {
 			setIsLoading(false);
@@ -67,6 +71,7 @@ export const useUserMemes = ({
 		memes,
 		isLoading,
 		hasNext,
+		error,
 		fetchMemes,
 	};
 };

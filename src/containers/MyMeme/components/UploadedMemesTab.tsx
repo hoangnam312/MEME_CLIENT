@@ -1,6 +1,7 @@
 import { useEffect, memo } from 'react';
-import { useUserMemes, useInfiniteScroll } from '../hooks';
-import { MemeList } from './MemeList';
+import { useUserMemes } from '../hooks';
+import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfiniteScroll';
+import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import type { SortOption, SortOrder } from './SortDropdown';
 
 interface UploadedMemesTabProps {
@@ -8,16 +9,10 @@ interface UploadedMemesTabProps {
 }
 
 export const UploadedMemesTab = memo(({ userId }: UploadedMemesTabProps) => {
-	const { memes, isLoading, hasNext, fetchMemes } = useUserMemes({
+	const { memes, isLoading, hasNext, error, fetchMemes } = useUserMemes({
 		userId,
 		sortBy: 'createdAt',
 		sortOrder: 'desc',
-	});
-
-	useInfiniteScroll({
-		isLoading,
-		hasNext,
-		onLoadMore: () => fetchMemes(true),
 	});
 
 	useEffect(() => {
@@ -26,7 +21,22 @@ export const UploadedMemesTab = memo(({ userId }: UploadedMemesTabProps) => {
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, []);
 
-	return <MemeList memes={memes} isLoading={isLoading} hasNext={hasNext} />;
+	return (
+		<OInfiniteScroll
+			state={{
+				isLoading,
+				hasNext,
+				isEmpty: memes.length === 0,
+				error,
+			}}
+			callbacks={{
+				onLoadMore: () => fetchMemes(true),
+				onRetry: () => fetchMemes(false),
+			}}
+		>
+			<OBoard imageArray={memes} />
+		</OInfiniteScroll>
+	);
 });
 
 UploadedMemesTab.displayName = 'UploadedMemesTab';
