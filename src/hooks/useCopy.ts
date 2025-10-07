@@ -5,9 +5,42 @@ async function getImageData(url: string): Promise<Blob> {
 	return await response.blob();
 }
 
-function copyImagePngToClipboard(data: Blob) {
-	const item = new ClipboardItem({ 'image/png': data });
-	navigator.clipboard.write([item]);
+async function convertToPng(blob: Blob): Promise<Blob> {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.onload = () => {
+			const canvas = document.createElement('canvas');
+			canvas.width = img.width;
+			canvas.height = img.height;
+			const ctx = canvas.getContext('2d');
+			if (!ctx) {
+				reject(new Error('Failed to get canvas context'));
+				return;
+			}
+			ctx.drawImage(img, 0, 0);
+			canvas.toBlob((pngBlob) => {
+				if (pngBlob) {
+					resolve(pngBlob);
+				} else {
+					reject(new Error('Conversion failed'));
+				}
+			}, 'image/png');
+		};
+		img.onerror = () => reject(new Error('Failed to load image'));
+		img.src = URL.createObjectURL(blob);
+	});
+}
+
+async function copyImageToClipboard(data: Blob) {
+	try {
+		const mimeType = data.type || 'image/png';
+		const item = new ClipboardItem({ [mimeType]: data });
+		await navigator.clipboard.write([item]);
+	} catch (error) {
+		const pngBlob = await convertToPng(data);
+		const item = new ClipboardItem({ 'image/png': pngBlob });
+		await navigator.clipboard.write([item]);
+	}
 }
 
 function useCopyImage() {
@@ -16,13 +49,11 @@ function useCopyImage() {
 
 	async function copyImage(url: string) {
 		try {
-			console.log('🚀 ~ copyImage ~ url:', url);
 			const imageData = await getImageData(url);
-			copyImagePngToClipboard(imageData);
+			await copyImageToClipboard(imageData);
 			setIsCopied(true);
 			return true;
 		} catch (error) {
-			console.log('🚀 ~ copyImage ~ error:', error);
 			setIsError(true);
 			return false;
 		}
