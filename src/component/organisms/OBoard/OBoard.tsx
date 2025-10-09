@@ -35,7 +35,7 @@ export const OBoard = ({
 	};
 
 	const breakpointColumns = {
-		default: 4,
+		default: 6,
 		1536: 5,
 		1280: 4,
 		1024: 3,
