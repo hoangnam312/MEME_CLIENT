@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faHeart } from '@fortawesome/free-solid-svg-icons';
+import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
 import { IMeme } from 'src/constants/type';
 import { ESourceType, trackingMeme } from 'src/service/meme';
@@ -53,28 +53,28 @@ const MemeLikeButton = ({ data, sourceType }: MemeLikeButtonProps) => {
 	if (!liked && likeBounce === LikeBounceState.None) {
 		return (
 			<AButton onClick={handleLike} isDisabled={false}>
-				<FontAwesomeIcon icon={faHeart} className="text-white" />
+				<FontAwesomeIcon icon={faThumbsUp} className="text-white" />
 			</AButton>
 		);
 	}
 	if (!liked && likeBounce === LikeBounceState.Like) {
 		return (
 			<AButton isDisabled={true}>
-				<FontAwesomeIcon icon={faHeart} bounce />
+				<FontAwesomeIcon icon={faThumbsUp} bounce />
 			</AButton>
 		);
 	}
 	if (liked && likeBounce === LikeBounceState.None) {
 		return (
 			<AButton onClick={handleLike} isDisabled={false}>
-				<FontAwesomeIcon icon={faHeart} />
+				<FontAwesomeIcon icon={faThumbsUp} />
 			</AButton>
 		);
 	}
 	if (liked && likeBounce === LikeBounceState.Unlike) {
 		return (
 			<AButton isDisabled={true}>
-				<FontAwesomeIcon icon={faHeart} bounce />
+				<FontAwesomeIcon icon={faThumbsUp} bounce />
 			</AButton>
 		);
 	}
