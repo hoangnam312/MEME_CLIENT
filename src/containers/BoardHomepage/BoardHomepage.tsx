@@ -7,13 +7,12 @@ import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfini
 import { IMeme } from 'src/constants/type';
 import {
 	getMemes,
-	getRandomRecommendMemes,
-	IRandomRecommendationParams,
+	getRecommendationFeed,
+	IRecommendationFeedParams,
 } from 'src/service/meme';
 
-const initialParams: IRandomRecommendationParams = {
+const initialParams: IRecommendationFeedParams = {
 	limit: 50,
-	excludeViewed: false,
 };
 
 export const BoardHomepage = () => {
@@ -24,16 +23,16 @@ export const BoardHomepage = () => {
 	const [hasNext, setHasNext] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
 	const [params, setParams] =
-		useState<IRandomRecommendationParams>(initialParams);
+		useState<IRecommendationFeedParams>(initialParams);
 
 	const debouncedFetchMemes = debounce(
-		async (currentParams: IRandomRecommendationParams) => {
+		async (currentParams: IRecommendationFeedParams) => {
 			setIsLoading(true);
 			setError(null);
 			try {
-				const res = await getRandomRecommendMemes(currentParams);
+				const res = await getRecommendationFeed(currentParams);
 				if (res?.data?.success) {
-					const memes = res.data.data.memes.map((meme) => ({
+					const memes = res.data.data.recommendations.map((meme) => ({
 						...meme,
 						imageMedium: meme.image.imageMedium,
 						imageSmall: meme.image.imageSmall,
@@ -44,7 +43,7 @@ export const BoardHomepage = () => {
 						dislikeCount: meme.stats.dislikeCount,
 					})) as IMeme[];
 					setListImage((prev) => [...prev, ...memes]);
-					setHasNext(memes.length === currentParams.limit);
+					setHasNext(res.data.data.hasMore);
 				}
 			} catch (err) {
 				setError(

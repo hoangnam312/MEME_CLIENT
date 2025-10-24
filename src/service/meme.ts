@@ -233,6 +233,27 @@ const getRandomRecommendMemes = (params?: IRandomRecommendationParams) =>
 		params,
 	});
 
+interface IRecommendationFeedParams {
+	limit?: number;
+}
+
+interface IRecommendationFeedItem extends IRandomMemeItem {
+	recommendationSource?: string;
+}
+
+interface IRecommendationFeedResponse {
+	success: boolean;
+	data: {
+		recommendations: IRecommendationFeedItem[];
+		sources: Record<string, number>;
+		total: number;
+		hasMore: boolean;
+	};
+}
+
+const getRecommendationFeed = (params?: IRecommendationFeedParams) =>
+	api.get<IRecommendationFeedResponse>('/recommendation-feed', { params });
+
 export {
 	createMeme,
 	getMemes,
@@ -246,6 +267,7 @@ export {
 	getUserFrequentMemes,
 	getUserMemes,
 	getRandomRecommendMemes,
+	getRecommendationFeed,
 	ESourceType,
 };
 export type {
@@ -266,4 +288,7 @@ export type {
 	IRandomRecommendationParams,
 	IRandomRecommendationResponse,
 	IRandomMemeItem,
+	IRecommendationFeedParams,
+	IRecommendationFeedResponse,
+	IRecommendationFeedItem,
 };
