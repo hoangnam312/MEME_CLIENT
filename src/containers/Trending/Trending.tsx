@@ -2,7 +2,12 @@ import { t } from 'i18next';
 import React, { useEffect, useState } from 'react';
 import OTrendingColumn from 'src/containers/Trending/component/OTrendingColumn/OTrendingColumn';
 import ATabs, { TabItem } from 'src/component/atoms/ATabs/ATabs';
-import { ITrendingMeme, TrendingTimeFrame } from 'src/constants/type';
+import {
+	ITrendingMeme,
+	TrendingTimeFrame,
+	TIMEFRAME_TO_PERIOD_MAP,
+	ITrendingMemeData,
+} from 'src/constants/type';
 import { getTrendingMemes } from 'src/service/meme';
 
 const Trending: React.FC = () => {
@@ -40,10 +45,46 @@ const Trending: React.FC = () => {
 		},
 	];
 
+	// Convert backend trending data to frontend format
+	const convertTrendingData = (data: ITrendingMemeData[]): ITrendingMeme[] => {
+		return data.map((item) => ({
+			...item.meme,
+			rank: item.rank,
+			analytics: {
+				likesGained: item.likeCount,
+				copiesGained: item.copyCount,
+				viewsGained: item.viewCount,
+				totalLikes: item.meme.stats.likeCount,
+				totalCopies: item.meme.stats.copyCount,
+				totalViews: item.meme.stats.viewCount,
+				trendingScore: item.score,
+				timeFrame: '24h' as TrendingTimeFrame,
+			},
+			uploader: item.meme.creator
+				? {
+						_id: item.meme.creator._id,
+						username: item.meme.creator.username,
+						displayName:
+							item.meme.creator.displayName || item.meme.creator.username,
+						avatarUrl: item.meme.creator.avatarUrl || '',
+						followCount: item.meme.creator.followCount,
+						followingCount: item.meme.creator.followingCount,
+				  }
+				: {
+						_id: item.meme.userId,
+						username: 'Unknown',
+						displayName: 'Unknown User',
+						avatarUrl: '',
+						followCount: 0,
+						followingCount: 0,
+				  },
+		}));
+	};
+
 	// Fetch trending memes for a specific time frame
 	const fetchTrendingMemes = async (
 		timeFrame: TrendingTimeFrame,
-		selectedPage = 1,
+		cursor?: string,
 		append = false
 	) => {
 		try {
@@ -57,18 +98,17 @@ const Trending: React.FC = () => {
 			else if (timeFrame === '1w') setError1w(null);
 			else if (timeFrame === '1m') setError1m(null);
 
+			// Map frontend timeframe to backend period
+			const period = TIMEFRAME_TO_PERIOD_MAP[timeFrame];
+
 			const response = await getTrendingMemes({
-				timeFrame,
-				page: selectedPage,
-				limit: 15, // Increased limit for better space utilization
+				period,
+				limit: 15,
+				cursor,
 			});
 
-			if (response.data.data) {
-				// Add rank to each meme based on their position
-				const memesWithRank = response.data.data.map((meme, index) => ({
-					...meme,
-					rank: (selectedPage - 1) * 15 + index + 1,
-				}));
+			if (response.data.success && response.data.data) {
+				const memesWithRank = convertTrendingData(response.data.data);
 
 				// Update state for specific time frame
 				if (timeFrame === '24h') {
@@ -108,7 +148,7 @@ const Trending: React.FC = () => {
 
 			// Generate mock data for development
 			if (process.env.NODE_ENV === 'development') {
-				const mockMemes = generateMockMemes(timeFrame, selectedPage);
+				const mockMemes = generateMockMemes(timeFrame, 1);
 				if (timeFrame === '24h')
 					setTrending24h(
 						append ? (prev) => [...prev, ...mockMemes] : mockMemes
@@ -128,7 +168,7 @@ const Trending: React.FC = () => {
 
 	// Retry on error for specific time frame
 	const handleRetry = (timeFrame: TrendingTimeFrame) => {
-		fetchTrendingMemes(timeFrame, 1, false);
+		fetchTrendingMemes(timeFrame, undefined, false);
 	};
 
 	// Initial load for all time frames

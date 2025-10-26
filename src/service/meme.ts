@@ -160,7 +160,7 @@ const trackingMeme = (
 	});
 
 const getTrendingMemes = (params?: ITrendingParams) =>
-	api.get<ITrendingResponse>('/meme/trending', { params });
+	api.get<ITrendingResponse>('/trending-memes', { params });
 
 const getTrendingUsers = (params?: ITrendingUsersParams) =>
 	api.get<ITrendingUsersResponse>('/users/trending', { params });

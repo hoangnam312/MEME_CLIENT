@@ -14,9 +14,6 @@ export interface IMeme {
 		imageMedium: string;
 		imageSmall: string;
 	};
-	imageMedium: string;
-	imageSmall: string;
-	imageOrigin: string;
 	userId: string;
 	stats: {
 		viewCount: number;
@@ -68,17 +65,54 @@ export interface ITrendingMeme extends IMeme {
 
 export type TrendingTimeFrame = '24h' | '1w' | '1m';
 
+// Backend API uses these period values
+export type TrendingPeriod = '12h' | '24h' | '3d' | '7d' | '1m';
+
+// Map frontend timeframe to backend period
+export const TIMEFRAME_TO_PERIOD_MAP: Record<
+	TrendingTimeFrame,
+	TrendingPeriod
+> = {
+	'24h': '24h',
+	'1w': '7d',
+	'1m': '1m',
+};
+
 export interface ITrendingParams {
-	timeFrame: TrendingTimeFrame;
+	period?: TrendingPeriod;
 	limit?: number;
-	page?: number;
+	cursor?: string;
+}
+
+export interface ITrendingPagination {
+	limit: number;
+	hasMore: boolean;
+	nextCursor?: string;
+	totalCount: number;
+}
+
+export interface ITrendingMemeData {
+	_id: string;
+	memeId: string;
+	period: TrendingPeriod;
+	rank: number;
+	interactionCount: number;
+	viewCount: number;
+	likeCount: number;
+	copyCount: number;
+	dislikeCount: number;
+	score: number;
+	periodStart: string;
+	periodEnd: string;
+	generatedAt: string;
+	meme: IMeme;
 }
 
 export interface ITrendingResponse {
-	total: number;
-	page: number;
-	timeFrame: TrendingTimeFrame;
-	data: ITrendingMeme[];
+	success: boolean;
+	period: TrendingPeriod;
+	pagination: ITrendingPagination;
+	data: ITrendingMemeData[];
 }
 
 // Trending Users Types
