@@ -9,25 +9,21 @@ export interface IMeme {
 	tag?: string;
 	location?: string;
 	__v?: number;
-	// Nested image structure
 	image: {
 		imageOrigin: string;
 		imageMedium: string;
 		imageSmall: string;
 	};
-	// Flat image properties for backward compatibility
 	imageMedium: string;
 	imageSmall: string;
 	imageOrigin: string;
 	userId: string;
-	// Nested stats structure
 	stats: {
 		viewCount: number;
 		likeCount: number;
 		copyCount: number;
 		dislikeCount: number;
 	};
-	// Flat stats properties for backward compatibility
 	viewCount: number;
 	likeCount: number;
 	copyCount: number;
@@ -35,6 +31,14 @@ export interface IMeme {
 	status: 'active' | 'pending' | 'flagged' | 'deleted';
 	createdAt: string;
 	updatedAt: string;
+	creator?: {
+		_id: string;
+		username: string;
+		displayName?: string;
+		avatarUrl?: string;
+		followCount: number;
+		followingCount: number;
+	};
 }
 
 export interface ITrendingAnalytics {

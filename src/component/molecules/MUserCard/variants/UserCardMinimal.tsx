@@ -15,9 +15,13 @@ export interface UserCardMinimalProps {
 const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 	user,
 	addClass = '',
+	onFollowersClick,
 }) => {
 	return (
-		<div className={`flex items-center gap-2 ${addClass}`}>
+		<div
+			className={`flex items-center gap-2 ${addClass}`}
+			onClick={() => onFollowersClick?.()}
+		>
 			<img
 				className="h-8 w-8 rounded-lg"
 				src={user.avatarUrl}

@@ -30,16 +30,18 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	const [dataImage, setDataImage] = useState<IMeme>(data);
 
 	// change to get creator data from data prop
-	const creatorData = {
-		id: 'creator-id',
-		avatarUrl:
-			'https://meme-bucket-001.s3.ap-southeast-2.amazonaws.com/uploads/small/1745418222847_memebetter_com-20240123012602.jpg',
-		username: 'Creator Name',
-		displayName: 'Creator Name',
-		followCount: 0,
-		followingCount: 0,
-		bio: '',
-	};
+	const creatorData = dataImage?.creator
+		? {
+				id: dataImage.creator._id,
+				avatarUrl: dataImage.creator.avatarUrl || '',
+				username: dataImage.creator.username,
+				displayName:
+					dataImage.creator.displayName || dataImage.creator.username,
+				followCount: dataImage.creator.followCount,
+				followingCount: dataImage.creator.followingCount,
+				bio: '',
+		  }
+		: null;
 
 	const fetchMemes = async (imageId: string) => {
 		const res = await getRecommendMemesByImage({
@@ -162,7 +164,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 									<MUserCard
 										variant="minimal"
 										user={creatorData}
-										enableFollowModal={false}
+										enableFollowModal={true}
 									/>
 								</div>
 							)}
