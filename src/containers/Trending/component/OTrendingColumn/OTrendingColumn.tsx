@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { t } from 'i18next';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
@@ -10,6 +10,7 @@ import OTrendingMemeCard from '../OTrendingMemeCard/OTrendingMemeCard';
 import OViewImage from '../../../../component/organisms/OViewImage/OViewImage';
 import AButton from 'src/component/atoms/AButton/AButton';
 import useOpen from 'src/hooks/useOpen';
+import { getMemeIdFromUrl } from 'src/utils/memeViewUtils';
 
 export interface OTrendingColumnProps {
 	timeFrame: TrendingTimeFrame;
@@ -31,9 +32,8 @@ const OTrendingColumn: React.FC<OTrendingColumnProps> = ({
 	const { isOpen, openModal, closeModal } = useOpen();
 	const [selectedMeme, setSelectedMeme] = useState<IMeme | null>(null);
 
-	const handleMemeClick = (meme: ITrendingMeme) => {
-		// Convert ITrendingMeme to IMeme for compatibility with OViewImage
-		const memeData: IMeme = {
+	const convertTrendingMemeToIMeme = (meme: ITrendingMeme): IMeme => {
+		return {
 			_id: meme._id,
 			name: meme.name,
 			description: meme.description,
@@ -63,10 +63,54 @@ const OTrendingColumn: React.FC<OTrendingColumnProps> = ({
 			createdAt: meme.createdAt,
 			updatedAt: meme.updatedAt,
 		};
+	};
 
+	const handleMemeClick = (meme: ITrendingMeme) => {
+		const memeData = convertTrendingMemeToIMeme(meme);
 		setSelectedMeme(memeData);
 		openModal();
 	};
+
+	// Handle browser back/forward button and initial URL state
+	useEffect(() => {
+		const handlePopState = () => {
+			const memeId = getMemeIdFromUrl();
+			if (memeId && !isOpen) {
+				// URL has meme ID but modal is closed - open it
+				const meme = memes.find((m) => m._id === memeId);
+				if (meme) {
+					const memeData = convertTrendingMemeToIMeme(meme);
+					setSelectedMeme(memeData);
+					openModal();
+				}
+			} else if (!memeId && isOpen) {
+				// URL has no meme ID but modal is open - close it
+				closeModal();
+			}
+		};
+
+		window.addEventListener('popstate', handlePopState);
+
+		// Check initial URL state
+		handlePopState();
+
+		return () => {
+			window.removeEventListener('popstate', handlePopState);
+		};
+	}, [memes, isOpen, openModal, closeModal]);
+
+	// Check URL when memes first load or update
+	useEffect(() => {
+		const memeId = getMemeIdFromUrl();
+		if (memeId && !isOpen && memes.length > 0) {
+			const meme = memes.find((m) => m._id === memeId);
+			if (meme) {
+				const memeData = convertTrendingMemeToIMeme(meme);
+				setSelectedMeme(memeData);
+				openModal();
+			}
+		}
+	}, [memes, isOpen, openModal]);
 
 	const renderSkeletonCards = () => {
 		return Array.from({ length: 12 }).map((_, index) => {

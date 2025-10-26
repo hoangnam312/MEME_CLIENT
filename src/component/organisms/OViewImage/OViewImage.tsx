@@ -17,6 +17,7 @@ import {
 	trackingMeme,
 } from 'src/service/meme';
 import { OCardImage } from '../OCardImage/OCardImage';
+import { addMemeIdToUrl, removeMemeIdFromUrl } from 'src/utils/memeViewUtils';
 
 export interface OViewImagePropsType {
 	isOpen: boolean;
@@ -28,6 +29,11 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	const { isLoggedIn } = useAuthen();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [dataImage, setDataImage] = useState<IMeme>(data);
+
+	const handleCloseModal = () => {
+		removeMemeIdFromUrl();
+		closeModal();
+	};
 
 	// change to get creator data from data prop
 	const creatorData = dataImage?.creator
@@ -71,6 +77,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		const newData = listImage.find((image) => image._id === item._id);
 		if (newData) {
 			setDataImage(newData);
+			addMemeIdToUrl(newData._id);
 		}
 	};
 
@@ -82,8 +89,15 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		fetchMemes(dataImage?._id);
 	}, [dataImage]);
 
+	// Update URL when modal opens with initial data
+	useEffect(() => {
+		if (isOpen && dataImage?._id) {
+			addMemeIdToUrl(dataImage._id);
+		}
+	}, [isOpen, dataImage?._id]);
+
 	return (
-		<AModal isOpen={isOpen} closeModal={closeModal} addClassWrap="!w-2/3">
+		<AModal isOpen={isOpen} closeModal={handleCloseModal} addClassWrap="!w-2/3">
 			<div className="grid grid-cols-3 gap-4">
 				<div className="relative col-span-2">
 					<div className="mb-3 mt-10 flex items-center justify-center rounded-lg text-5xl">

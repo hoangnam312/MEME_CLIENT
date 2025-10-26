@@ -7,6 +7,7 @@ import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfini
 import { IMeme } from 'src/constants/type';
 import {
 	getMemes,
+	getMemeById,
 	getRecommendationFeed,
 	IRecommendationFeedParams,
 } from 'src/service/meme';
@@ -19,6 +20,7 @@ export const BoardHomepage = () => {
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [searchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
+	const viewMemeId = searchParams.get('view');
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasNext, setHasNext] = useState(true);
 	const [error, setError] = useState<Error | null>(null);
@@ -87,6 +89,23 @@ export const BoardHomepage = () => {
 		}
 	};
 
+	// Fetch specific meme by ID when view parameter is present
+	const fetchMemeById = async (memeId: string) => {
+		try {
+			const res = await getMemeById(memeId);
+			if (res?.data) {
+				// Check if meme already exists in list
+				const memeExists = listImage.some((meme) => meme._id === memeId);
+				if (!memeExists) {
+					// Add to beginning of list if not already there
+					setListImage((prev) => [res.data, ...prev]);
+				}
+			}
+		} catch (err) {
+			console.error('Failed to fetch meme by ID:', err);
+		}
+	};
+
 	useEffect(() => {
 		if (searchValue) {
 			fetchSearchMemes();
@@ -98,6 +117,14 @@ export const BoardHomepage = () => {
 		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [searchValue]);
+
+	// Fetch specific meme when view parameter changes
+	useEffect(() => {
+		if (viewMemeId && !searchValue) {
+			fetchMemeById(viewMemeId);
+		}
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, [viewMemeId]);
 
 	return (
 		<OInfiniteScroll

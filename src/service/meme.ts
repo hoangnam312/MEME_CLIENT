@@ -121,6 +121,8 @@ const createMeme = (payload: FormData) =>
 const getMemes = (params?: InterfaceParamsGetMemes) =>
 	api.get<InterfaceResponseGetMemes>('/meme', { params });
 
+const getMemeById = (memeId: string) => api.get<IMeme>(`/meme/${memeId}`);
+
 const deleteMeme = (params?: InterfaceId) =>
 	api.delete<InterfaceResponseGetMemes>(`/meme/${params?.id}`);
 
@@ -257,6 +259,7 @@ const getRecommendationFeed = (params?: IRecommendationFeedParams) =>
 export {
 	createMeme,
 	getMemes,
+	getMemeById,
 	deleteMeme,
 	getRecommendMemes,
 	getRecommendMemesLegacy,

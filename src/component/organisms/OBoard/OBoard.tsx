@@ -2,9 +2,10 @@ import useOpen from 'src/hooks/useOpen';
 import { OCardImage } from '../OCardImage/OCardImage';
 import { IMeme } from 'src/constants/type';
 import OViewImage from '../OViewImage/OViewImage';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ESourceType, trackingMeme } from 'src/service/meme';
 import Masonry from 'react-masonry-css';
+import { getMemeIdFromUrl } from 'src/utils/memeViewUtils';
 
 export interface OBoardPropsType {
 	imageArray: IMeme[];
@@ -33,6 +34,45 @@ export const OBoard = ({
 		openModal();
 		setDataImage(item);
 	};
+
+	// Handle browser back/forward button and initial URL state
+	useEffect(() => {
+		const handlePopState = () => {
+			const memeId = getMemeIdFromUrl();
+			if (memeId && !isOpen) {
+				// URL has meme ID but modal is closed - open it
+				const meme = imageArray.find((img) => img._id === memeId);
+				if (meme) {
+					setDataImage(meme);
+					openModal();
+				}
+			} else if (!memeId && isOpen) {
+				// URL has no meme ID but modal is open - close it
+				closeModal();
+			}
+		};
+
+		window.addEventListener('popstate', handlePopState);
+
+		// Check initial URL state
+		handlePopState();
+
+		return () => {
+			window.removeEventListener('popstate', handlePopState);
+		};
+	}, [imageArray, isOpen, openModal, closeModal]);
+
+	// Check URL when images first load or update
+	useEffect(() => {
+		const memeId = getMemeIdFromUrl();
+		if (memeId && !isOpen && imageArray.length > 0) {
+			const meme = imageArray.find((img) => img._id === memeId);
+			if (meme) {
+				setDataImage(meme);
+				openModal();
+			}
+		}
+	}, [imageArray, isOpen, openModal]);
 
 	const breakpointColumns = {
 		default: 6,
