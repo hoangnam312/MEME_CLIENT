@@ -6,10 +6,10 @@ import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfiniteScroll';
 import { IMeme } from 'src/constants/type';
 import {
-	getMemes,
 	getMemeById,
 	getRecommendationFeed,
 	IRecommendationFeedParams,
+	searchMemes,
 } from 'src/service/meme';
 
 const initialParams: IRecommendationFeedParams = {
@@ -26,6 +26,10 @@ export const BoardHomepage = () => {
 	const [error, setError] = useState<Error | null>(null);
 	const [params, setParams] =
 		useState<IRecommendationFeedParams>(initialParams);
+	const [searchCursor, setSearchCursor] = useState<{
+		lastId?: string;
+		lastCreatedAt?: string;
+	}>({});
 
 	const debouncedFetchMemes = debounce(
 		async (currentParams: IRecommendationFeedParams) => {
@@ -62,27 +66,67 @@ export const BoardHomepage = () => {
 		debouncedFetchMemes(params);
 	}, [params, debouncedFetchMemes]);
 
-	const fetchSearchMemes = async () => {
-		setIsLoading(true);
-		setError(null);
-		if (!searchValue) return;
-		try {
-			const res = await getMemes({ search: searchValue });
-			setListImage(() => [...(res?.data?.data ?? [])]);
-		} catch (err) {
-			setError(
-				err instanceof Error ? err : new Error('Failed to search memes')
-			);
+	const fetchSearchMemes = useCallback(
+		async (isInitial = true) => {
+			setIsLoading(true);
+			setError(null);
+			if (!searchValue) return;
+			try {
+				const res = await searchMemes({
+					q: searchValue,
+					limit: 50,
+					...(isInitial ? {} : searchCursor),
+				});
+				if (res?.data) {
+					const memes = res.data.data.map((meme) => ({
+						...meme,
+						imageMedium: meme.image.imageMedium,
+						imageSmall: meme.image.imageSmall,
+						imageOrigin: meme.image.imageOrigin,
+						viewCount: meme.stats.viewCount,
+						likeCount: meme.stats.likeCount,
+						copyCount: meme.stats.copyCount,
+						dislikeCount: meme.stats.dislikeCount,
+					})) as IMeme[];
+
+					if (isInitial) {
+						setListImage(memes);
+					} else {
+						setListImage((prev) => [...prev, ...memes]);
+					}
+
+					setHasNext(res.data.hasNext);
+					if (res.data.nextCursor) {
+						setSearchCursor({
+							lastId: res.data.nextCursor.lastId,
+							lastCreatedAt: res.data.nextCursor.lastCreatedAt,
+						});
+					}
+				}
+			} catch (err) {
+				setError(
+					err instanceof Error ? err : new Error('Failed to search memes')
+				);
+				setHasNext(false);
+			}
+			setIsLoading(false);
+		},
+		[searchValue, searchCursor]
+	);
+
+	const loadMoreSearchResults = useCallback(() => {
+		if (searchValue && hasNext && !isLoading) {
+			fetchSearchMemes(false);
 		}
-		setIsLoading(false);
-	};
+	}, [searchValue, hasNext, isLoading, fetchSearchMemes]);
 
 	const handleRetry = () => {
 		setError(null);
 		setListImage([]);
 		setHasNext(true);
+		setSearchCursor({});
 		if (searchValue) {
-			fetchSearchMemes();
+			fetchSearchMemes(true);
 		} else {
 			setParams(initialParams);
 			fetchMemes();
@@ -108,7 +152,9 @@ export const BoardHomepage = () => {
 
 	useEffect(() => {
 		if (searchValue) {
-			fetchSearchMemes();
+			setSearchCursor({});
+			setListImage([]);
+			fetchSearchMemes(true);
 		} else {
 			setParams(initialParams);
 			setHasNext(true);
@@ -130,12 +176,12 @@ export const BoardHomepage = () => {
 		<OInfiniteScroll
 			state={{
 				isLoading,
-				hasNext: searchValue ? false : hasNext,
+				hasNext: searchValue ? hasNext : hasNext,
 				isEmpty: listImage.length === 0,
 				error,
 			}}
 			callbacks={{
-				onLoadMore: fetchMemes,
+				onLoadMore: searchValue ? loadMoreSearchResults : fetchMemes,
 				onRetry: handleRetry,
 			}}
 		>

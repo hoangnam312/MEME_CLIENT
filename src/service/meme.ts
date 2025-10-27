@@ -256,6 +256,40 @@ interface IRecommendationFeedResponse {
 const getRecommendationFeed = (params?: IRecommendationFeedParams) =>
 	api.get<IRecommendationFeedResponse>('/recommendation-feed', { params });
 
+interface ISearchMemesParams {
+	q: string;
+	limit?: number;
+	lastId?: string;
+	lastCreatedAt?: string;
+}
+
+interface IMemeCreator {
+	_id: string;
+	username: string;
+	displayName?: string;
+	avatarUrl?: string;
+	followCount: number;
+	followingCount: number;
+}
+
+interface IMemeWithCreator extends IRandomMemeItem {
+	creator?: IMemeCreator;
+}
+
+interface ISearchMemesResponse {
+	query: string;
+	total: number;
+	hasNext: boolean;
+	nextCursor: {
+		lastId: string;
+		lastCreatedAt: string;
+	} | null;
+	data: IMemeWithCreator[];
+}
+
+const searchMemes = (params: ISearchMemesParams) =>
+	api.get<ISearchMemesResponse>('/meme/search', { params });
+
 export {
 	createMeme,
 	getMemes,
@@ -271,6 +305,7 @@ export {
 	getUserMemes,
 	getRandomRecommendMemes,
 	getRecommendationFeed,
+	searchMemes,
 	ESourceType,
 };
 export type {
@@ -294,4 +329,8 @@ export type {
 	IRecommendationFeedParams,
 	IRecommendationFeedResponse,
 	IRecommendationFeedItem,
+	ISearchMemesParams,
+	ISearchMemesResponse,
+	IMemeWithCreator,
+	IMemeCreator,
 };
