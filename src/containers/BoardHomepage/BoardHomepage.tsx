@@ -1,7 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useSearchParams } from 'react-router';
+import { useNavigate, useSearchParams } from 'react-router';
 
+import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { t } from 'i18next';
 import { debounce } from 'lodash';
+import AButton from 'src/component/atoms/AButton/AButton';
 import { OBoard } from 'src/component/organisms/OBoard/OBoard';
 import { OInfiniteScroll } from 'src/component/organisms/OInfiniteScroll/OInfiniteScroll';
 import { IMeme } from 'src/constants/type';
@@ -17,8 +21,9 @@ const initialParams: IRecommendationFeedParams = {
 };
 
 export const BoardHomepage = () => {
+	const navigate = useNavigate();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
-	const [searchParams] = useSearchParams();
+	const [searchParams, setSearchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
 	const viewMemeId = searchParams.get('view');
 	const [isLoading, setIsLoading] = useState(false);
@@ -133,6 +138,10 @@ export const BoardHomepage = () => {
 		}
 	};
 
+	const handleExitSearch = () => {
+		setSearchParams({});
+	};
+
 	// Fetch specific meme by ID when view parameter is present
 	const fetchMemeById = async (memeId: string) => {
 		try {
@@ -173,19 +182,29 @@ export const BoardHomepage = () => {
 	}, [viewMemeId]);
 
 	return (
-		<OInfiniteScroll
-			state={{
-				isLoading,
-				hasNext: searchValue ? hasNext : hasNext,
-				isEmpty: listImage.length === 0,
-				error,
-			}}
-			callbacks={{
-				onLoadMore: searchValue ? loadMoreSearchResults : fetchMemes,
-				onRetry: handleRetry,
-			}}
-		>
-			<OBoard imageArray={listImage} />
-		</OInfiniteScroll>
+		<div className="relative">
+			{searchValue && (
+				<div className="fixed left-5 top-20 z-[1000]">
+					<AButton onClick={handleExitSearch} addClass="text-sm">
+						<FontAwesomeIcon icon={faArrowLeft} />
+						<span className="ml-2">{t('getBack')}</span>
+					</AButton>
+				</div>
+			)}
+			<OInfiniteScroll
+				state={{
+					isLoading,
+					hasNext: searchValue ? hasNext : hasNext,
+					isEmpty: listImage.length === 0,
+					error,
+				}}
+				callbacks={{
+					onLoadMore: searchValue ? loadMoreSearchResults : fetchMemes,
+					onRetry: handleRetry,
+				}}
+			>
+				<OBoard imageArray={listImage} />
+			</OInfiniteScroll>
+		</div>
 	);
 };
