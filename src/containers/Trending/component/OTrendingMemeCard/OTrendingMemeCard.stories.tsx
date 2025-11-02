@@ -39,14 +39,10 @@ const sampleTrendingMeme: ITrendingMeme = {
 	userId: 'user1',
 	location: 'https://example.com/cat-meme.jpg',
 	__v: 0,
-	imageMedium: 'https://picsum.photos/800/1200?random=1',
-	imageSmall: 'https://picsum.photos/400/600?random=1',
-	imageOrigin: 'https://picsum.photos/1200/1800?random=1',
 	viewCount: 1500,
 	likeCount: 1200,
 	copyCount: 450,
 	dislikeCount: 50,
-	// Add missing required properties
 	image: {
 		imageOrigin: 'https://picsum.photos/1200/1800?random=1',
 		imageMedium: 'https://picsum.photos/800/1200?random=1',
