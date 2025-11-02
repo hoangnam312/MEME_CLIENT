@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from 'react';
-import { useNavigate, useSearchParams } from 'react-router';
+import { useSearchParams } from 'react-router';
 
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -13,7 +13,7 @@ import {
 	getMemeById,
 	getRecommendationFeed,
 	IRecommendationFeedParams,
-	searchMemes,
+	vectorSearchMemes,
 } from 'src/service/meme';
 
 const initialParams: IRecommendationFeedParams = {
@@ -21,7 +21,6 @@ const initialParams: IRecommendationFeedParams = {
 };
 
 export const BoardHomepage = () => {
-	const navigate = useNavigate();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [searchParams, setSearchParams] = useSearchParams();
 	const searchValue = searchParams.get('search');
@@ -33,9 +32,8 @@ export const BoardHomepage = () => {
 		useState<IRecommendationFeedParams>(initialParams);
 	const [searchCursor, setSearchCursor] = useState<{
 		lastId?: string;
-		lastCreatedAt?: string;
+		lastScore?: number;
 	}>({});
-
 	const debouncedFetchMemes = debounce(
 		async (currentParams: IRecommendationFeedParams) => {
 			setIsLoading(true);
@@ -77,7 +75,7 @@ export const BoardHomepage = () => {
 			setError(null);
 			if (!searchValue) return;
 			try {
-				const res = await searchMemes({
+				const res = await vectorSearchMemes({
 					q: searchValue,
 					limit: 50,
 					...(isInitial ? {} : searchCursor),
@@ -104,7 +102,7 @@ export const BoardHomepage = () => {
 					if (res.data.nextCursor) {
 						setSearchCursor({
 							lastId: res.data.nextCursor.lastId,
-							lastCreatedAt: res.data.nextCursor.lastCreatedAt,
+							lastScore: res.data.nextCursor.lastScore,
 						});
 					}
 				}
@@ -194,7 +192,7 @@ export const BoardHomepage = () => {
 			<OInfiniteScroll
 				state={{
 					isLoading,
-					hasNext: searchValue ? hasNext : hasNext,
+					hasNext,
 					isEmpty: listImage.length === 0,
 					error,
 				}}

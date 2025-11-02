@@ -290,6 +290,50 @@ interface ISearchMemesResponse {
 const searchMemes = (params: ISearchMemesParams) =>
 	api.get<ISearchMemesResponse>('/meme/search', { params });
 
+interface IVectorSearchMemesParams {
+	q: string;
+	limit?: number;
+	lastId?: string;
+	lastScore?: number;
+}
+
+interface IVectorSearchMeme {
+	_id: string;
+	name: string;
+	description?: string;
+	image: {
+		imageOrigin: string;
+		imageMedium: string;
+		imageSmall: string;
+	};
+	userId: string;
+	stats: {
+		viewCount: number;
+		likeCount: number;
+		copyCount: number;
+		dislikeCount: number;
+	};
+	status: string;
+	createdAt: string;
+	updatedAt: string;
+	vectorSearchScore: number;
+	creator?: IMemeCreator;
+}
+
+interface IVectorSearchMemesResponse {
+	query: string;
+	total: number;
+	hasNext: boolean;
+	nextCursor: {
+		lastId: string;
+		lastScore: number;
+	} | null;
+	data: IVectorSearchMeme[];
+}
+
+const vectorSearchMemes = (params: IVectorSearchMemesParams) =>
+	api.get<IVectorSearchMemesResponse>('/vector-search/text', { params });
+
 export {
 	createMeme,
 	getMemes,
@@ -306,6 +350,7 @@ export {
 	getRandomRecommendMemes,
 	getRecommendationFeed,
 	searchMemes,
+	vectorSearchMemes,
 	ESourceType,
 };
 export type {
@@ -333,4 +378,7 @@ export type {
 	ISearchMemesResponse,
 	IMemeWithCreator,
 	IMemeCreator,
+	IVectorSearchMemesParams,
+	IVectorSearchMemesResponse,
+	IVectorSearchMeme,
 };
