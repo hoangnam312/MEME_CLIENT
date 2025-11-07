@@ -31,7 +31,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 
 	return (
 		<>
-			<div className="relative z-10 flex flex-row items-center justify-between bg-white px-6 py-2 shadow-lg shadow-emerald-200 backdrop-blur-sm dark:bg-gray-800">
+			<div className="fixed top-0 z-10 flex w-full flex-row items-center justify-between bg-white px-6 py-2 shadow-lg shadow-emerald-200 backdrop-blur-sm dark:bg-gray-800">
 				<div className="flex items-center justify-start">
 					<div className="mr-5 flex items-center justify-start">
 						<img
@@ -68,6 +68,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 					</div>
 				</div>
 			</div>
+			<div className="h-20" />
 			<OUploadModal isOpen={isOpen} closeModal={closeModal} />
 		</>
 	);
