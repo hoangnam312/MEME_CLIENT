@@ -23,6 +23,7 @@ import {
 	accountValidationSchema,
 	ProfileFormData,
 } from '../account.validation';
+import { AxiosError } from 'axios';
 
 const ProfileTab: React.FC = () => {
 	const { profile } = useAuthen();
@@ -114,7 +115,11 @@ const ProfileTab: React.FC = () => {
 			toast.success(t('account.profile.updateSuccess'));
 		} catch (error) {
 			console.error('Profile update error:', error);
-			toast.error(t('account.profile.updateError'));
+			const errorMessage =
+				error instanceof AxiosError && error.response?.data?.message
+					? error.response.data.message
+					: t('account.profile.updateError');
+			toast.error(errorMessage);
 		}
 	};
 
