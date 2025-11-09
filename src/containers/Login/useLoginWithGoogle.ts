@@ -170,6 +170,7 @@ const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
 	const updateAuthentication = useBoundStore(
 		(state) => state.authen.updateAuthen
 	);
+	const { token } = useBoundStore((state) => state.authen);
 
 	const login = useGoogleLogin({
 		onSuccess: (
@@ -188,6 +189,7 @@ const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
 	});
 
 	useGoogleOneTapLogin({
+		cancel_on_tap_outside: true,
 		onSuccess: (credentialResponse) =>
 			handleGoogleOneTapSuccess(
 				credentialResponse,
@@ -196,6 +198,7 @@ const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
 				setIsLoading
 			),
 		onError: () => toast.error(t('auth.google.error')),
+		disabled: !!token,
 	});
 
 	return {
