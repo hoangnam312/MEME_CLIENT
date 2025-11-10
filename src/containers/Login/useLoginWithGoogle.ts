@@ -189,6 +189,7 @@ const useLoginWithGoogle = (): UseLoginWithGoogleReturn => {
 	});
 
 	useGoogleOneTapLogin({
+		cancel_on_tap_outside: true,
 		onSuccess: (credentialResponse) =>
 			handleGoogleOneTapSuccess(
 				credentialResponse,

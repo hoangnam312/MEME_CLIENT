@@ -131,7 +131,6 @@ const Account: React.FC = () => {
 						: t('account.followers.errorLoading');
 
 				setFollowersError(errorMessage);
-				toast.error(errorMessage);
 			} finally {
 				setFollowersLoading(false, false);
 			}
@@ -209,7 +208,6 @@ const Account: React.FC = () => {
 						: t('account.following.errorLoading');
 
 				setFollowingError(errorMessage);
-				toast.error(errorMessage);
 			} finally {
 				setFollowingLoading(false, false);
 			}

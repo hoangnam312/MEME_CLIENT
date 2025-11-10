@@ -56,7 +56,7 @@ api.interceptors.response.use(
 					window.location.href = Path.LOGIN;
 					clearToken();
 					break;
-				case 500:
+				case 503:
 					window.location.href = Path.SERVER_ERROR;
 					break;
 			}
