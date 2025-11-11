@@ -50,6 +50,8 @@ export const BoardHomepage = () => {
 						likeCount: meme.stats.likeCount,
 						copyCount: meme.stats.copyCount,
 						dislikeCount: meme.stats.dislikeCount,
+						hasLiked: meme.hasLiked,
+						hasDisliked: meme.hasDisliked,
 					})) as IMeme[];
 					setListImage((prev) => [...prev, ...memes]);
 					setHasNext(res.data.data.hasMore);
@@ -90,6 +92,8 @@ export const BoardHomepage = () => {
 						likeCount: meme.stats.likeCount,
 						copyCount: meme.stats.copyCount,
 						dislikeCount: meme.stats.dislikeCount,
+						hasLiked: meme.hasLiked,
+						hasDisliked: meme.hasDisliked,
 					})) as IMeme[];
 
 					if (isInitial) {

@@ -36,6 +36,8 @@ export interface IMeme {
 		followCount: number;
 		followingCount: number;
 	};
+	hasLiked?: boolean;
+	hasDisliked?: boolean;
 }
 
 export interface ITrendingAnalytics {

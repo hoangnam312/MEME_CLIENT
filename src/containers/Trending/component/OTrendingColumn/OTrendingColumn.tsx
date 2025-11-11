@@ -55,6 +55,8 @@ const OTrendingColumn: React.FC<OTrendingColumnProps> = ({
 			status: meme.status,
 			createdAt: meme.createdAt,
 			updatedAt: meme.updatedAt,
+			hasLiked: meme.hasLiked,
+			hasDisliked: meme.hasDisliked,
 		};
 	};
 

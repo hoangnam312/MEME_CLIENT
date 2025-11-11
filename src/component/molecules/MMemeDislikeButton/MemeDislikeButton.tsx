@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsDown } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
@@ -18,7 +18,7 @@ interface MemeDislikeButtonProps {
 }
 
 const MemeDislikeButton = ({ data, sourceType }: MemeDislikeButtonProps) => {
-	const [disliked, setDisliked] = useState(false);
+	const [disliked, setDisliked] = useState(data.hasDisliked ?? false);
 	const [dislikeBounce, setDislikeBounce] = useState(DislikeBounceState.None);
 
 	const handleDislike = async (
@@ -70,6 +70,10 @@ const MemeDislikeButton = ({ data, sourceType }: MemeDislikeButtonProps) => {
 			}
 		}
 	};
+
+	useEffect(() => {
+		setDisliked(data?.hasDisliked ?? false);
+	}, [data.hasDisliked]);
 
 	if (!disliked && dislikeBounce === DislikeBounceState.None) {
 		return (

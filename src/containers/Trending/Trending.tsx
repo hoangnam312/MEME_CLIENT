@@ -50,6 +50,8 @@ const Trending: React.FC = () => {
 		return data.map((item) => ({
 			...item.meme,
 			rank: item.rank,
+			hasLiked: item.meme.hasLiked,
+			hasDisliked: item.meme.hasDisliked,
 			analytics: {
 				likesGained: item.likeCount,
 				copiesGained: item.copyCount,

@@ -1,12 +1,12 @@
 import { useState, useCallback } from 'react';
-import { IMeme } from 'src/constants/type';
 import {
 	getUserFrequentMemes,
 	IGetFrequentMemesParams,
+	IFrequentMeme,
 } from 'src/service/meme';
 
 interface UseFrequentMemesReturn {
-	memes: IMeme[];
+	memes: IFrequentMeme[];
 	isLoading: boolean;
 	hasNext: boolean;
 	error: Error | null;
@@ -14,7 +14,7 @@ interface UseFrequentMemesReturn {
 }
 
 export const useFrequentMemes = (userId: string): UseFrequentMemesReturn => {
-	const [memes, setMemes] = useState<IMeme[]>([]);
+	const [memes, setMemes] = useState<IFrequentMeme[]>([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [hasNext, setHasNext] = useState(false);
 	const [error, setError] = useState<Error | null>(null);

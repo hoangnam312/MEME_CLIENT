@@ -26,13 +26,14 @@ export interface OViewImagePropsType {
 }
 
 const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
-	console.log('🚀 ~ OViewImage ~ data:', data);
 	const { isLoggedIn } = useAuthen();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [dataImage, setDataImage] = useState<IMeme>(data);
 
 	const handleCloseModal = () => {
 		removeMemeIdFromUrl();
+		setDataImage(data);
+		setListImage([]);
 		closeModal();
 	};
 

@@ -99,6 +99,8 @@ interface IRandomMemeItem {
 	status: string;
 	createdAt: string;
 	updatedAt: string;
+	hasLiked?: boolean;
+	hasDisliked?: boolean;
 }
 
 interface IRandomRecommendationResponse {
@@ -173,6 +175,8 @@ interface IFrequentMeme extends IMeme {
 		copies: number;
 		dislikes: number;
 	};
+	hasLiked: boolean;
+	hasDisliked: boolean;
 }
 
 interface IGetFrequentMemesParams {
@@ -318,6 +322,8 @@ interface IVectorSearchMeme {
 	updatedAt: string;
 	vectorSearchScore: number;
 	creator?: IMemeCreator;
+	hasLiked?: boolean;
+	hasDisliked?: boolean;
 }
 
 interface IVectorSearchMemesResponse {

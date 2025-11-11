@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../../atoms/AButton/AButton';
@@ -18,14 +18,11 @@ interface MemeLikeButtonProps {
 }
 
 const MemeLikeButton = ({ data, sourceType }: MemeLikeButtonProps) => {
-	const [liked, setLiked] = useState(false);
+	const [liked, setLiked] = useState(data.hasLiked ?? false);
 	const [likeBounce, setLikeBounce] = useState(LikeBounceState.None);
 
 	const handleLike = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();
-		// TODO: call api to like
-		// TODO: call api to tracking
-		// fake api
 		trackingMeme(
 			{
 				memeId: data._id,
@@ -49,6 +46,10 @@ const MemeLikeButton = ({ data, sourceType }: MemeLikeButtonProps) => {
 			}, 1000);
 		}
 	};
+
+	useEffect(() => {
+		setLiked(data?.hasLiked ?? false);
+	}, [data.hasLiked]);
 
 	if (!liked && likeBounce === LikeBounceState.None) {
 		return (
