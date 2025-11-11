@@ -1,9 +1,4 @@
-import {
-	faBars,
-	faFire,
-	faUsers,
-	faImages,
-} from '@fortawesome/free-solid-svg-icons';
+import { faBars, faImages } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
 import { useNavigate } from 'react-router';
@@ -18,16 +13,16 @@ const MNavDropdown = () => {
 
 	// Options for logged in users
 	const loggedInOptions = [
-		{
-			label: t('trending.title'),
-			value: 'trending',
-			icon: <FontAwesomeIcon icon={faFire} className="mr-2" />,
-		},
-		{
-			label: t('trendingUsers.title'),
-			value: 'trending-users',
-			icon: <FontAwesomeIcon icon={faUsers} className="mr-2" />,
-		},
+		// {
+		// 	label: t('trending.title'),
+		// 	value: 'trending',
+		// 	icon: <FontAwesomeIcon icon={faFire} className="mr-2" />,
+		// },
+		// {
+		// 	label: t('trendingUsers.title'),
+		// 	value: 'trending-users',
+		// 	icon: <FontAwesomeIcon icon={faUsers} className="mr-2" />,
+		// },
 		{
 			label: t('bulkUpload.title'),
 			value: 'bulk-upload',
@@ -35,19 +30,19 @@ const MNavDropdown = () => {
 		},
 	];
 
-	// Options for guests (not logged in)
-	const guestOptions = [
-		{
-			label: t('trending.title'),
-			value: 'trending',
-			icon: <FontAwesomeIcon icon={faFire} className="mr-2" />,
-		},
-		{
-			label: t('trendingUsers.title'),
-			value: 'trending-users',
-			icon: <FontAwesomeIcon icon={faUsers} className="mr-2" />,
-		},
-	];
+	// // Options for guests (not logged in)
+	// const guestOptions = [
+	// 	{
+	// 		label: t('trending.title'),
+	// 		value: 'trending',
+	// 		icon: <FontAwesomeIcon icon={faFire} className="mr-2" />,
+	// 	},
+	// 	{
+	// 		label: t('trendingUsers.title'),
+	// 		value: 'trending-users',
+	// 		icon: <FontAwesomeIcon icon={faUsers} className="mr-2" />,
+	// 	},
+	// ];
 
 	const onSelect = (value: string) => {
 		switch (value) {
@@ -72,6 +67,9 @@ const MNavDropdown = () => {
 		closeModal: closeDropdown,
 	} = useOpen();
 
+	// TODO: remove this code when enabled trending
+	if (!isLoggedIn()) return null;
+
 	return (
 		<div className="flex items-center justify-start">
 			<ADropdown
@@ -91,7 +89,9 @@ const MNavDropdown = () => {
 					</div>
 				}
 				isOpen={isOpen}
-				options={isLoggedIn() ? loggedInOptions : guestOptions}
+				// disabled trending
+				// options={isLoggedIn() ? loggedInOptions : guestOptions}
+				options={isLoggedIn() ? loggedInOptions : []}
 				onSelect={onSelect}
 			/>
 		</div>
