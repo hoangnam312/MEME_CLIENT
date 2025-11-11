@@ -1,4 +1,3 @@
-/* eslint-disable no-mixed-spaces-and-tabs */
 import React, { useState } from 'react';
 
 import VerificationCodeInput from 'src/component/organisms/VerificationCodeInput/VerificationCodeInput';

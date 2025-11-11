@@ -36,7 +36,8 @@ export const MemeHeader = ({
 	const tabs: Tab[] = [
 		{ key: 'frequent', label: t('tab.frequent') },
 		{ key: 'uploadedByMe', label: t('tab.uploadedByMe') },
-		{ key: 'album', label: t('tab.album') },
+		// disabled album
+		// { key: 'album', label: t('tab.album') },
 	];
 
 	return (

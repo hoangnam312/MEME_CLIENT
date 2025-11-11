@@ -3,7 +3,6 @@ import { faCopy, faEye, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
 import AModal from 'src/component/atoms/AModal/AModal';
-import MemeAlbumButton from 'src/component/molecules/MMemeAlbumButton/MemeAlbumButton';
 import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 import MemeDislikeButton from 'src/component/molecules/MMemeDislikeButton/MemeDislikeButton';
 import MemeLikeButton from 'src/component/molecules/MMemeLikeButton/MemeLikeButton';
@@ -16,8 +15,8 @@ import {
 	getRecommendMemesByImage,
 	trackingMeme,
 } from 'src/service/meme';
-import { OCardImage } from '../OCardImage/OCardImage';
 import { addMemeIdToUrl, removeMemeIdFromUrl } from 'src/utils/memeViewUtils';
+import { OCardImage } from '../OCardImage/OCardImage';
 
 export interface OViewImagePropsType {
 	isOpen: boolean;
@@ -131,10 +130,11 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 										data={dataImage}
 										sourceType={ESourceType.Detail}
 									/>
-									<MemeAlbumButton
+									{/* disabled album */}
+									{/* <MemeAlbumButton
 										data={dataImage}
 										sourceType={ESourceType.Detail}
-									/>
+									/> */}
 								</>
 							)}
 						</div>
