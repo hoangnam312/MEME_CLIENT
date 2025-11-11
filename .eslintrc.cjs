@@ -11,5 +11,6 @@ module.exports = {
   plugins: ["react-refresh", "@typescript-eslint"],
   rules: {
     "react-refresh/only-export-components": "warn",
+    "no-mixed-spaces-and-tabs": ["warn", "smart-tabs"]
   },
 };
