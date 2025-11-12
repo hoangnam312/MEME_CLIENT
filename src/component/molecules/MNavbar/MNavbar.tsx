@@ -48,6 +48,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 				<div className="flex basis-1/2 items-center justify-end">
 					<ASearch
 						onSubmit={(_, value) => onSearch(value)}
+						placeholder={t('searchPlaceholder')}
 						addClassWrapper="w-full"
 					/>
 				</div>

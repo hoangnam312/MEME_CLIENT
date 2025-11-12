@@ -1,6 +1,7 @@
 {
 	"hello": "Hello",
 	"search": "Search",
+	"searchPlaceholder": "AI-Powered Search - Describe the meme you're looking for here",
 	"upload": "Upload",
 	"myMemes": "My memes",
 	"save": "Save",
