@@ -13,6 +13,7 @@ import PrivacyPolicy from 'src/containers/PrivacyPolicy/PrivacyPolicy';
 import TermsOfService from 'src/containers/TermsOfService/TermsOfService';
 import DataDeletionGuide from 'src/containers/DataDeletionGuide/DataDeletionGuide';
 import BulkUpload from 'src/containers/BulkUpload/BulkUpload';
+import ContactUs from 'src/containers/ContactUs/ContactUs';
 
 const AppRoutes = () => {
 	return (
@@ -34,6 +35,7 @@ const AppRoutes = () => {
 			<Route path="/privacy-policy" element={<PrivacyPolicy />} />
 			<Route path="/terms-of-service" element={<TermsOfService />} />
 			<Route path="/data-deletion-guide" element={<DataDeletionGuide />} />
+			<Route path="/contact-us" element={<ContactUs />} />
 
 			<Route path="*" element={<div>Error Page</div>} />
 		</Routes>

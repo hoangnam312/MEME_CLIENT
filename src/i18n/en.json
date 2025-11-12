@@ -359,6 +359,15 @@
 		"loginRequired": "Please log in to continue"
 	},
 
+	"contactUs": {
+		"title": "Contact Us",
+		"subtitle": "Get in touch with us in here",
+		"gmail": "Email Us",
+		"facebookPage": "Facebook Page",
+		"facebookPersonal": "Personal Facebook",
+		"formBug": "Report a Bug"
+	},
+
 	"bulkUpload": {
 		"button": "Got many memes? Upload them here.",
 		"title": "Bulk Meme Upload",

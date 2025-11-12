@@ -178,6 +178,7 @@ export enum Path {
 	TRENDING = '/trending',
 	TRENDING_USERS = '/trending-users',
 	ACCOUNT = '/account',
+	CONTACT_US = '/contact-us',
 	LOGIN = '/login',
 	REGISTER = '/register',
 	FORGOT_PASSWORD = '/forgot-password',

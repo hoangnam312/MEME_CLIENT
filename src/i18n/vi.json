@@ -355,6 +355,15 @@
 		"loginRequired": "Vui lòng đăng nhập để tiếp tục"
 	},
 
+	"contactUs": {
+		"title": "Liên Hệ",
+		"subtitle": "Liên hệ với chúng tôi tại đây",
+		"gmail": "Gửi Email",
+		"facebookPage": "Trang Facebook",
+		"facebookPersonal": "Facebook Cá Nhân",
+		"formBug": "Báo Lỗi"
+	},
+
 	"bulkUpload": {
 		"button": "Bạn có nhiều meme? Upload ở đây",
 		"title": "Tải lên hàng loạt Meme",
