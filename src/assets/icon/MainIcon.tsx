@@ -1,8 +1,8 @@
 export default function MainIcon() {
 	return (
 		<img
-			className="h-10 w-10 cursor-pointer rounded-full object-cover"
-			src="vite.svg"
+			className="h-24 w-24 cursor-pointer object-cover"
+			src="logo.svg"
 			alt="viteIcon"
 		/>
 	);

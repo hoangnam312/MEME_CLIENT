@@ -35,8 +35,8 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 				<div className="flex items-center justify-start">
 					<div className="mr-5 flex items-center justify-start">
 						<img
-							className="h-10 w-10 cursor-pointer rounded-full object-cover"
-							src="vite.svg"
+							className="h-14 w-14 cursor-pointer object-cover"
+							src="logo.svg"
 							alt="viteIcon"
 							onClick={() => (window.location.href = '/')}
 						/>
