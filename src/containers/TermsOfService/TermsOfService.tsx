@@ -537,7 +537,7 @@ const TermsOfService = () => {
 						<div className="contact-card">
 							<h3>General Inquiries</h3>
 							<p>
-								<strong>Email:</strong> hoangnam312@gmail.com
+								<strong>Email:</strong> memenya.com@gmail.com
 							</p>
 							<p>
 								<strong>Response Time:</strong> Within 30 days

@@ -261,7 +261,7 @@ const PrivacyPolicy = () => {
 						</p>
 						<div className="contact-info">
 							<p>
-								<strong>Email:</strong> hoangnam312.dev@gmail.com
+								<strong>Email:</strong> memenya.com@gmail.com
 							</p>
 						</div>
 					</div>
@@ -334,7 +334,7 @@ const PrivacyPolicy = () => {
 						<div className="opt-out-options">
 							<p>
 								You can opt-out of data sharing by contacting us at
-								hoangnam312.dev@gmail.com
+								memenya.com@gmail.com
 							</p>
 						</div>
 					</div>
@@ -503,7 +503,7 @@ const PrivacyPolicy = () => {
 						<div className="contact-card">
 							<h3>General Privacy Inquiries</h3>
 							<p>
-								<strong>Email:</strong> hoangnam312.dev@gmail.com
+								<strong>Email:</strong> memenya.com@gmail.com
 							</p>
 							<p>
 								<strong>Response Time:</strong> Within 30 days
