@@ -9,7 +9,7 @@ const Layout = () => {
 	const { modalOpening, updateModalOpening } = useCheckModalOpening();
 
 	return (
-		<>
+		<div className="min-h-screen dark:bg-gray-800">
 			<MNavbar updateModalOpening={updateModalOpening} />
 			<QuickUploadWrapper
 				modalOpening={modalOpening}
@@ -21,7 +21,7 @@ const Layout = () => {
 					</div>
 				</div>
 			</QuickUploadWrapper>
-		</>
+		</div>
 	);
 };
 
