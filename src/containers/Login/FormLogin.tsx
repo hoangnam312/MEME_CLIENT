@@ -52,7 +52,6 @@ function FormLogin() {
 				// Initialize language based on user preferences
 				await initializeLanguage(res.data.preferences);
 			});
-			toast.success(t('login.success'));
 			navigate(Path.HOME_PAGE);
 		} catch (error) {
 			localStorage.removeItem('authen');
