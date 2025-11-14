@@ -33,7 +33,7 @@ const ATabs: React.FC<ATabsProps> = ({
 								className={
 									`group inline-flex items-center justify-center rounded-t-lg border-b-2 p-4 ` +
 									(isActive
-										? 'active border-violet-900 font-semibold text-violet-900 dark:border-violet-800 dark:text-violet-800 '
+										? 'active border-violet-900 font-semibold text-violet-900 dark:border-white dark:text-white '
 										: 'border-transparent hover:border-gray-300 hover:text-gray-600 dark:hover:text-gray-300 ') +
 									(isDisabled
 										? 'cursor-not-allowed text-gray-400 dark:text-gray-500'
