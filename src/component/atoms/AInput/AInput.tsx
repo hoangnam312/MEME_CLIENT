@@ -49,8 +49,8 @@ const AInput = ({
 		// Default interactive state
 		return `
 			bg-gray-50 text-gray-900
-			dark:bg-gray-700 dark:text-white dark:placeholder-gray-400
-			border-gray-300 dark:border-gray-600
+			dark:bg-emerald-100 dark:text-black-800 dark:placeholder-gray-400
+			border-gray-300 dark:border-violet-400
 			focus-within:border-blue-500 focus-within:ring-blue-500
 			focus:border-blue-500 focus:ring-blue-500
 			dark:focus:border-blue-500 dark:focus:ring-blue-500

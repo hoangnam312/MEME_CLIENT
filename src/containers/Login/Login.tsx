@@ -28,7 +28,7 @@ function Login() {
 		useLoginWithFacebook();
 
 	return (
-		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12">
+		<div className="flex min-h-screen flex-col justify-center bg-gray-100 sm:py-12 dark:bg-gray-800">
 			<div className="xs:p-0 mx-auto p-10 md:w-full md:max-w-md">
 				<div className="mb-5 flex items-center justify-center">
 					<div onClick={() => navigate(Path.HOME_PAGE)}>

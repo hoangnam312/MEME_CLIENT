@@ -55,6 +55,7 @@ function FormRegister() {
 		<form onSubmit={handleSubmit(handleRegister)}>
 			<AInput
 				addClassWrapper="mt-3"
+				addClassLabel="dark:text-violet-900"
 				label={t('email')}
 				rest={{ ...register('email'), name: 'email' }}
 			/>
@@ -63,6 +64,7 @@ function FormRegister() {
 			)}
 			<AInput
 				addClassWrapper="mt-3"
+				addClassLabel="dark:text-violet-900"
 				label={t('username')}
 				rest={{ ...register('username'), name: 'username' }}
 			/>
@@ -71,6 +73,7 @@ function FormRegister() {
 			)}
 			<AInput
 				addClassWrapper="mt-3"
+				addClassLabel="dark:text-violet-900"
 				label={t('password')}
 				type="password"
 				rest={{ ...register('password') }}
@@ -80,6 +83,7 @@ function FormRegister() {
 			)}
 			<AInput
 				addClassWrapper="mt-3"
+				addClassLabel="dark:text-violet-900"
 				label={t('confirmPassword')}
 				type="password"
 				rest={{ ...register('confirmPassword') }}

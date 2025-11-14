@@ -317,7 +317,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 
 	if (!currentEmail) {
 		return (
-			<div className="flex min-h-screen items-center justify-center bg-gray-50">
+			<div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-800">
 				<div className="w-full max-w-md space-y-8 p-8">
 					<div className="text-center">
 						<FontAwesomeIcon

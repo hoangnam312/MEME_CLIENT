@@ -102,6 +102,7 @@ const NewResetPassword: React.FC<NewResetPasswordProps> = ({
 					<div className="space-y-6 py-12">
 						<div>
 							<AInput
+								addClassLabel="dark:text-violet-900"
 								type="password"
 								label={t('forgotPassword.resetStep.newPasswordLabel')}
 								rest={{
@@ -119,6 +120,7 @@ const NewResetPassword: React.FC<NewResetPasswordProps> = ({
 
 						<div>
 							<AInput
+								addClassLabel="dark:text-violet-900"
 								type="password"
 								label={t('forgotPassword.resetStep.confirmPasswordLabel')}
 								rest={{

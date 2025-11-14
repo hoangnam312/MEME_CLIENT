@@ -74,7 +74,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 	};
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8">
+		<div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-800">
 			<div className="w-full max-w-md space-y-10">
 				<div className="space-y-8 rounded-lg bg-white px-5 py-7 shadow">
 					<div className="text-center">
@@ -90,6 +90,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 						<div className="py-12">
 							<AInput
 								type="email"
+								addClassLabel="dark:text-violet-900"
 								label={t('forgotPassword.emailStep.emailLabel')}
 								rest={{
 									...register('email'),

@@ -78,6 +78,7 @@ function FormLogin() {
 		<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
 			<div>
 				<AInput
+					addClassLabel="dark:text-violet-900"
 					type="email"
 					label={t('email')}
 					rest={{ ...register('email'), disabled: isSubmitting }}
@@ -88,6 +89,7 @@ function FormLogin() {
 			)}
 			<div>
 				<AInput
+					addClassLabel="dark:text-violet-900"
 					type="password"
 					label={t('password')}
 					rest={{ ...register('password'), disabled: isSubmitting }}
