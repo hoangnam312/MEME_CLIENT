@@ -13,7 +13,7 @@ export interface MInputWithinFormPropsType {
 	type?: string;
 	placeholder?: string;
 	label?: string;
-	labelButton?: string;
+	labelButton?: string | React.ReactNode;
 	icon?: React.ReactNode;
 	suffix?: React.ReactNode;
 	disabled?: boolean;
@@ -124,7 +124,9 @@ const MInputWithinForm = ({
 						type={type}
 						disabled={disabled}
 						readOnly={readOnly}
-						className={`block w-full rounded-lg border p-4 pl-10 pr-24 text-sm
+						className={`block w-full rounded-lg border p-4 ${
+							icon ? 'pl-10' : 'pl-4'
+						} pr-24 text-sm
 						${getInputStateStyles()}
 						${addClass}`}
 						placeholder={placeholder}
@@ -137,12 +139,13 @@ const MInputWithinForm = ({
 						<div className="absolute bottom-2 right-2.5">
 							<AButton
 								addClass="!font-medium text-sm"
-								content={labelButton}
 								rest={{
 									type: 'submit',
 									onClick: onSubmitDefault,
 								}}
-							/>
+							>
+								{labelButton}
+							</AButton>
 						</div>
 					)}
 					{suffix && suffix}

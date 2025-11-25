@@ -7,16 +7,29 @@ import MInputWithinForm, {
 
 const ASearch = (props: MInputWithinFormPropsType) => {
 	return (
-		<MInputWithinForm
-			labelButton={t('search')}
-			icon={
-				<FontAwesomeIcon
-					className="text-violet-900 dark:text-white"
-					icon={faMagnifyingGlass}
+		<>
+			{/* Mobile & Tablet Version (< 1024px) */}
+			<div className="lg:hidden">
+				<MInputWithinForm
+					labelButton={<FontAwesomeIcon size="xl" icon={faMagnifyingGlass} />}
+					{...props}
 				/>
-			}
-			{...props}
-		/>
+			</div>
+
+			{/* Desktop Version (>= 1024px) */}
+			<div className="hidden lg:block">
+				<MInputWithinForm
+					labelButton={t('search')}
+					icon={
+						<FontAwesomeIcon
+							className="text-violet-900 dark:text-white"
+							icon={faMagnifyingGlass}
+						/>
+					}
+					{...props}
+				/>
+			</div>
+		</>
 	);
 };
 
