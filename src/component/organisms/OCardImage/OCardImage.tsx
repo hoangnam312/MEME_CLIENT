@@ -74,8 +74,14 @@ export const OCardImage = ({
 			{/* <div className="absolute left-2 top-2 z-10 rounded-md bg-black/50 px-2 py-1 text-xs text-white">
 				{data._id} - {index}
 			</div> */}
-			{isHover && isLoaded && (
-				<div className="absolute inset-0 flex items-end justify-end [box-shadow:inset_-40px_-40px_20px_rgba(0,0,0,0.25)]">
+			{isLoaded && (
+				<div
+					className={`absolute inset-0 flex items-end justify-end xl:opacity-0 xl:hover:opacity-100 ${
+						isHover
+							? '[box-shadow:inset_-40px_-40px_20px_rgba(0,0,0,0.25)]'
+							: ''
+					}`}
+				>
 					<div className="mb-2 mr-2 flex flex-col gap-2">
 						<MemeCopyButton data={data} sourceType={ESourceType.Feed} />
 					</div>
