@@ -59,14 +59,16 @@ const PasswordTab: React.FC = () => {
 	};
 
 	return (
-		<div className="space-y-6">
-			<div className="rounded-lg bg-yellow-50 p-4">
-				<p className="text-sm text-yellow-800">{t('account.password.help')}</p>
+		<div className="space-y-4 md:space-y-6">
+			<div className="rounded-lg bg-yellow-50 p-3 md:p-4 dark:bg-yellow-900/20">
+				<p className="text-xs text-yellow-800 md:text-sm dark:text-yellow-300">
+					{t('account.password.help')}
+				</p>
 			</div>
 
 			<form
 				onSubmit={handleSubmitPassword(onSubmitPassword)}
-				className="space-y-4"
+				className="space-y-3 md:space-y-4"
 			>
 				<div>
 					<AInput

@@ -74,7 +74,7 @@ function FormLogin() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+		<form onSubmit={handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
 			<div>
 				<AInput
 					addClassLabel="dark:text-violet-900"
@@ -84,7 +84,9 @@ function FormLogin() {
 				/>
 			</div>
 			{errors.email?.message && (
-				<p className="mt-2 text-red-500">{t(errors.email.message)}</p>
+				<p className="mt-1 text-xs text-red-500 md:mt-2 md:text-sm">
+					{t(errors.email.message)}
+				</p>
 			)}
 			<div>
 				<AInput
@@ -95,9 +97,11 @@ function FormLogin() {
 				/>
 			</div>
 			{errors.password?.message && (
-				<p className="mt-2 text-red-500">{t(errors.password.message)}</p>
+				<p className="mt-1 text-xs text-red-500 md:mt-2 md:text-sm">
+					{t(errors.password.message)}
+				</p>
 			)}
-			<div className="mt-7 flex justify-center align-middle">
+			<div className="mt-5 flex justify-center align-middle md:mt-7">
 				<AButton
 					content={t('login')}
 					rest={{

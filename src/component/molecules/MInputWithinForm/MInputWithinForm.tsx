@@ -126,7 +126,7 @@ const MInputWithinForm = ({
 						readOnly={readOnly}
 						className={`block w-full rounded-lg border p-4 ${
 							icon ? 'pl-10' : 'pl-4'
-						} pr-24 text-sm
+						} pr-16 text-sm md:pr-24
 						${getInputStateStyles()}
 						${addClass}`}
 						placeholder={placeholder}
@@ -136,9 +136,9 @@ const MInputWithinForm = ({
 						{...rest}
 					/>
 					{labelButton && !disabled && (
-						<div className="absolute bottom-2 right-2.5">
+						<div className="absolute bottom-2 right-2 md:right-2.5">
 							<AButton
-								addClass="!font-medium text-sm"
+								addClass="!font-medium text-sm !px-3 md:!px-5"
 								rest={{
 									type: 'submit',
 									onClick: onSubmitDefault,

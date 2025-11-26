@@ -25,17 +25,19 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 	enableFollowModal = false,
 }) => {
 	return (
-		<div className={`flex items-center gap-3 ${addClass}`}>
+		<div
+			className={`flex items-center gap-2 rounded-lg bg-indigo-200 p-1.5 md:gap-3 md:p-2 dark:bg-indigo-900 ${addClass}`}
+		>
 			<img
-				className="h-12 w-12 rounded-xl"
+				className="h-10 w-10 rounded-lg md:h-12 md:w-12 md:rounded-xl"
 				src={user.avatarUrl}
 				alt={user.displayName || user.username}
 			/>
 			<div className="min-w-0 flex-1">
-				<div className="truncate text-xl font-medium text-indigo-800 dark:text-white">
+				<div className="truncate text-sm font-medium text-indigo-800 md:text-base lg:text-xl dark:text-white">
 					{user.displayName || user.username}
 				</div>
-				<div className="text-xs text-gray-500 dark:text-gray-400">
+				<div className="text-[10px] text-gray-500 md:text-xs dark:text-gray-400">
 					<span
 						className={
 							enableFollowModal

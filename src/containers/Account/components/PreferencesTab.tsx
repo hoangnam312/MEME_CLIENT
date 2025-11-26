@@ -103,12 +103,12 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 			<div className="space-y-6">
 				{/* Language Preference */}
 				<div>
-					<label className="mb-2 block text-sm font-medium text-gray-700">
+					<label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
 						{t('account.language')}
 					</label>
 					<div className="relative">
 						<select
-							className={`w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 ${
+							className={`w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white ${
 								isUpdatingPreferences ? 'cursor-not-allowed opacity-50' : ''
 							}`}
 							value={currentLanguage}
@@ -122,26 +122,28 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 						</select>
 						{isUpdatingPreferences && (
 							<div className="absolute right-3 top-1/2 -translate-y-1/2 transform">
-								<div className="h-4 w-4 animate-spin rounded-full border-b-2 border-indigo-500"></div>
+								<div className="h-4 w-4 animate-spin rounded-full border-b-2 border-indigo-500 dark:border-indigo-400"></div>
 							</div>
 						)}
 					</div>
 					{isUpdatingPreferences && (
-						<p className="mt-1 text-xs text-gray-500">{t('updating')}</p>
+						<p className="mt-1 text-xs text-gray-500 dark:text-gray-400">
+							{t('updating')}
+						</p>
 					)}
 				</div>
 
 				{/* Danger Zone */}
-				<div className="rounded-lg border border-red-200 bg-red-50 p-4">
-					<h3 className="mb-2 text-lg font-medium text-red-800">
+				<div className="rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800 dark:bg-red-900/20">
+					<h3 className="mb-2 text-lg font-medium text-red-800 dark:text-red-400">
 						{t('account.dangerZone')}
 					</h3>
-					<p className="mb-4 text-sm text-red-700">
+					<p className="mb-4 text-sm text-red-700 dark:text-red-300">
 						{t('account.deleteWarning')}
 					</p>
 					<AButton
 						content={t('account.deleteAccount')}
-						addClass="!bg-red-600 hover:!bg-red-700 text-white"
+						addClass="!bg-red-600 hover:!bg-red-700 text-white dark:!bg-red-700 dark:hover:!bg-red-800"
 						onClick={() => setIsConfirmDeleteOpen(true)}
 						isDisabled={isDeletingAccount}
 					/>

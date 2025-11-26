@@ -115,12 +115,12 @@ const ForgotPassword: React.FC = () => {
 		const currentStepIndex = steps.indexOf(state.step);
 
 		return (
-			<div className="mb-6 flex justify-center">
-				<div className="flex space-x-2">
+			<div className="mb-4 flex justify-center md:mb-6">
+				<div className="flex space-x-1.5 md:space-x-2">
 					{steps.map((_, index) => (
 						<div
 							key={index}
-							className={`h-2 w-8 rounded ${
+							className={`h-1.5 w-6 rounded md:h-2 md:w-8 ${
 								index <= currentStepIndex ? 'bg-violet-600' : 'bg-gray-300'
 							}`}
 						/>
@@ -186,7 +186,7 @@ const ForgotPassword: React.FC = () => {
 
 	return (
 		<div className="forgot-password-container">
-			<div className="flex min-h-screen items-center justify-center bg-gray-50 px-4 py-12 sm:px-6 lg:px-8 dark:bg-gray-800">
+			<div className="flex min-h-screen items-center justify-center bg-gray-50 px-3 py-6 sm:px-6 md:py-12 lg:px-8 dark:bg-gray-800">
 				<div className="w-full max-w-md">{renderStep()}</div>
 			</div>
 		</div>

@@ -295,18 +295,20 @@ const BulkUpload: React.FC = () => {
 	);
 
 	return (
-		<div className="mx-auto min-h-screen max-w-7xl bg-gray-50 p-4 sm:p-8">
-			<div className="relative mb-8 text-center">
+		<div className="mx-auto min-h-screen max-w-7xl bg-gray-50 p-2 sm:p-4 md:p-6 lg:p-8">
+			<div className="relative mb-4 text-center md:mb-8">
 				<AOutlineButton
-					addClass="!absolute left-0 top-0 -translate-y-1/2"
+					addClass="!absolute left-0 top-0 md:top-1/2 md:-translate-y-1/2 scale-75 md:scale-100"
 					onClick={() => navigate(-1)}
 				>
 					<FontAwesomeIcon icon={faArrowLeft} className="text-violet-900" />
 				</AOutlineButton>
-				<h1 className="bg-gradient-to-r bg-clip-text text-4xl font-bold text-transparent text-violet-900">
+				<h1 className="bg-gradient-to-r bg-clip-text px-8 text-2xl font-bold text-transparent text-violet-900 md:px-0 md:text-3xl lg:text-4xl">
 					{t('bulkUpload.title')}
 				</h1>
-				<p className="mt-2 text-lg text-gray-600">{t('bulkUpload.subtitle')}</p>
+				<p className="mt-1 px-2 text-sm text-gray-600 md:mt-2 md:text-base lg:text-lg">
+					{t('bulkUpload.subtitle')}
+				</p>
 			</div>
 
 			{!uploadState.isUploading && !isUploadComplete && (
@@ -330,20 +332,20 @@ const BulkUpload: React.FC = () => {
 							<>
 								<FontAwesomeIcon
 									icon={faCloudUpload}
-									className="mb-4 text-6xl text-emerald-300"
+									className="mb-2 text-4xl text-emerald-300 md:mb-4 md:text-5xl lg:text-6xl"
 								/>
-								<h3 className="mb-2 text-xl font-semibold text-gray-800">
+								<h3 className="mb-1 px-2 text-lg font-semibold text-gray-800 md:mb-2 md:text-xl">
 									{t('bulkUpload.dropZone.title')}
 								</h3>
-								<p className="mb-2 text-gray-600">
+								<p className="mb-1 px-2 text-sm text-gray-600 md:mb-2 md:text-base">
 									{t('bulkUpload.dropZone.subtitle')}
 								</p>
-								<p className="mt-4 text-sm text-gray-500">
+								<p className="mt-2 px-4 text-xs text-gray-500 md:mt-4 md:text-sm">
 									{t('bulkUpload.dropZone.constraints')}
 								</p>
 							</>
 						) : (
-							<div className="grid w-full grid-cols-1 gap-6 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5">
+							<div className="grid w-full grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 xl:grid-cols-5">
 								{files.map((fileData) => (
 									<FileCard
 										key={fileData.id}
@@ -353,7 +355,7 @@ const BulkUpload: React.FC = () => {
 									/>
 								))}
 								<div
-									className="flex min-h-48 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-all duration-300 hover:border-violet-500 hover:bg-white"
+									className="flex min-h-32 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-dashed border-gray-300 bg-gray-50 transition-all duration-300 hover:border-violet-500 hover:bg-white md:min-h-48"
 									onClick={(e) => {
 										e.stopPropagation();
 										fileInputRef.current?.click();
@@ -361,10 +363,10 @@ const BulkUpload: React.FC = () => {
 								>
 									<FontAwesomeIcon
 										icon={faUpload}
-										className="mb-2 text-2xl"
+										className="mb-1 text-xl md:mb-2 md:text-2xl"
 										style={{ color: color.main }}
 									/>
-									<span className="font-medium text-gray-600">
+									<span className="px-1 text-center text-xs font-medium text-gray-600 md:text-sm">
 										{t('bulkUpload.addMore')}
 									</span>
 								</div>

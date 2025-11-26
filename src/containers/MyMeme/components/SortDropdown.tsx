@@ -42,10 +42,10 @@ export const SortDropdown = ({ onSortChange }: SortDropdownProps) => {
 				buttonOutside={
 					<button
 						onClick={toggle}
-						className="flex items-center gap-2 rounded-md border border-gray-300 bg-white px-4 py-2 text-sm text-gray-700 hover:bg-gray-50"
+						className="flex items-center gap-1 rounded-md border border-gray-300 bg-white px-3 py-1.5 text-xs text-gray-700 hover:bg-gray-50 md:gap-2 md:px-4 md:py-2 md:text-sm"
 					>
 						<svg
-							className="h-4 w-4"
+							className="h-3 w-3 md:h-4 md:w-4"
 							fill="none"
 							stroke="currentColor"
 							viewBox="0 0 24 24"

@@ -41,18 +41,18 @@ export const MemeHeader = ({
 	];
 
 	return (
-		<div className="mb-6 flex justify-between">
+		<div className="mb-3 flex flex-col justify-between gap-3 md:mb-6 md:flex-row md:gap-0">
 			<ATabs
-				addClass="!w-1/2"
+				addClass="!w-full md:!w-1/2"
 				tabs={tabs}
 				value={activeTab}
 				onChange={onTabChange}
 			/>
-			<div className="flex items-center gap-3">
+			<div className="flex items-center justify-between gap-2 md:justify-end md:gap-3">
 				{showSortDropdown && onSortChange && (
 					<SortDropdown onSortChange={onSortChange} />
 				)}
-				<MUserCard variant="compact" user={user} />
+				<MUserCard variant="compact" user={user} addClass="w-full md:w-auto" />
 			</div>
 		</div>
 	);

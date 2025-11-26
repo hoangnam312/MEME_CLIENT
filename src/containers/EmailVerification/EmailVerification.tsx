@@ -343,14 +343,14 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 	}
 
 	return (
-		<div className="flex min-h-screen items-center justify-center bg-gray-100 px-4 py-12 sm:px-6 lg:px-8">
-			<div className="w-full max-w-md space-y-10">
-				<div className="space-y-8 rounded-lg bg-white px-5 py-7 shadow">
+		<div className="flex min-h-screen items-center justify-center bg-gray-100 px-3 py-6 sm:px-6 md:py-12 lg:px-8">
+			<div className="w-full max-w-md space-y-6 md:space-y-10">
+				<div className="space-y-5 rounded-lg bg-white px-4 py-5 shadow md:space-y-8 md:px-5 md:py-7">
 					<div className="text-center">
-						<h2 className="text-3xl font-extrabold text-gray-900">
+						<h2 className="text-2xl font-extrabold text-gray-900 md:text-3xl">
 							{t('emailVerification.title')}
 						</h2>
-						<p className="mt-2 text-sm text-gray-600">
+						<p className="mt-1 text-xs text-gray-600 md:mt-2 md:text-sm">
 							{t('emailVerification.subtitle', { email: currentEmail })}
 						</p>
 						{timeLeft && timeLeft !== 'Expired' && (
@@ -366,9 +366,9 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 					</div>
 
 					<div>
-						<div className="space-y-6 py-12">
+						<div className="space-y-4 py-8 md:space-y-6 md:py-12">
 							{/* 6-digit code input */}
-							<div className="flex justify-center space-x-2">
+							<div className="flex justify-center space-x-1.5 md:space-x-2">
 								{code.map((digit, index) => (
 									<input
 										key={index}
@@ -384,7 +384,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 										disabled={
 											isVerifying || verificationStatus === 'success' || isBlock
 										}
-										className={`h-12 w-12 rounded-lg border-2 text-center text-xl font-semibold transition-colors focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 ${
+										className={`h-10 w-10 rounded-lg border-2 text-center text-lg font-semibold transition-colors focus:border-transparent focus:outline-none focus:ring-2 focus:ring-blue-500 md:h-12 md:w-12 md:text-xl ${
 											verificationStatus === 'error'
 												? 'border-red-300 bg-red-50'
 												: verificationStatus === 'success'

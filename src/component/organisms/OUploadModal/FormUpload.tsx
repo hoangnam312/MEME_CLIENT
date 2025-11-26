@@ -25,9 +25,9 @@ const FormUpload = ({
 	const { register, handleSubmit } = useForm<TInputs>();
 
 	return (
-		<form onSubmit={handleSubmit(handleSave)}>
+		<form onSubmit={handleSubmit(handleSave)} className="px-2 md:px-0">
 			<AInput
-				addClassWrapper="mt-3"
+				addClassWrapper="mt-2 md:mt-3"
 				icon={<FontAwesomeIcon className="text-violet-900" icon={faPen} />}
 				rest={{
 					placeholder: t('UploadModal.name'),
@@ -35,7 +35,7 @@ const FormUpload = ({
 				}}
 			/>
 			<AInput
-				addClassWrapper="mt-3"
+				addClassWrapper="mt-2 md:mt-3"
 				icon={
 					<FontAwesomeIcon className="text-violet-900" icon={faPenToSquare} />
 				}
@@ -44,7 +44,7 @@ const FormUpload = ({
 					...register('description'),
 				}}
 			/>
-			<div className="mt-5 flex justify-center self-center">
+			<div className="mt-3 flex justify-center self-center md:mt-5">
 				<AButton
 					isDisabled={isDisabledButtonSave}
 					onClick={handleSubmit(handleSave)}

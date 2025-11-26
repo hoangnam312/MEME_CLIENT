@@ -26,21 +26,21 @@ const OUploadModal = ({ isOpen, closeModal }: OUploadModalPropsType) => {
 		<AModal
 			isOpen={isOpen}
 			closeModal={closeModal}
-			addClassWrap="!w-1/2 xl:max-w-[75vh]"
+			addClassWrap="!w-full md:!w-3/4 lg:!w-2/3 xl:!w-1/2 xl:max-w-[75vh]"
 		>
 			<div className="relative max-h-screen overflow-auto">
-				<h3 className="p-3 text-center text-xl font-bold text-main-color">
+				<h3 className="p-2 text-center text-lg font-bold text-main-color md:p-3 md:text-xl">
 					{t('QuickUpload.dragHere')}
 				</h3>
 
 				<UploadImage closeModal={closeModal} />
 
-				<div className="mt-3 flex justify-end">
+				<div className="mt-2 flex justify-center px-2 md:mt-3 md:justify-end md:px-0">
 					<AOutlineButton
 						onClick={handleBulkUpload}
-						addClass="text-sm flex items-center gap-2"
+						addClass="text-xs md:text-sm flex items-center gap-1 md:gap-2 w-full md:w-auto justify-center"
 					>
-						<FontAwesomeIcon icon={faImages} className="text-base" />
+						<FontAwesomeIcon icon={faImages} className="text-sm md:text-base" />
 						{t('bulkUpload.button')}
 					</AOutlineButton>
 				</div>
