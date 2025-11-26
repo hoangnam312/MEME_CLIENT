@@ -2,6 +2,7 @@ import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faCopy, faEye, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { useEffect, useState } from 'react';
+import Masonry from 'react-masonry-css';
 import AModal from 'src/component/atoms/AModal/AModal';
 import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 import MemeDislikeButton from 'src/component/molecules/MMemeDislikeButton/MemeDislikeButton';
@@ -97,16 +98,26 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 		}
 	}, [isOpen, dataImage?._id]);
 
+	// Breakpoint columns for masonry layout (mobile/tablet only)
+	const breakpointColumns = {
+		default: 2, // For tablet (md)
+		640: 1, // For mobile (sm and below)
+	};
+
 	return (
-		<AModal isOpen={isOpen} closeModal={handleCloseModal} addClassWrap="!w-2/3">
-			<div className="grid grid-cols-3 gap-4">
-				<div className="relative col-span-2">
-					<div className="mb-3 mt-10 flex items-center justify-center rounded-lg text-5xl">
+		<AModal
+			isOpen={isOpen}
+			closeModal={handleCloseModal}
+			addClassWrap="!w-8/12 lg:!w-2/3 lg:!max-w-6xl overflow-y-auto lg:overflow-visible max-h-[90vh] lg:max-h-unset"
+		>
+			<div className="grid grid-cols-1 gap-2 lg:grid-cols-3 lg:gap-4">
+				<div className="relative col-span-1 lg:col-span-2">
+					<div className="mlg:mt-10 mb-3 mt-2 flex items-center justify-center rounded-lg text-5xl">
 						{dataImage?.image.imageMedium ? (
 							<img
 								src={dataImage.image.imageMedium}
 								alt={dataImage.image.imageMedium}
-								className="max-xl max-h-96"
+								className="max-h-[50vh] max-w-full object-contain md:max-h-[60vh] lg:max-h-96"
 							/>
 						) : (
 							<FontAwesomeIcon
@@ -118,18 +129,22 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 						)}
 					</div>
 
-					<div className="flex justify-between">
-						<div className="flex justify-start gap-4 self-center">
+					<div className="flex justify-between gap-2 lg:flex-row lg:gap-0">
+						<div className="flex justify-center gap-2 self-center md:justify-start md:gap-4">
 							{isLoggedIn() && (
 								<>
-									<MemeLikeButton
-										data={dataImage}
-										sourceType={ESourceType.Detail}
-									/>
-									<MemeDislikeButton
-										data={dataImage}
-										sourceType={ESourceType.Detail}
-									/>
+									<div className="scale-90 md:scale-100">
+										<MemeLikeButton
+											data={dataImage}
+											sourceType={ESourceType.Detail}
+										/>
+									</div>
+									<div className="scale-90 md:scale-100">
+										<MemeDislikeButton
+											data={dataImage}
+											sourceType={ESourceType.Detail}
+										/>
+									</div>
 									{/* disabled album */}
 									{/* <MemeAlbumButton
 										data={dataImage}
@@ -138,7 +153,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								</>
 							)}
 						</div>
-						<div className="flex justify-end gap-4 self-center">
+						<div className="flex justify-center gap-2 self-center md:justify-end md:gap-4">
 							{/* {userId === dataImage?.userId && (
 							<AButton
 								addClass="bg-red-500 text-white"
@@ -148,18 +163,20 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								<FontAwesomeIcon icon={faTrashCan} />
 							</AButton>
 						)} */}
-							<MemeCopyButton
-								data={dataImage}
-								sourceType={ESourceType.Detail}
-							/>
+							<div className="scale-90 md:scale-100">
+								<MemeCopyButton
+									data={dataImage}
+									sourceType={ESourceType.Detail}
+								/>
+							</div>
 						</div>
 					</div>
 
-					<div className="mt-5 rounded-2xl bg-gray-100 p-3">
+					<div className="mt-3 rounded-2xl bg-gray-100 p-2 md:mt-5 md:p-3">
 						{/* Combined stats and account info in horizontal row */}
-						<div className="flex items-center justify-between">
+						<div className="flex items-center justify-between gap-3 md:gap-0">
 							{/* Stats on the left */}
-							<div className="flex items-center gap-6 text-sm text-gray-500">
+							<div className="flex items-center gap-4 text-xs text-gray-500 md:gap-6 md:text-sm">
 								<span className="flex items-center gap-1">
 									<FontAwesomeIcon icon={faEye} size="sm" />
 									{dataImage?.stats.viewCount || 0}
@@ -187,21 +204,41 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 						</div>
 
 						{dataImage?.name && (
-							<h2 className="mt-4 text-2xl font-bold text-gray-900">
+							<h2 className="mt-3 text-lg font-bold text-gray-900 md:mt-4 md:text-2xl">
 								{dataImage?.name}
 							</h2>
 						)}
 
 						{dataImage?.description && (
-							<p className="leading-relaxed text-gray-600">
+							<p className="text-sm leading-relaxed text-gray-600 md:text-base">
 								{dataImage.description}
 							</p>
 						)}
 					</div>
 				</div>
 				<div className="rounded-lg border bg-gray-200">
-					<div className="mx-auto max-w-md p-4">
-						<div className="max-h-[35rem] space-y-4 overflow-y-auto">
+					<div className="mx-auto max-w-md p-2 lg:p-4">
+						{/* Mobile / Tablet: Masonry Layout */}
+						<div className="max-h-[35rem] overflow-y-auto pb-2 lg:hidden">
+							<Masonry
+								breakpointCols={breakpointColumns}
+								className="-ml-4 flex w-auto"
+								columnClassName="pl-4 [background-clip:padding-box] [&>div]:mb-2"
+							>
+								{listImage?.map((item, index) => (
+									<div key={item._id} className="aspect-auto h-auto">
+										<OCardImage
+											index={index}
+											data={item}
+											addClassImage={'w-full'}
+											onClick={() => handleClick(item)}
+										/>
+									</div>
+								))}
+							</Masonry>
+						</div>
+						{/* Desktop: Vertical Scroll */}
+						<div className="hidden max-h-[35rem] space-y-4 overflow-y-auto lg:block">
 							{listImage?.map((item, index) => (
 								<OCardImage
 									key={item._id}

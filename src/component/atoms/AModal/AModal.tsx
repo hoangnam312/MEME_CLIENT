@@ -30,10 +30,10 @@ const AModal = ({
 			}}
 		>
 			<div
-				className={`md:max-w-11/12 z-50 mx-auto w-4/12 overflow-y-auto rounded-lg border bg-white shadow-lg ${addClassWrap}`}
+				className={`md:max-w-11/12 max-h-11/12 z-50 mx-auto w-4/12 overflow-y-auto scroll-smooth rounded-lg border bg-white shadow-lg ${addClassWrap}`}
 			>
 				<div
-					className="px-6 py-4"
+					className="px-3 py-2 md:px-6 md:py-4"
 					onClick={(e) => {
 						e.stopPropagation();
 						onClickWrapChildren?.(e);

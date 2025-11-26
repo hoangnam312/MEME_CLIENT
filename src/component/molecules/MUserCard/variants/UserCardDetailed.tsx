@@ -28,7 +28,7 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 }) => {
 	return (
 		<div
-			className={`rounded-2xl bg-white p-6 shadow-lg dark:bg-gray-800 ${addClass}`}
+			className={`rounded-2xl bg-indigo-200 p-6 shadow-lg dark:bg-indigo-900 ${addClass}`}
 		>
 			<div className="flex flex-col items-center text-center">
 				<img

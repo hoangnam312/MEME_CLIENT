@@ -25,7 +25,9 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 	enableFollowModal = false,
 }) => {
 	return (
-		<div className={`flex items-center gap-3 ${addClass}`}>
+		<div
+			className={`flex items-center gap-3 rounded-lg bg-indigo-200 p-1 lg:p-1.5 dark:bg-indigo-900 ${addClass}`}
+		>
 			<img
 				className="h-12 w-12 rounded-xl"
 				src={user.avatarUrl}

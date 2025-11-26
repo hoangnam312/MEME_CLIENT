@@ -19,7 +19,7 @@ const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 }) => {
 	return (
 		<div
-			className={`flex items-center gap-2 ${addClass}`}
+			className={`flex items-center gap-2 rounded-lg bg-indigo-200 p-1 lg:p-1.5 dark:bg-indigo-900 ${addClass}`}
 			onClick={() => onFollowersClick?.()}
 		>
 			<img
