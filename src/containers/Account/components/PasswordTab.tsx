@@ -60,8 +60,8 @@ const PasswordTab: React.FC = () => {
 
 	return (
 		<div className="space-y-4 md:space-y-6">
-			<div className="rounded-lg bg-yellow-50 p-3 md:p-4">
-				<p className="text-xs text-yellow-800 md:text-sm">
+			<div className="rounded-lg bg-yellow-50 p-3 md:p-4 dark:bg-yellow-900/20">
+				<p className="text-xs text-yellow-800 md:text-sm dark:text-yellow-300">
 					{t('account.password.help')}
 				</p>
 			</div>

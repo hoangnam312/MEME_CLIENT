@@ -150,7 +150,7 @@ const ProfileTab: React.FC = () => {
 	if (isLoading) {
 		return (
 			<div className="flex items-center justify-center py-8">
-				<div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600"></div>
+				<div className="h-8 w-8 animate-spin rounded-full border-b-2 border-indigo-600 dark:border-indigo-400"></div>
 			</div>
 		);
 	}
@@ -199,7 +199,7 @@ const ProfileTab: React.FC = () => {
 					</div>
 				)}
 
-				<p className="text-xs text-gray-600 md:text-sm">
+				<p className="text-xs text-gray-600 md:text-sm dark:text-gray-400">
 					{t('account.avatar.help')}
 				</p>
 			</div>
@@ -266,14 +266,14 @@ const ProfileTab: React.FC = () => {
 				</div>
 
 				<div>
-					<label className="mb-1 block text-sm font-medium text-gray-700">
+					<label className="mb-1 block text-sm font-medium text-gray-700 dark:text-gray-300">
 						{t('account.bio')}
 					</label>
 					<textarea
 						{...registerProfile('bio')}
 						disabled={isSubmittingProfile || isLoading}
 						rows={4}
-						className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-100"
+						className="w-full rounded-lg border border-gray-300 px-3 py-2 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 disabled:cursor-not-allowed disabled:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:disabled:bg-gray-800"
 						placeholder={t('account.bio.placeholder')}
 					/>
 				</div>

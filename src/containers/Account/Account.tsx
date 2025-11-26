@@ -265,20 +265,20 @@ const Account: React.FC = () => {
 
 	return (
 		<OModalRequiredAuthen>
-			<div className="min-h-screen bg-gray-50 py-4 md:py-8">
+			<div className="min-h-screen bg-gray-50 py-4 md:py-8 dark:bg-gray-900">
 				<div className="mx-auto max-w-4xl px-3 sm:px-6 lg:px-8">
 					{/* Header */}
 					<div className="mb-4 md:mb-8">
-						<h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
+						<h1 className="text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
 							{t('account.title')}
 						</h1>
-						<p className="mt-1 text-sm text-gray-600 md:mt-2 md:text-base">
+						<p className="mt-1 text-sm text-gray-600 md:mt-2 md:text-base dark:text-gray-400">
 							{t('account.subtitle')}
 						</p>
 					</div>
 
 					{/* Main Content */}
-					<div className="rounded-lg bg-white shadow">
+					<div className="rounded-lg bg-white shadow dark:bg-gray-800">
 						{/* Tabs */}
 						<div className="pt-2">
 							<ATabs
@@ -303,21 +303,21 @@ const Account: React.FC = () => {
 				closeModal={() => setShowDeleteModal(false)}
 			>
 				<div className="space-y-3 md:space-y-4">
-					<h2 className="text-lg font-bold md:text-xl">
+					<h2 className="text-lg font-bold md:text-xl dark:text-white">
 						{t('account.deleteAccount')}
 					</h2>
-					<p className="text-sm text-gray-600 md:text-base">
+					<p className="text-sm text-gray-600 md:text-base dark:text-gray-400">
 						{t('account.deleteConfirmation')}
 					</p>
 					<div className="flex flex-col justify-end gap-2 sm:flex-row sm:gap-3">
 						<AButton
 							content={t('cancel')}
-							addClass="!bg-gray-500 hover:!bg-gray-600"
+							addClass="!bg-gray-500 hover:!bg-gray-600 dark:!bg-gray-600 dark:hover:!bg-gray-700"
 							onClick={() => setShowDeleteModal(false)}
 						/>
 						<AButton
 							content={t('account.confirmDelete')}
-							addClass="!bg-red-600 hover:!bg-red-700"
+							addClass="!bg-red-600 hover:!bg-red-700 dark:!bg-red-700 dark:hover:!bg-red-800"
 							onClick={handleDeleteAccount}
 						/>
 					</div>

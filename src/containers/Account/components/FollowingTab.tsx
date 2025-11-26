@@ -90,8 +90,10 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 		return (
 			<div className="flex items-center justify-center py-12">
 				<div className="text-center">
-					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600"></div>
-					<p className="mt-4 text-gray-600">{t('account.following.loading')}</p>
+					<div className="mx-auto h-12 w-12 animate-spin rounded-full border-4 border-indigo-200 border-t-indigo-600 dark:border-indigo-800 dark:border-t-indigo-400"></div>
+					<p className="mt-4 text-gray-600 dark:text-gray-400">
+						{t('account.following.loading')}
+					</p>
 				</div>
 			</div>
 		);
@@ -101,13 +103,16 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 		return (
 			<div className="flex items-center justify-center py-12">
 				<div className="text-center">
-					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-red-100">
-						<FontAwesomeIcon icon={faSearch} className="h-8 w-8 text-red-400" />
+					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-red-100 dark:bg-red-900/20">
+						<FontAwesomeIcon
+							icon={faSearch}
+							className="h-8 w-8 text-red-400 dark:text-red-500"
+						/>
 					</div>
-					<h3 className="mb-2 text-lg font-medium text-gray-900">
+					<h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
 						{t('account.following.errorTitle')}
 					</h3>
-					<p className="mb-4 text-gray-600">{error}</p>
+					<p className="mb-4 text-gray-600 dark:text-gray-400">{error}</p>
 					<AButton
 						content={t('account.following.retry')}
 						onClick={() => fetchFollowing(undefined, true)}
@@ -122,10 +127,10 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 			{/* Header */}
 			<div className="flex items-center justify-between">
 				<div>
-					<h3 className="text-lg font-medium text-gray-900">
+					<h3 className="text-lg font-medium text-gray-900 dark:text-white">
 						{t('account.following.title')}
 					</h3>
-					<p className="text-sm text-gray-600">
+					<p className="text-sm text-gray-600 dark:text-gray-400">
 						{t('account.following.subtitle', { count: totalCount })}
 					</p>
 				</div>
@@ -134,32 +139,35 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 			{/* Search */}
 			<div className="relative">
 				<div className="absolute inset-y-0 left-0 flex items-center pl-3">
-					<FontAwesomeIcon icon={faSearch} className="text-gray-400" />
+					<FontAwesomeIcon
+						icon={faSearch}
+						className="text-gray-400 dark:text-gray-500"
+					/>
 				</div>
 				<input
 					type="text"
 					placeholder={t('account.following.searchPlaceholder')}
 					value={searchQuery}
 					onChange={handleSearchChange}
-					className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-3 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+					className="w-full rounded-lg border border-gray-300 py-2 pl-10 pr-3 focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder-gray-400"
 				/>
 			</div>
 
 			{/* Following List */}
 			{filteredFollowing.length === 0 ? (
 				<div className="py-12 text-center">
-					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100">
+					<div className="mx-auto mb-4 flex h-24 w-24 items-center justify-center rounded-full bg-gray-100 dark:bg-gray-700">
 						<FontAwesomeIcon
 							icon={faSearch}
-							className="h-8 w-8 text-gray-400"
+							className="h-8 w-8 text-gray-400 dark:text-gray-500"
 						/>
 					</div>
-					<h3 className="mb-2 text-lg font-medium text-gray-900">
+					<h3 className="mb-2 text-lg font-medium text-gray-900 dark:text-white">
 						{searchQuery
 							? t('account.following.noResults')
 							: t('account.following.empty')}
 					</h3>
-					<p className="text-gray-600">
+					<p className="text-gray-600 dark:text-gray-400">
 						{searchQuery
 							? t('account.following.noResultsDesc')
 							: t('account.following.emptyDesc')}
@@ -171,7 +179,7 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 						{filteredFollowing.map((user, index) => (
 							<div
 								key={user.username}
-								className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50"
+								className="flex items-center justify-between rounded-lg border border-gray-200 p-4 hover:bg-gray-50 dark:border-gray-700 dark:hover:bg-gray-700"
 								ref={
 									index === filteredFollowing.length - 1 ? lastElementRef : null
 								}
@@ -190,8 +198,8 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 					{/* Loading more indicator */}
 					{isLoadingMore && (
 						<div className="flex items-center justify-center py-4">
-							<div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600"></div>
-							<p className="ml-2 text-sm text-gray-600">
+							<div className="mx-auto h-6 w-6 animate-spin rounded-full border-2 border-indigo-200 border-t-indigo-600 dark:border-indigo-800 dark:border-t-indigo-400"></div>
+							<p className="ml-2 text-sm text-gray-600 dark:text-gray-400">
 								{t('account.following.loadingMore')}
 							</p>
 						</div>
@@ -200,7 +208,7 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 					{/* End of results indicator */}
 					{!hasNextPage && filteredFollowing.length > 0 && (
 						<div className="flex items-center justify-center py-4">
-							<p className="text-sm text-gray-500">
+							<p className="text-sm text-gray-500 dark:text-gray-400">
 								{t('account.following.endOfResults')}
 							</p>
 						</div>
@@ -210,8 +218,8 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 
 			{/* Stats */}
 			{filteredFollowing.length > 0 && (
-				<div className="border-t border-gray-200 pt-4">
-					<div className="flex justify-between text-sm text-gray-600">
+				<div className="border-t border-gray-200 pt-4 dark:border-gray-700">
+					<div className="flex justify-between text-sm text-gray-600 dark:text-gray-400">
 						<span>
 							{t('account.following.showing', {
 								count: filteredFollowing.length,
@@ -221,7 +229,7 @@ const FollowingTab: React.FC<FollowingTabProps> = ({ fetchFollowing }) => {
 						{searchQuery && (
 							<button
 								onClick={() => setSearchQuery('')}
-								className="text-indigo-600 hover:text-indigo-700"
+								className="text-indigo-600 hover:text-indigo-700 dark:text-indigo-400 dark:hover:text-indigo-300"
 							>
 								{t('account.following.clearSearch')}
 							</button>
