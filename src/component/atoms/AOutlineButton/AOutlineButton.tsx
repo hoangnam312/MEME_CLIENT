@@ -21,8 +21,8 @@ const AOutlineButton = ({
 	return (
 		<button
 			className={`
-				group relative flex items-center justify-center rounded-full border-2 border-emerald-300 
-				bg-white px-5 py-2 font-semibold text-violet-900 shadow-xl hover:bg-emerald-300 ${addClass}
+				group relative flex items-center justify-center rounded-full border-2 border-emerald-300
+				bg-white px-3 py-1.5 text-xs font-semibold text-violet-900 shadow-xl hover:bg-emerald-300 md:px-5 md:py-2 md:text-sm ${addClass}
 			`}
 			onClick={onClick}
 			disabled={isDisabled}

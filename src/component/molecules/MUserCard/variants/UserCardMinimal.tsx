@@ -19,15 +19,15 @@ const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 }) => {
 	return (
 		<div
-			className={`flex items-center gap-2 rounded-lg bg-indigo-200 p-1 lg:p-1.5 dark:bg-indigo-900 ${addClass}`}
+			className={`flex items-center gap-1.5 rounded-lg bg-indigo-200 p-1 md:gap-2 md:p-1.5 dark:bg-indigo-900 ${addClass}`}
 			onClick={() => onFollowersClick?.()}
 		>
 			<img
-				className="h-8 w-8 rounded-lg"
+				className="h-7 w-7 rounded-md md:h-8 md:w-8 md:rounded-lg"
 				src={user.avatarUrl}
 				alt={user.displayName || user.username}
 			/>
-			<span className="text-sm font-medium text-indigo-800 dark:text-white">
+			<span className="text-xs font-medium text-indigo-800 md:text-sm dark:text-white">
 				{user.displayName || user.username}
 			</span>
 		</div>

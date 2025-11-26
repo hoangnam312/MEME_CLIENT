@@ -55,9 +55,12 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 			<AButton
 				onClick={handleFollowToggle}
 				isDisabled={false}
-				addClass={addClass}
+				addClass={`text-xs md:text-sm ${addClass}`}
 			>
-				<FontAwesomeIcon icon={faUserPlus} className="mr-2" />
+				<FontAwesomeIcon
+					icon={faUserPlus}
+					className="mr-1 text-xs md:mr-2 md:text-sm"
+				/>
 				{t('follow')}
 			</AButton>
 		);
@@ -66,8 +69,12 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 	// Not following, bounce animation
 	if (!internalFollowing && followBounce === FollowBounceState.Follow) {
 		return (
-			<AButton isDisabled={true} addClass={addClass}>
-				<FontAwesomeIcon icon={faUserPlus} bounce className="mr-2" />
+			<AButton isDisabled={true} addClass={`text-xs md:text-sm ${addClass}`}>
+				<FontAwesomeIcon
+					icon={faUserPlus}
+					bounce
+					className="mr-1 text-xs md:mr-2 md:text-sm"
+				/>
 				{t('follow')}
 			</AButton>
 		);
@@ -79,9 +86,12 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 			<AButton
 				onClick={handleFollowToggle}
 				isDisabled={false}
-				addClass={`!bg-emerald-200 hover:!bg-emerald-300 transition-colors duration-200 ${addClass}`}
+				addClass={`!bg-emerald-200 hover:!bg-emerald-300 transition-colors duration-200 text-xs md:text-sm ${addClass}`}
 			>
-				<FontAwesomeIcon icon={faCheckDouble} className="mr-2" />
+				<FontAwesomeIcon
+					icon={faCheckDouble}
+					className="mr-1 text-xs md:mr-2 md:text-sm"
+				/>
 				{t('following')}
 			</AButton>
 		);
@@ -90,8 +100,15 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 	// Following, bounce animation
 	if (internalFollowing && followBounce === FollowBounceState.Unfollow) {
 		return (
-			<AButton isDisabled={true} addClass={`!bg-emerald-200 ${addClass}`}>
-				<FontAwesomeIcon icon={faCheckDouble} bounce className="mr-2" />
+			<AButton
+				isDisabled={true}
+				addClass={`!bg-emerald-200 text-xs md:text-sm ${addClass}`}
+			>
+				<FontAwesomeIcon
+					icon={faCheckDouble}
+					bounce
+					className="mr-1 text-xs md:mr-2 md:text-sm"
+				/>
 				{t('following')}
 			</AButton>
 		);

@@ -28,62 +28,62 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 }) => {
 	return (
 		<div
-			className={`rounded-2xl bg-indigo-200 p-6 shadow-lg dark:bg-indigo-900 ${addClass}`}
+			className={`rounded-xl bg-indigo-200 p-4 shadow-lg md:rounded-2xl md:p-6 dark:bg-indigo-900 ${addClass}`}
 		>
 			<div className="flex flex-col items-center text-center">
 				<img
-					className="mb-4 h-20 w-20 rounded-2xl"
+					className="mb-3 h-16 w-16 rounded-xl md:mb-4 md:h-20 md:w-20 md:rounded-2xl"
 					src={user.avatarUrl}
 					alt={user.displayName || user.username}
 				/>
 
 				<div className="mb-2 flex items-center gap-2">
-					<h3 className="text-xl font-bold text-indigo-800 dark:text-white">
+					<h3 className="text-lg font-bold text-indigo-800 md:text-xl dark:text-white">
 						{user.displayName || user.username}
 					</h3>
 				</div>
 
 				{user.bio && (
-					<p className="mb-4 max-w-sm text-gray-600 dark:text-gray-300">
+					<p className="mb-3 max-w-sm text-sm text-gray-600 md:mb-4 md:text-base dark:text-gray-300">
 						{user.bio}
 					</p>
 				)}
 
-				<div className="mb-4 flex gap-6">
+				<div className="mb-3 flex gap-4 md:mb-4 md:gap-6">
 					<div
 						className={`text-center ${
 							enableFollowModal
-								? 'cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+								? 'cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-gray-50 md:p-2 dark:hover:bg-gray-700'
 								: ''
 						}`}
 						onClick={onFollowersClick}
 					>
-						<div className="text-lg font-bold text-indigo-800 dark:text-white">
+						<div className="text-base font-bold text-indigo-800 md:text-lg dark:text-white">
 							{user.followCount}
 						</div>
-						<div className="text-sm text-gray-500 dark:text-gray-400">
+						<div className="text-xs text-gray-500 md:text-sm dark:text-gray-400">
 							{t('followers')}
 						</div>
 					</div>
 					<div
 						className={`text-center ${
 							enableFollowModal
-								? 'cursor-pointer rounded-lg p-2 transition-colors hover:bg-gray-50 dark:hover:bg-gray-700'
+								? 'cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-gray-50 md:p-2 dark:hover:bg-gray-700'
 								: ''
 						}`}
 						onClick={onFollowingClick}
 					>
-						<div className="text-lg font-bold text-indigo-800 dark:text-white">
+						<div className="text-base font-bold text-indigo-800 md:text-lg dark:text-white">
 							{user.followingCount}
 						</div>
-						<div className="text-sm text-gray-500 dark:text-gray-400">
+						<div className="text-xs text-gray-500 md:text-sm dark:text-gray-400">
 							{t('following')}
 						</div>
 					</div>
 				</div>
 
 				{user?.joinDate && (
-					<div className="mb-4 flex items-center gap-2 text-sm text-gray-500 dark:text-gray-400">
+					<div className="mb-3 flex items-center gap-2 text-xs text-gray-500 md:mb-4 md:text-sm dark:text-gray-400">
 						<FontAwesomeIcon icon={faCalendarAlt} />
 						<span>
 							{t('joinedIn')} {user.joinDate}

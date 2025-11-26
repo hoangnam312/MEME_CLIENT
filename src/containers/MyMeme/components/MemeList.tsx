@@ -14,13 +14,15 @@ export const MemeList = ({ memes, isLoading, hasNext }: MemeListProps) => {
 		<>
 			<OBoard imageArray={memes} />
 			{isLoading && (
-				<div className="my-4 flex justify-center">
+				<div className="my-3 flex justify-center md:my-4">
 					<ALoading isLoading={isLoading} />
 				</div>
 			)}
 			{!hasNext && memes.length > 0 && (
-				<div className="my-4 flex justify-center">
-					<p className="text-sm text-gray-500">{t('BoardHomePage.isEnd')}</p>
+				<div className="my-3 flex justify-center md:my-4">
+					<p className="text-xs text-gray-500 md:text-sm">
+						{t('BoardHomePage.isEnd')}
+					</p>
 				</div>
 			)}
 		</>

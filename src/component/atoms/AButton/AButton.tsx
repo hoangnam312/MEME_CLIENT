@@ -21,8 +21,8 @@ const AButton = ({
 	return (
 		<button
 			className={`
-				group relative flex items-center justify-center rounded-full bg-emerald-300 
-				bg-gradient-to-r px-5 py-2 font-semibold text-violet-900 shadow-xl ${addClass}
+				group relative flex items-center justify-center rounded-full bg-emerald-300
+				bg-gradient-to-r px-3 py-1.5 text-xs font-semibold text-violet-900 shadow-xl md:px-5 md:py-2 md:text-sm ${addClass}
 				${isDisabled ? 'cursor-not-allowed opacity-50' : ''}
 			`}
 			onClick={onClick}

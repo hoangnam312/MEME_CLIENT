@@ -57,7 +57,11 @@ const MemeCopyButton = ({ data, sourceType }: MemeCopyButtonProps) => {
 	};
 
 	return (
-		<AButton onClick={handleCopy} isDisabled={copyState === CopyState.Copying}>
+		<AButton
+			onClick={handleCopy}
+			isDisabled={copyState === CopyState.Copying}
+			addClass="!px-5 !py-2 !text-sm"
+		>
 			{copyState === CopyState.Copying ? (
 				<ALoading size="lg" />
 			) : copyState === CopyState.Success ? (
