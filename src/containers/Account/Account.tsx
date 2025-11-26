@@ -265,14 +265,16 @@ const Account: React.FC = () => {
 
 	return (
 		<OModalRequiredAuthen>
-			<div className="min-h-screen bg-gray-50 py-8">
-				<div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8">
+			<div className="min-h-screen bg-gray-50 py-4 md:py-8">
+				<div className="mx-auto max-w-4xl px-3 sm:px-6 lg:px-8">
 					{/* Header */}
-					<div className="mb-8">
-						<h1 className="text-3xl font-bold text-gray-900">
+					<div className="mb-4 md:mb-8">
+						<h1 className="text-2xl font-bold text-gray-900 md:text-3xl">
 							{t('account.title')}
 						</h1>
-						<p className="mt-2 text-gray-600">{t('account.subtitle')}</p>
+						<p className="mt-1 text-sm text-gray-600 md:mt-2 md:text-base">
+							{t('account.subtitle')}
+						</p>
 					</div>
 
 					{/* Main Content */}
@@ -288,7 +290,9 @@ const Account: React.FC = () => {
 						</div>
 
 						{/* Tab Content */}
-						<div className="px-6 py-8">{renderTabContent()}</div>
+						<div className="px-3 py-4 md:px-6 md:py-8">
+							{renderTabContent()}
+						</div>
 					</div>
 				</div>
 			</div>
@@ -298,10 +302,14 @@ const Account: React.FC = () => {
 				isOpen={showDeleteModal}
 				closeModal={() => setShowDeleteModal(false)}
 			>
-				<div className="space-y-4">
-					<h2 className="text-xl font-bold">{t('account.deleteAccount')}</h2>
-					<p className="text-gray-600">{t('account.deleteConfirmation')}</p>
-					<div className="flex justify-end space-x-3">
+				<div className="space-y-3 md:space-y-4">
+					<h2 className="text-lg font-bold md:text-xl">
+						{t('account.deleteAccount')}
+					</h2>
+					<p className="text-sm text-gray-600 md:text-base">
+						{t('account.deleteConfirmation')}
+					</p>
+					<div className="flex flex-col justify-end gap-2 sm:flex-row sm:gap-3">
 						<AButton
 							content={t('cancel')}
 							addClass="!bg-gray-500 hover:!bg-gray-600"

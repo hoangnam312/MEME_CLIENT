@@ -156,27 +156,27 @@ const ProfileTab: React.FC = () => {
 	}
 
 	return (
-		<div className="space-y-6">
+		<div className="space-y-4 md:space-y-6">
 			{/* Avatar Section */}
-			<div className="flex flex-col items-center space-y-4">
+			<div className="flex flex-col items-center space-y-3 md:space-y-4">
 				<div
-					className="relative flex h-20 w-20 cursor-pointer items-center justify-center 
-                        rounded-2xl"
+					className="relative flex h-16 w-16 cursor-pointer items-center justify-center rounded-xl md:h-20
+                        md:w-20 md:rounded-2xl"
 				>
 					{avatarPreview ? (
 						<img
 							src={avatarPreview}
 							alt="Avatar"
-							className="rounded-2xl object-cover"
+							className="rounded-xl object-cover md:rounded-2xl"
 						/>
 					) : (
-						<FontAwesomeIcon icon={faUser} size="xl" />
+						<FontAwesomeIcon icon={faUser} className="text-2xl md:text-3xl" />
 					)}
 					<label
 						htmlFor="avatar-upload"
-						className="absolute -bottom-3 -right-3 flex h-8 w-8 cursor-pointer items-center justify-center rounded-full bg-indigo-600 text-white hover:bg-indigo-700"
+						className="absolute -bottom-2 -right-2 flex h-7 w-7 cursor-pointer items-center justify-center rounded-full bg-indigo-600 text-white hover:bg-indigo-700 md:-bottom-3 md:-right-3 md:h-8 md:w-8"
 					>
-						<FontAwesomeIcon icon={faCamera} size="sm" />
+						<FontAwesomeIcon icon={faCamera} className="text-xs md:text-sm" />
 					</label>
 					<input
 						id="avatar-upload"
@@ -189,15 +189,19 @@ const ProfileTab: React.FC = () => {
 				</div>
 
 				{avatarFile && (
-					<div className="flex flex-col items-center space-y-2">
-						<p className="text-sm text-gray-600">Selected: {avatarFile.name}</p>
-						<p className="text-xs text-gray-500">
+					<div className="flex flex-col items-center space-y-1 md:space-y-2">
+						<p className="text-xs text-gray-600 md:text-sm">
+							Selected: {avatarFile.name}
+						</p>
+						<p className="text-[10px] text-gray-500 md:text-xs">
 							Avatar will be uploaded when you save your profile
 						</p>
 					</div>
 				)}
 
-				<p className="text-sm text-gray-600">{t('account.avatar.help')}</p>
+				<p className="text-xs text-gray-600 md:text-sm">
+					{t('account.avatar.help')}
+				</p>
 			</div>
 
 			{/* Profile Form */}
