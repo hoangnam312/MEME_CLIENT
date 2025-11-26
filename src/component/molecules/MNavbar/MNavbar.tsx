@@ -50,10 +50,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 						<div className="flex-1">
 							<ASearch
 								onSubmit={(_, value) => onSearch(value)}
-								placeholder={
-									t('mobileSearchPlaceholder') ||
-									"describe what you're looking for"
-								}
+								placeholder={t('mobileSearchPlaceholder')}
 								addClassWrapper="w-full"
 							/>
 						</div>

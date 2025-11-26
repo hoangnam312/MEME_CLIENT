@@ -117,7 +117,7 @@ const MMobileNavDropdown = ({ onUpload }: MMobileNavDropdownPropsType) => {
 			<ADropdown
 				buttonOutside={
 					<div
-						className="flex h-14 w-14 cursor-pointer items-center justify-center p-4"
+						className="flex h-14 w-7 cursor-pointer items-center justify-center p-0 md:w-14 md:p-4"
 						onClick={isOpen ? closeDropdown : openDropdown}
 						title={t('navigation.explore')}
 					>
