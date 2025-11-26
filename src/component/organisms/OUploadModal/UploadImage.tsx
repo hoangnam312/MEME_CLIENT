@@ -8,28 +8,22 @@ import ASearch from 'src/component/atoms/ASearch/ASearch';
 import { faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import FormUpload, { TInputs } from './FormUpload';
-import { createMeme } from 'src/service/meme';
+import { createMeme, ESourceType } from 'src/service/meme';
 import { AxiosError } from 'axios';
 import { toast } from 'react-toastify';
-import { ErrorResponse } from 'src/constants/type';
-import AButton from 'src/component/atoms/AButton/AButton';
+import { ErrorResponse, IMeme } from 'src/constants/type';
 import OBlurRequiredAuthen from '../OBlurRequiredAuthen/OBlurRequiredAuthen';
+import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 
 export interface OUploadImagePropsType {
 	closeModal: () => void;
 }
 
-const ToastUploadSuccess = () => {
-	const handleCopy = () => {
-		// !TODO: copy image by id
-	};
-
+const ToastUploadSuccess = ({ meme }: { meme: IMeme }) => {
 	return (
-		<div className="ms-3">
-			<p>{t('upload.success')}</p>
-			<div className="mt-1">
-				<AButton onClick={handleCopy}>{t('copy')}</AButton>
-			</div>
+		<div className="ms-3 flex items-center justify-between">
+			<p className="mr-1">{t('upload.success')}</p>
+			<MemeCopyButton data={meme} sourceType={ESourceType.Other} />
 		</div>
 	);
 };
@@ -65,7 +59,6 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 		const memeFormData = new FormData();
 
 		for (const [key, value] of Object.entries(data)) {
-			console.log(key, value);
 			memeFormData.append(key, value);
 		}
 		if (source && file) memeFormData.append('image', file);
@@ -82,13 +75,15 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 			}
 		}
 
-		for (const value of memeFormData.values()) {
-			console.log(value);
-		}
 		createMeme(memeFormData)
-			.then(() => {
+			.then((response) => {
 				closeModal();
-				toast.success(ToastUploadSuccess);
+				const createdMeme = response.data;
+				if (createdMeme) {
+					toast.success(() => <ToastUploadSuccess meme={createdMeme} />);
+				} else {
+					toast.success(t('upload.success'));
+				}
 			})
 			.catch((error: AxiosError<ErrorResponse>) =>
 				toast.error(error.response?.data.message ?? t('toast.unexpectedError'))
@@ -108,7 +103,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 
 	return (
 		<div>
-			<div className="my-10">
+			<div className="my-4 md:my-10">
 				{(source || link) && !isImageError ? (
 					<div
 						className="flex justify-center"
@@ -118,6 +113,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 						<img
 							src={source || link}
 							alt="meme preview"
+							className="max-h-[40vh] w-auto max-w-full rounded-lg object-contain md:max-h-[50vh] lg:max-h-[60vh]"
 							onError={() => {
 								setIsImageError(true);
 								console.log('error');
@@ -130,21 +126,26 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 					</div>
 				) : (
 					<div
-						className="flex items-center justify-center rounded-lg border-2 border-dashed border-main-color bg-gray-100 pb-8 pt-14 text-5xl"
+						className="flex cursor-pointer items-center justify-center rounded-lg border-2 border-dashed border-main-color bg-gray-100 py-12 text-4xl transition-colors hover:bg-gray-200 md:pb-8 md:pt-14 md:text-5xl"
 						onClick={() => inputFile?.current?.click()}
 						onDragOver={onDragOverAble}
 						onDrop={onDrop}
 					>
-						<FontAwesomeIcon
-							icon={faUpload}
-							bounce
-							size="2xl"
-							style={{ color: color.main }}
-						/>
+						<div className="flex flex-col items-center gap-3">
+							<FontAwesomeIcon
+								icon={faUpload}
+								bounce
+								size="2xl"
+								style={{ color: color.main }}
+							/>
+							<p className="hidden text-sm text-gray-600 md:block md:text-base">
+								{t('QuickUpload.dragHere')}
+							</p>
+						</div>
 					</div>
 				)}
 				{isImageError && (
-					<p className="mt-2 text-center font-semibold text-red-500">
+					<p className="mt-2 px-2 text-center text-sm font-semibold text-red-500 md:text-base">
 						{t('toast.cannotGetImageFromLink')}
 					</p>
 				)}
