@@ -428,5 +428,20 @@
 			"errorAnnouncement": "Quá trình tải lên gặp lỗi.",
 			"processingAnnouncement": "Đã bắt đầu xử lý meme."
 		}
+	},
+
+	"clipboard": {
+		"error": {
+			"browserNotSupported": "Trình duyệt của bạn không hỗ trợ copy ảnh. Hãy thử Chrome, Edge, hoặc Safari.",
+			"permissionDenied": "Không thể truy cập clipboard. Vui lòng cho phép quyền clipboard trong cài đặt trình duyệt.",
+			"imageFailed": "Không thể copy ảnh. Vui lòng thử lại.",
+			"networkError": "Có vấn đề kết nối. Kiểm tra internet và thử lại.",
+			"imageNotFound": "Ảnh không khả dụng. Có thể đã bị xóa hoặc tạm thời không có sẵn."
+		},
+		"warning": {
+			"limitedSupport": "Tính năng copy ảnh có thể không hoạt động trên thiết bị của bạn. Thử tải ảnh xuống thay vào đó.",
+			"firefoxNotSupported": "Firefox chưa hỗ trợ copy ảnh. Hãy thử Chrome, Edge, hoặc Safari.",
+			"deviceNotSupported": "Thiết bị của bạn có thể có hạn chế về clipboard. Hãy thử thiết bị khác"
+		}
 	}
 }

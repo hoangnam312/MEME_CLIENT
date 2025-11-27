@@ -432,5 +432,20 @@
 			"errorAnnouncement": "Upload process encountered an error.",
 			"processingAnnouncement": "Processing memes has started."
 		}
+	},
+
+	"clipboard": {
+		"error": {
+			"browserNotSupported": "Your browser doesn't support copying images. Try using Chrome, Edge, or Safari.",
+			"permissionDenied": "Can't access clipboard. Please allow clipboard permissions in your browser settings.",
+			"imageFailed": "Unable to copy image. Please try again.",
+			"networkError": "Connection issue. Check your internet and try again.",
+			"imageNotFound": "Image not available. It may have been removed or is temporarily unavailable."
+		},
+		"warning": {
+			"limitedSupport": "Image copying may not work on your device. Try another device.",
+			"firefoxNotSupported": "Firefox doesn't support copying images yet. Try Chrome, Edge, or Safari.",
+			"deviceNotSupported": "Your device may have limited clipboard support. Try another device."
+		}
 	}
 }
