@@ -40,14 +40,16 @@ const MUserCard: React.FC<MUserCardProps> = ({
 	const handleFollowersClick = () => {
 		if (enableFollowModal) {
 			setDefaultModalTab('followers');
-			setIsFollowModalOpen(true);
+			// TODO: enable follow modal
+			// setIsFollowModalOpen(true);
 		}
 	};
 
 	const handleFollowingClick = () => {
 		if (enableFollowModal) {
 			setDefaultModalTab('following');
-			setIsFollowModalOpen(true);
+			// TODO: enable follow modal
+			// setIsFollowModalOpen(true);
 		}
 	};
 
