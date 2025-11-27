@@ -1,5 +1,25 @@
 import { useState } from 'react';
 
+function isClipboardImageSupported(): boolean {
+	return (
+		'clipboard' in navigator &&
+		'write' in navigator.clipboard &&
+		typeof ClipboardItem !== 'undefined'
+	);
+}
+
+function canCopyImageFormat(mimeType: string): boolean {
+	if (typeof ClipboardItem === 'undefined') return false;
+	if ('supports' in ClipboardItem) {
+		return (
+			(ClipboardItem as { supports?: (type: string) => boolean }).supports?.(
+				mimeType
+			) ?? false
+		);
+	}
+	return mimeType === 'image/png';
+}
+
 async function getImageData(url: string): Promise<Blob> {
 	const response = await fetch(url);
 	return await response.blob();
@@ -31,26 +51,27 @@ async function convertToPng(blob: Blob): Promise<Blob> {
 	});
 }
 
-async function copyImageToClipboard(data: Blob) {
-	try {
-		const mimeType = data.type || 'image/png';
-		const item = new ClipboardItem({ [mimeType]: data });
-		await navigator.clipboard.write([item]);
-	} catch (error) {
-		const pngBlob = await convertToPng(data);
-		const item = new ClipboardItem({ 'image/png': pngBlob });
-		await navigator.clipboard.write([item]);
-	}
-}
-
 function useCopyImage() {
 	const [isCopied, setIsCopied] = useState(false);
 	const [isError, setIsError] = useState(false);
 
 	async function copyImage(url: string) {
 		try {
-			const imageData = await getImageData(url);
-			await copyImageToClipboard(imageData);
+			if (!isClipboardImageSupported()) {
+				setIsError(true);
+				return false;
+			}
+
+			const item = new ClipboardItem({
+				'image/png': getImageData(url).then(async (blob) => {
+					if (blob.type === 'image/png' || canCopyImageFormat(blob.type)) {
+						return blob;
+					}
+					return convertToPng(blob);
+				}),
+			});
+
+			await navigator.clipboard.write([item]);
 			setIsCopied(true);
 			return true;
 		} catch (error) {
