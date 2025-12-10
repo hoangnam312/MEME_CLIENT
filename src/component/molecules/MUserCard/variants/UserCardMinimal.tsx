@@ -3,7 +3,6 @@ import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 
 export interface UserCardMinimalProps {
 	user: UserCardData;
-	isLoggedIn: boolean;
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;

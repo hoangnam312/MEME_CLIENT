@@ -55,7 +55,7 @@ export const useUserCard = ({
 			!followRelationship &&
 			initialFollowing !== undefined &&
 			isLoggedIn() &&
-			userId !== user.username
+			userId !== user.id
 		) {
 			setFollowRelationship(user.username, {
 				isFollowing: initialFollowing,
@@ -67,7 +67,7 @@ export const useUserCard = ({
 		initialFollowing,
 		isLoggedIn,
 		userId,
-		user.username,
+		user,
 		setFollowRelationship,
 	]);
 
@@ -147,6 +147,7 @@ export const useUserCard = ({
 	return {
 		user,
 		isLoggedIn: isLoggedIn(),
+		isMyself: isLoggedIn() && userId === user.id,
 		isFollowing,
 		isFollowLoading: isFollowActionLoading,
 		onFollowToggle: handleFollowToggle,

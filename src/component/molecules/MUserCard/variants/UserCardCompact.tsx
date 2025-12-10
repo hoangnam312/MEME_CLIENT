@@ -5,7 +5,7 @@ import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 
 export interface UserCardCompactProps {
 	user: UserCardData;
-	isLoggedIn: boolean;
+	isShowFollowButton?: boolean;
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;
@@ -16,7 +16,7 @@ export interface UserCardCompactProps {
 
 const UserCardCompact: React.FC<UserCardCompactProps> = ({
 	user,
-	isLoggedIn,
+	isShowFollowButton = true,
 	isFollowing,
 	onFollowToggle,
 	addClass = '',
@@ -61,7 +61,7 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 					</span>
 				</div>
 			</div>
-			{isLoggedIn && (
+			{isShowFollowButton && (
 				<AFollowButton
 					isFollowing={isFollowing}
 					onFollowToggle={onFollowToggle}

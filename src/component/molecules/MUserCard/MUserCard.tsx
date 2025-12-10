@@ -26,6 +26,7 @@ const MUserCard: React.FC<MUserCardProps> = ({
 	const {
 		user: userData,
 		isLoggedIn,
+		isMyself,
 		isFollowing,
 		onFollowToggle: handleFollowToggle,
 	} = useUserCard({
@@ -40,22 +41,20 @@ const MUserCard: React.FC<MUserCardProps> = ({
 	const handleFollowersClick = () => {
 		if (enableFollowModal) {
 			setDefaultModalTab('followers');
-			// TODO: enable follow modal
-			// setIsFollowModalOpen(true);
+			setIsFollowModalOpen(true);
 		}
 	};
 
 	const handleFollowingClick = () => {
 		if (enableFollowModal) {
 			setDefaultModalTab('following');
-			// TODO: enable follow modal
-			// setIsFollowModalOpen(true);
+			setIsFollowModalOpen(true);
 		}
 	};
 
 	const commonProps = {
 		user: userData,
-		isLoggedIn,
+		isShowFollowButton: isLoggedIn && !isMyself,
 		isFollowing,
 		onFollowToggle: handleFollowToggle,
 		addClass,
@@ -84,7 +83,7 @@ const MUserCard: React.FC<MUserCardProps> = ({
 				<OFollowListModal
 					isOpen={isFollowModalOpen}
 					onClose={() => setIsFollowModalOpen(false)}
-					userId={user.username}
+					userId={user.id}
 					defaultTab={defaultModalTab}
 				/>
 			)}

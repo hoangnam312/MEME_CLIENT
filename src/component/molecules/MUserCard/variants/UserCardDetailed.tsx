@@ -7,7 +7,7 @@ import { UserCardData } from 'src/component/molecules/MUserCard/useUserCard';
 
 export interface UserCardDetailedProps {
 	user: UserCardData;
-	isLoggedIn: boolean;
+	isShowFollowButton?: boolean;
 	isFollowing: boolean;
 	onFollowToggle: (isFollowing: boolean) => void;
 	addClass?: string;
@@ -18,7 +18,7 @@ export interface UserCardDetailedProps {
 
 const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 	user,
-	isLoggedIn,
+	isShowFollowButton = true,
 	isFollowing,
 	onFollowToggle,
 	addClass = '',
@@ -91,7 +91,7 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 					</div>
 				)}
 
-				{isLoggedIn && (
+				{isShowFollowButton && (
 					<AFollowButton
 						isFollowing={isFollowing}
 						onFollowToggle={onFollowToggle}
