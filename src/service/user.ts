@@ -16,6 +16,7 @@ export interface UserStats {
 
 export interface UserPreferences {
 	contentLanguage: 'en' | 'vi';
+	enableWatermark: boolean;
 }
 
 export interface UserTimestamps {
@@ -51,6 +52,7 @@ export interface UpdateProfileResponse {
 
 export interface UpdatePreferencesPayload {
 	contentLanguage?: SupportedLanguages;
+	enableWatermark?: boolean;
 }
 
 export interface UpdatePreferencesResponse {

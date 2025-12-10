@@ -30,6 +30,7 @@ export const useAuthen = () => {
 			},
 			preferences: {
 				contentLanguage: preferences.contentLanguage,
+				enableWatermark: preferences.enableWatermark ?? true,
 			},
 			timestamps: {
 				createdAt: '',

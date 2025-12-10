@@ -55,6 +55,7 @@ export const createAuthen: StateCreator<TBoundStore, [], [], TAuthenSlice> = (
 	},
 	preferences: {
 		contentLanguage: 'en',
+		enableWatermark: true,
 	},
 	timestamps: {
 		createdAt: '',

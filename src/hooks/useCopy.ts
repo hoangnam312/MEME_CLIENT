@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { t } from 'i18next';
 import memenyaWhiteIcon from '/memenya_white.svg';
+import { useAuthen } from './useAuthen';
 
 export type UseCopyOptions = {
 	enableNotifications?: boolean;
@@ -183,6 +184,8 @@ async function addWatermark(
 
 function useCopyImage(options: UseCopyOptions = {}) {
 	const { enableNotifications = true } = options;
+	const { preferences } = useAuthen();
+	const enableWatermark = preferences.enableWatermark ?? true;
 	const [isCopied, setIsCopied] = useState(false);
 	const [isError, setIsError] = useState(false);
 
@@ -216,8 +219,10 @@ function useCopyImage(options: UseCopyOptions = {}) {
 						processedBlob = await convertToPng(blob);
 					}
 
-					// Add watermark with memenya icon
-					processedBlob = await addWatermark(processedBlob, memenyaWhiteIcon);
+					// Add watermark with memenya icon if enabled
+					if (enableWatermark) {
+						processedBlob = await addWatermark(processedBlob, memenyaWhiteIcon);
+					}
 
 					return processedBlob;
 				}),

@@ -22,6 +22,9 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 	const [currentLanguage, setCurrentLanguage] = useState<'en' | 'vi'>(
 		preferences.contentLanguage as 'en' | 'vi'
 	);
+	const [enableWatermark, setEnableWatermark] = useState<boolean>(
+		preferences.enableWatermark ?? true
+	);
 	const [isUpdatingPreferences, setIsUpdatingPreferences] = useState(false);
 	const [isConfirmDeleteOpen, setIsConfirmDeleteOpen] = useState(false);
 	const [isDeletingAccount, setIsDeletingAccount] = useState(false);
@@ -30,6 +33,11 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 	useEffect(() => {
 		setCurrentLanguage(preferences.contentLanguage as 'en' | 'vi');
 	}, [preferences.contentLanguage]);
+
+	// Sync watermark setting with preferences
+	useEffect(() => {
+		setEnableWatermark(preferences.enableWatermark ?? true);
+	}, [preferences.enableWatermark]);
 
 	const handleLanguageChange = async (newLanguage: 'en' | 'vi') => {
 		if (newLanguage === currentLanguage) return;
@@ -83,6 +91,61 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 		}
 	};
 
+	const handleWatermarkToggle = async (enabled: boolean) => {
+		if (enabled === enableWatermark) return;
+
+		setIsUpdatingPreferences(true);
+		try {
+			// Update backend first
+			await updatePreferences({ enableWatermark: enabled });
+
+			// Update local state and store
+			setEnableWatermark(enabled);
+			updatePreferencesStore({ enableWatermark: enabled });
+
+			// Update localStorage with new preferences
+			const authenRaw = localStorage.getItem('authen');
+			if (authenRaw) {
+				const authenObj = JSON.parse(authenRaw);
+				authenObj.preferences = {
+					...authenObj.preferences,
+					enableWatermark: enabled,
+				};
+				localStorage.setItem('authen', JSON.stringify(authenObj));
+			}
+
+			// Show specific success message based on enabled/disabled state
+			const successMessage = enabled
+				? t('account.watermarkEnabled')
+				: t('account.watermarkDisabled');
+			toast.success(successMessage);
+		} catch (error: unknown) {
+			// Handle different types of errors
+			let errorMessage = t('account.watermarkUpdateError');
+
+			if (error && typeof error === 'object' && 'response' in error) {
+				const axiosError = error as {
+					response?: { data?: { message?: string }; status?: number };
+				};
+				if (axiosError.response?.status === 401) {
+					errorMessage = t('common.error.authRequired');
+					logout(); // Logout if unauthorized
+				} else if (axiosError.response?.data?.message) {
+					errorMessage = axiosError.response.data.message;
+				}
+			} else if (error && typeof error === 'object' && 'message' in error) {
+				// Network or other errors
+				errorMessage = t('toast.unexpectedError');
+			}
+
+			toast.error(errorMessage);
+			// Revert local state on error
+			setEnableWatermark(preferences.enableWatermark ?? true);
+		} finally {
+			setIsUpdatingPreferences(false);
+		}
+	};
+
 	const handleDeleteAccount = async () => {
 		setIsDeletingAccount(true);
 		try {
@@ -131,6 +194,43 @@ const PreferencesTab: React.FC<PreferencesTabProps> = ({ onDeleteAccount }) => {
 							{t('updating')}
 						</p>
 					)}
+				</div>
+
+				{/* Watermark Preference */}
+				<div>
+					<label className="mb-2 block text-sm font-medium text-gray-700 dark:text-gray-300">
+						{t('account.watermark')}
+					</label>
+					<div className="flex items-center justify-between rounded-lg border border-gray-300 px-4 py-3 dark:border-gray-600 dark:bg-gray-700">
+						<div className="flex-1">
+							<p className="text-sm font-medium text-gray-900 dark:text-white">
+								{t('account.enableWatermark')}
+							</p>
+							<p className="text-xs text-gray-500 dark:text-gray-400">
+								{t('account.watermarkDescription')}
+							</p>
+						</div>
+						<button
+							type="button"
+							onClick={() => handleWatermarkToggle(!enableWatermark)}
+							disabled={isUpdatingPreferences}
+							className={`relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-gray-800 ${
+								enableWatermark
+									? 'bg-indigo-600 dark:bg-indigo-500'
+									: 'bg-gray-200 dark:bg-gray-600'
+							} ${
+								isUpdatingPreferences ? 'cursor-not-allowed opacity-50' : ''
+							}`}
+							role="switch"
+							aria-checked={enableWatermark}
+						>
+							<span
+								className={`pointer-events-none inline-block h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out ${
+									enableWatermark ? 'translate-x-5' : 'translate-x-0'
+								}`}
+							/>
+						</button>
+					</div>
 				</div>
 
 				{/* Danger Zone */}
