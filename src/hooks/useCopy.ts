@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { t } from 'i18next';
+import memenyaWhiteIcon from '/memenya_white.svg';
 
 export type UseCopyOptions = {
 	enableNotifications?: boolean;
@@ -108,6 +109,78 @@ async function convertToPng(blob: Blob): Promise<Blob> {
 	});
 }
 
+async function loadImage(src: string): Promise<HTMLImageElement> {
+	return new Promise((resolve, reject) => {
+		const img = new Image();
+		img.crossOrigin = 'anonymous';
+		img.onload = () => resolve(img);
+		img.onerror = () => reject(new Error('Failed to load image'));
+		img.src = src;
+	});
+}
+
+async function addWatermark(
+	blob: Blob,
+	watermarkUrl: string,
+	sizePercent = 20,
+	paddingPercent = 2,
+	opacity = 0.5
+): Promise<Blob> {
+	// Load main image
+	const mainImageUrl = URL.createObjectURL(blob);
+	const mainImage = await loadImage(mainImageUrl);
+
+	// Load watermark image
+	const watermarkImage = await loadImage(watermarkUrl);
+
+	return new Promise((resolve, reject) => {
+		// Create canvas
+		const canvas = document.createElement('canvas');
+		canvas.width = mainImage.width;
+		canvas.height = mainImage.height;
+		const ctx = canvas.getContext('2d');
+
+		if (!ctx) {
+			reject(new Error('Canvas context failed'));
+			return;
+		}
+
+		// Draw main image
+		ctx.drawImage(mainImage, 0, 0);
+
+		// Calculate watermark size based on percentage of image width
+		const watermarkSize = (canvas.width * sizePercent) / 100;
+		const padding = (canvas.width * paddingPercent) / 100;
+
+		// Calculate watermark position (bottom right)
+		const watermarkX = canvas.width - watermarkSize - padding * 3;
+		const watermarkY = canvas.height - watermarkSize - padding;
+
+		// Draw watermark with opacity
+		ctx.globalAlpha = opacity;
+		ctx.drawImage(
+			watermarkImage,
+			watermarkX,
+			watermarkY,
+			watermarkSize,
+			watermarkSize
+		);
+		ctx.globalAlpha = 1.0;
+
+		// Clean up object URLs
+		URL.revokeObjectURL(mainImageUrl);
+
+		// Convert to blob
+		canvas.toBlob((resultBlob) => {
+			if (resultBlob) {
+				resolve(resultBlob);
+			} else {
+				reject(new Error('Failed to create watermarked image'));
+			}
+		}, 'image/png');
+	});
+}
+
 function useCopyImage(options: UseCopyOptions = {}) {
 	const { enableNotifications = true } = options;
 	const [isCopied, setIsCopied] = useState(false);
@@ -137,10 +210,16 @@ function useCopyImage(options: UseCopyOptions = {}) {
 			// Create clipboard item with promise
 			const item = new ClipboardItem({
 				'image/png': getImageData(url).then(async (blob) => {
-					if (blob.type === 'image/png' || canCopyImageFormat(blob.type)) {
-						return blob;
+					// Convert to PNG if needed
+					let processedBlob = blob;
+					if (!(blob.type === 'image/png' || canCopyImageFormat(blob.type))) {
+						processedBlob = await convertToPng(blob);
 					}
-					return convertToPng(blob);
+
+					// Add watermark with memenya icon
+					processedBlob = await addWatermark(processedBlob, memenyaWhiteIcon);
+
+					return processedBlob;
 				}),
 			});
 
