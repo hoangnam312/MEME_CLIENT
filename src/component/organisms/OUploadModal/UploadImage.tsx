@@ -14,16 +14,27 @@ import { toast } from 'react-toastify';
 import { ErrorResponse, IMeme } from 'src/constants/type';
 import OBlurRequiredAuthen from '../OBlurRequiredAuthen/OBlurRequiredAuthen';
 import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
+import { useAuthen } from 'src/hooks/useAuthen';
 
 export interface OUploadImagePropsType {
 	closeModal: () => void;
 }
 
-const ToastUploadSuccess = ({ meme }: { meme: IMeme }) => {
+const ToastUploadSuccess = ({
+	meme,
+	enableWatermark,
+}: {
+	meme: IMeme;
+	enableWatermark?: boolean;
+}) => {
 	return (
 		<div className="ms-3 flex items-center justify-between">
 			<p className="mr-1">{t('upload.success')}</p>
-			<MemeCopyButton data={meme} sourceType={ESourceType.Other} />
+			<MemeCopyButton
+				data={meme}
+				sourceType={ESourceType.Other}
+				enableWatermark={enableWatermark}
+			/>
 		</div>
 	);
 };
@@ -33,6 +44,7 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 	const [link, setLink] = useState('');
 	const [isImageError, setIsImageError] = useState<boolean>(false);
 	const [isLoading, setIsLoading] = useState(false);
+	const { preferences } = useAuthen();
 	const {
 		source,
 		file,
@@ -80,7 +92,12 @@ const UploadImage = ({ closeModal }: OUploadImagePropsType) => {
 				closeModal();
 				const createdMeme = response.data;
 				if (createdMeme) {
-					toast.success(() => <ToastUploadSuccess meme={createdMeme} />);
+					toast.success(() => (
+						<ToastUploadSuccess
+							meme={createdMeme}
+							enableWatermark={preferences.enableWatermark ?? true}
+						/>
+					));
 				} else {
 					toast.success(t('upload.success'));
 				}

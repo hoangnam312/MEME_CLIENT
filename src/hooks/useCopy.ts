@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { t } from 'i18next';
 import memenyaWhiteIcon from '/memenya_white.svg';
-import { useAuthen } from './useAuthen';
 
 export type UseCopyOptions = {
 	enableNotifications?: boolean;
+	enableWatermark?: boolean;
 };
 
 function isClipboardImageSupported(): boolean {
@@ -183,9 +183,7 @@ async function addWatermark(
 }
 
 function useCopyImage(options: UseCopyOptions = {}) {
-	const { enableNotifications = true } = options;
-	const { preferences } = useAuthen();
-	const enableWatermark = preferences.enableWatermark ?? true;
+	const { enableNotifications = true, enableWatermark = true } = options;
 	const [isCopied, setIsCopied] = useState(false);
 	const [isError, setIsError] = useState(false);
 

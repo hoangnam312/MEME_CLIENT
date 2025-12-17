@@ -26,7 +26,7 @@ export interface OViewImagePropsType {
 }
 
 const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
-	const { isLoggedIn } = useAuthen();
+	const { isLoggedIn, preferences } = useAuthen();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [dataImage, setDataImage] = useState<IMeme>(data);
 
@@ -167,6 +167,7 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								<MemeCopyButton
 									data={dataImage}
 									sourceType={ESourceType.Detail}
+									enableWatermark={preferences.enableWatermark ?? true}
 								/>
 							</div>
 						</div>

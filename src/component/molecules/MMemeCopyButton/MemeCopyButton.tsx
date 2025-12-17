@@ -21,11 +21,18 @@ export enum CopyState {
 interface MemeCopyButtonProps {
 	data: IMeme;
 	sourceType?: ESourceType;
+	enableWatermark?: boolean;
 }
 
-const MemeCopyButton = ({ data, sourceType }: MemeCopyButtonProps) => {
+const MemeCopyButton = ({
+	data,
+	sourceType,
+	enableWatermark = true,
+}: MemeCopyButtonProps) => {
 	const [copyState, setCopyState] = useState<CopyState>(CopyState.Idle);
-	const { copyImage } = useCopyImage();
+	const { copyImage } = useCopyImage({
+		enableWatermark,
+	});
 	let copyTimeout: NodeJS.Timeout | null = null;
 
 	const handleCopy = async (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
