@@ -454,5 +454,12 @@
 			"firefoxNotSupported": "Firefox doesn't support copying images yet. Try Chrome, Edge, or Safari.",
 			"deviceNotSupported": "Your device may have limited clipboard support. Try another device."
 		}
+	},
+
+	"share": {
+		"copyLink": "Copy Link",
+		"facebook": "Facebook",
+		"success": "Link copied successfully!",
+		"error": "Failed to copy link"
 	}
 }

@@ -32,7 +32,7 @@ interface InterfaceResponseGetMemes {
 
 interface IBodyTrackingMeme {
 	memeId: string;
-	action: 'like' | 'copy' | 'view' | 'dislike' | 'add-to-album';
+	action: 'like' | 'copy' | 'view' | 'dislike' | 'add-to-album' | 'share';
 }
 
 enum ESourceType {

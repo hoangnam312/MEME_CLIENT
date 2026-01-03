@@ -450,5 +450,12 @@
 			"firefoxNotSupported": "Firefox chưa hỗ trợ copy ảnh. Hãy thử Chrome, Edge, hoặc Safari.",
 			"deviceNotSupported": "Thiết bị của bạn có thể có hạn chế về clipboard. Hãy thử thiết bị khác"
 		}
+	},
+
+	"share": {
+		"copyLink": "Sao chép liên kết",
+		"facebook": "Facebook",
+		"success": "Đã sao chép liên kết thành công!",
+		"error": "Không thể sao chép liên kết"
 	}
 }

@@ -1,9 +1,11 @@
 import { faImage } from '@fortawesome/free-regular-svg-icons';
 import { faCopy, faEye, faThumbsUp } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import Masonry from 'react-masonry-css';
 import AModal from 'src/component/atoms/AModal/AModal';
+import AShareButton from 'src/component/atoms/AShareButton/AShareButton';
+import MSharePopover from 'src/component/molecules/MSharePopover/MSharePopover';
 import MemeCopyButton from 'src/component/molecules/MMemeCopyButton/MemeCopyButton';
 import MemeDislikeButton from 'src/component/molecules/MMemeDislikeButton/MemeDislikeButton';
 import MemeLikeButton from 'src/component/molecules/MMemeLikeButton/MemeLikeButton';
@@ -29,6 +31,8 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 	const { isLoggedIn, preferences } = useAuthen();
 	const [listImage, setListImage] = useState<IMeme[]>([]);
 	const [dataImage, setDataImage] = useState<IMeme>(data);
+	const [isSharePopoverOpen, setIsSharePopoverOpen] = useState<boolean>(false);
+	const shareButtonRef = useRef<HTMLDivElement>(null);
 
 	const handleCloseModal = () => {
 		removeMemeIdFromUrl();
@@ -163,6 +167,14 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 								<FontAwesomeIcon icon={faTrashCan} />
 							</AButton>
 						)} */}
+							<div ref={shareButtonRef} className="scale-90 md:scale-100">
+								<AShareButton
+									onClick={(e) => {
+										e.stopPropagation();
+										setIsSharePopoverOpen(true);
+									}}
+								/>
+							</div>
 							<div className="scale-90 md:scale-100">
 								<MemeCopyButton
 									data={dataImage}
@@ -253,6 +265,13 @@ const OViewImage = ({ isOpen, data, closeModal }: OViewImagePropsType) => {
 					</div>
 				</div>
 			</div>
+			<MSharePopover
+				isOpen={isSharePopoverOpen}
+				onClose={() => setIsSharePopoverOpen(false)}
+				memeData={dataImage}
+				sourceType={ESourceType.Detail}
+				anchorEl={shareButtonRef.current}
+			/>
 		</AModal>
 	);
 };
