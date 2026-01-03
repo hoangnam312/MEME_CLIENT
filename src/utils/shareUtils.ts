@@ -24,6 +24,7 @@ export function getShareUrls(
 	twitter: string;
 	whatsapp: string;
 	pinterest: string;
+	messenger: string;
 } {
 	const encodedUrl = encodeURIComponent(memeUrl);
 	const encodedTitle = encodeURIComponent(
@@ -34,11 +35,16 @@ export function getShareUrls(
 	);
 	const encodedImageUrl = encodeURIComponent(memeData.image.imageMedium);
 
+	const facebookAppId = import.meta.env.VITE_FACEBOOK_APP_ID;
+
 	return {
 		facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodedUrl}`,
 		twitter: `https://twitter.com/intent/tweet?url=${encodedUrl}&text=${encodedTitle}`,
 		whatsapp: `https://wa.me/?text=${encodedTitle}%20${encodedUrl}`,
 		pinterest: `https://pinterest.com/pin/create/button/?url=${encodedUrl}&media=${encodedImageUrl}&description=${encodedDescription}`,
+		messenger: `https://www.facebook.com/dialog/send?link=${encodedUrl}&app_id=${facebookAppId}&redirect_uri=${encodeURIComponent(
+			window.location.origin
+		)}`,
 	};
 }
 

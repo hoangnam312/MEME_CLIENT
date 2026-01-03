@@ -4,6 +4,7 @@ import { t } from 'i18next';
 import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 import FacebookIcon from 'src/assets/icon/FacebookIcon';
+import MessengerIcon from 'src/assets/icon/MessengerIcon';
 import { IMeme } from 'src/constants/type';
 import { useClickOutside } from 'src/hooks/useClickOutside';
 import useCopyImage from 'src/hooks/useCopy';
@@ -44,7 +45,13 @@ const MSharePopover = ({
 	const shareUrls = getShareUrls(shareUrl, memeData);
 
 	const handleShare = async (
-		platform: 'facebook' | 'twitter' | 'whatsapp' | 'pinterest' | 'copy'
+		platform:
+			| 'facebook'
+			| 'twitter'
+			| 'whatsapp'
+			| 'pinterest'
+			| 'messenger'
+			| 'copy'
 	) => {
 		if (platform === 'copy') {
 			const success = await copyMemeLink(memeData._id, copyText);
@@ -87,10 +94,17 @@ const MSharePopover = ({
 		},
 		{
 			name: t('share.facebook'),
-			icon: <FacebookIcon />,
+			icon: <FacebookIcon addClass="!mr-0" />,
 			color: 'text-blue-600',
 			bgColor: 'bg-blue-100 hover:bg-blue-200',
 			action: 'facebook' as const,
+		},
+		{
+			name: t('share.messenger'),
+			icon: <MessengerIcon addClass="!mr-0" />,
+			color: 'text-blue-500',
+			bgColor: 'bg-blue-50 hover:bg-blue-100',
+			action: 'messenger' as const,
 		},
 	];
 
@@ -184,7 +198,7 @@ const MSharePopover = ({
 								onClick={() => handleShare(option.action)}
 								className={`flex flex-col items-center gap-1.5 rounded-lg p-2.5 transition-all md:p-3 ${option.bgColor}`}
 							>
-								<div className="flex items-center justify-center rounded-full">
+								<div className="inline-flex items-center justify-center rounded-full">
 									{option.icon}
 								</div>
 								<span

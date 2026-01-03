@@ -459,6 +459,7 @@
 	"share": {
 		"copyLink": "Copy Link",
 		"facebook": "Facebook",
+		"messenger": "Messenger",
 		"success": "Link copied successfully!",
 		"error": "Failed to copy link"
 	}

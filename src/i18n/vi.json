@@ -455,6 +455,7 @@
 	"share": {
 		"copyLink": "Sao chép liên kết",
 		"facebook": "Facebook",
+		"messenger": "Messenger",
 		"success": "Đã sao chép liên kết thành công!",
 		"error": "Không thể sao chép liên kết"
 	}
