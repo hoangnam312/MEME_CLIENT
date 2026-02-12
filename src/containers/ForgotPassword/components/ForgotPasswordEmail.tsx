@@ -37,7 +37,7 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 		formState: { errors, isSubmitting },
 	} = useForm<EmailFormData>({
 		resolver: yupResolver(emailValidationSchema),
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 
 	const onSubmit = async (data: EmailFormData) => {
@@ -86,7 +86,11 @@ const ForgotPasswordEmail: React.FC<ForgotPasswordEmailProps> = ({
 						</p>
 					</div>
 
-					<form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+					<form
+						noValidate
+						onSubmit={handleSubmit(onSubmit)}
+						className="space-y-6"
+					>
 						<div className="py-12">
 							<AInput
 								type="email"

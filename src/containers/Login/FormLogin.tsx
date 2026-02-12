@@ -29,7 +29,7 @@ function FormLogin() {
 		formState: { errors, isSubmitting },
 	} = useForm<LoginFormData>({
 		resolver: yupResolver(loginValidationSchema),
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 
 	const onSubmit: SubmitHandler<TInputs> = async (data) => {
@@ -74,7 +74,11 @@ function FormLogin() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(onSubmit)} className="space-y-3 md:space-y-4">
+		<form
+			noValidate
+			onSubmit={handleSubmit(onSubmit)}
+			className="space-y-3 md:space-y-4"
+		>
 			<div>
 				<AInput
 					addClassLabel="dark:text-violet-900"

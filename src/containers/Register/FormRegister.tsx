@@ -27,7 +27,7 @@ function FormRegister() {
 		formState: { errors },
 	} = useForm<TInputs>({
 		resolver: yupResolver(registerValidationSchema),
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 
 	const handleRegister: SubmitHandler<TInputs> = async (data) => {
@@ -52,7 +52,7 @@ function FormRegister() {
 	};
 
 	return (
-		<form onSubmit={handleSubmit(handleRegister)}>
+		<form noValidate onSubmit={handleSubmit(handleRegister)}>
 			<AInput
 				addClassWrapper="mt-3"
 				addClassLabel="dark:text-violet-900"

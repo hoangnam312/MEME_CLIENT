@@ -49,7 +49,7 @@ const NewResetPassword: React.FC<NewResetPasswordProps> = ({
 		formState: { errors, isSubmitting },
 	} = useForm<ResetPasswordFormData>({
 		resolver: yupResolver(resetPasswordValidationSchema),
-		mode: 'onChange',
+		mode: 'onSubmit',
 	});
 
 	const onSubmit = async (data: ResetPasswordFormData) => {
@@ -98,7 +98,7 @@ const NewResetPassword: React.FC<NewResetPasswordProps> = ({
 					</p>
 				</div>
 
-				<form onSubmit={handleSubmit(onSubmit)} className="">
+				<form noValidate onSubmit={handleSubmit(onSubmit)} className="">
 					<div className="space-y-6 py-12">
 						<div>
 							<AInput
