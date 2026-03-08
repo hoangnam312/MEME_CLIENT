@@ -8,6 +8,7 @@ import { toast } from 'react-toastify';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 import { RATE_LIMITS } from 'src/constants/mail';
+import { formatSeconds } from 'src/utils/timeUtils';
 
 export type VerificationContext = 'email-verification' | 'password-reset';
 
@@ -97,9 +98,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
 					setTimeLeft('Expired');
 					clearInterval(interval);
 				} else {
-					const minutes = Math.floor(timeRemaining / (1000 * 60));
-					const seconds = Math.floor((timeRemaining % (1000 * 60)) / 1000);
-					setTimeLeft(`${minutes}:${seconds.toString().padStart(2, '0')}`);
+					setTimeLeft(formatSeconds(Math.floor(timeRemaining / 1000)));
 				}
 			}, 1000);
 		}
@@ -269,15 +268,6 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
 		}
 	};
 
-	// Format resend timer
-	const formatTimer = (seconds: number): string => {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, '0')}:${secs
-			.toString()
-			.padStart(2, '0')}`;
-	};
-
 	return (
 		<div className={`space-y-8 ${className}`}>
 			<div className="rounded-lg bg-white px-5 py-7 shadow ">
@@ -377,7 +367,7 @@ const VerificationCodeInput: React.FC<VerificationCodeInputProps> = ({
 						</p>
 						{resendTimer > 0 ? (
 							<span className="text-gray-600">
-								{t('emailVerification.resendIn')} {formatTimer(resendTimer)}
+								{t('emailVerification.resendIn')} {formatSeconds(resendTimer)}
 							</span>
 						) : (
 							<div className="flex justify-center">

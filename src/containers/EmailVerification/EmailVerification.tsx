@@ -13,6 +13,7 @@ import { RATE_LIMITS } from 'src/constants/mail';
 import { Path } from 'src/constants/type';
 import { sendVerificationCode, verifyEmail } from 'src/service/auth';
 import { useBoundStore } from 'src/store/store';
+import { formatSeconds } from 'src/utils/timeUtils';
 
 interface EmailVerificationProps {
 	email?: string;
@@ -306,15 +307,6 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 		}
 	};
 
-	// Format resend timer
-	const formatTimer = (seconds: number): string => {
-		const mins = Math.floor(seconds / 60);
-		const secs = seconds % 60;
-		return `${mins.toString().padStart(2, '0')}:${secs
-			.toString()
-			.padStart(2, '0')}`;
-	};
-
 	if (!currentEmail) {
 		return (
 			<div className="flex min-h-screen items-center justify-center bg-gray-50 dark:bg-gray-800">
@@ -447,7 +439,7 @@ const EmailVerification: React.FC<EmailVerificationProps> = ({
 									) : isResending ? (
 										<span>{t('emailVerification.sending')}</span>
 									) : (
-										`${t('emailVerification.resendIn')} ${formatTimer(
+										`${t('emailVerification.resendIn')} ${formatSeconds(
 											resendTimer
 										)}`
 									)}
