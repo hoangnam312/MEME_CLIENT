@@ -32,6 +32,7 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 				className="h-10 w-10 rounded-lg md:h-12 md:w-12 md:rounded-xl"
 				src={user.avatarUrl}
 				alt={user.displayName || user.username}
+				referrerPolicy="no-referrer"
 			/>
 			<div className="min-w-0 flex-1">
 				<div className="truncate text-sm font-medium text-indigo-800 md:text-base lg:text-xl dark:text-white">

@@ -70,11 +70,12 @@ const MUserDropdown = () => {
 								src={profile?.avatar || ''}
 								alt={profile?.avatar || 'avatar'}
 								className="rounded-2xl object-cover"
+								referrerPolicy="no-referrer"
 							/>
 						</div>
 					) : (
 						<div
-							className={`flex h-14 w-14 cursor-pointer items-center justify-center 
+							className={`flex h-14 w-14 cursor-pointer items-center justify-center
 					rounded-2xl border-2 border-main-background p-4 ${defaultStye.border}`}
 							onClick={isOpen ? closeDropdown : openDropdown}
 						>

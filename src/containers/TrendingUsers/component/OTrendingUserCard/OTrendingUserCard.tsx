@@ -54,6 +54,7 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 						src={data.avatarUrl}
 						alt={data.displayName || data.username}
 						className="h-16 w-16 rounded-xl object-cover"
+						referrerPolicy="no-referrer"
 					/>
 				</div>
 
@@ -193,6 +194,7 @@ const OTrendingUserCard: React.FC<OTrendingUserCardProps> = ({
 						src={data.avatarUrl}
 						alt={data.displayName || data.username}
 						className="h-12 w-12 rounded-xl object-cover"
+						referrerPolicy="no-referrer"
 					/>
 				</div>
 

@@ -35,6 +35,7 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 					className="mb-3 h-16 w-16 rounded-xl md:mb-4 md:h-20 md:w-20 md:rounded-2xl"
 					src={user.avatarUrl}
 					alt={user.displayName || user.username}
+					referrerPolicy="no-referrer"
 				/>
 
 				<div className="mb-2 flex items-center gap-2">

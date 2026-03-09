@@ -25,6 +25,7 @@ const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 				className="h-7 w-7 rounded-md md:h-8 md:w-8 md:rounded-lg"
 				src={user.avatarUrl}
 				alt={user.displayName || user.username}
+				referrerPolicy="no-referrer"
 			/>
 			<span className="text-xs font-medium text-indigo-800 md:text-sm dark:text-white">
 				{user.displayName || user.username}

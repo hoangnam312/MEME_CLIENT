@@ -168,6 +168,7 @@ const ProfileTab: React.FC = () => {
 							src={avatarPreview}
 							alt="Avatar"
 							className="rounded-xl object-cover md:rounded-2xl"
+							referrerPolicy="no-referrer"
 						/>
 					) : (
 						<FontAwesomeIcon icon={faUser} className="text-2xl md:text-3xl" />
