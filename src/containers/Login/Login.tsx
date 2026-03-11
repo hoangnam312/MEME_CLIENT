@@ -3,10 +3,8 @@ import {
 	faUnlockKeyhole,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import FacebookLogin from '@greatsumini/react-facebook-login';
 import { t } from 'i18next';
 import { useNavigate } from 'react-router';
-import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import MainIcon from 'src/assets/icon/MainIcon';
 import AButton from 'src/component/atoms/AButton/AButton';
@@ -15,17 +13,12 @@ import ASquareOutlineButton from 'src/component/atoms/ASquareOutlineButton/ASqua
 import { Path } from 'src/constants/type';
 import useNavigateBack from 'src/hooks/useNavigateBack';
 import FormLogin from './FormLogin';
-import useLoginWithFacebook from './useLoginWithFacebook';
 import useLoginWithGoogle from './useLoginWithGoogle';
-
-const FACEBOOK_APP_ID = import.meta.env.VITE_FACEBOOK_APP_ID;
 
 function Login() {
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
 	const { loginWithGoogle } = useLoginWithGoogle();
-	const { onSuccess: onSuccessFacebook, onError: onErrorFacebook } =
-		useLoginWithFacebook();
 
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 py-6 sm:py-12 dark:bg-gray-800">
@@ -52,26 +45,6 @@ function Login() {
 									<GoogleIcon />
 									<span className="text-xs md:text-sm">{t('google')}</span>
 								</ASquareOutlineButton>
-								<FacebookLogin
-									appId={FACEBOOK_APP_ID}
-									onSuccess={(response) => {
-										onSuccessFacebook(response);
-									}}
-									onFail={(error) => {
-										onErrorFacebook(error);
-									}}
-									render={({ onClick }) => (
-										<ASquareOutlineButton
-											onClick={onClick}
-											addClass="mt-3 md:mt-4"
-										>
-											<FacebookIcon />
-											<span className="text-xs md:text-sm">
-												{t('facebook')}
-											</span>
-										</ASquareOutlineButton>
-									)}
-								/>
 							</div>
 						</div>
 						<div className="mt-2 flex flex-col items-center gap-1 p-3 sm:flex-row sm:gap-0 md:p-5">

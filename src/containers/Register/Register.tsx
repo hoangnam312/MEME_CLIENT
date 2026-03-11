@@ -3,7 +3,6 @@ import { t } from 'i18next';
 import MainIcon from 'src/assets/icon/MainIcon';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import ALink from 'src/component/atoms/Alink/ALink';
-import FacebookIcon from 'src/assets/icon/FacebookIcon';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
@@ -35,10 +34,6 @@ function Register() {
 								<ALink addClass="my-3 md:my-4">
 									<GoogleIcon />
 									<span className="text-xs md:text-sm">{t('google')}</span>
-								</ALink>
-								<ALink addClass="my-3 md:my-4">
-									<FacebookIcon />
-									<span className="text-xs md:text-sm">{t('facebook')}</span>
 								</ALink>
 							</div>
 						</div>
