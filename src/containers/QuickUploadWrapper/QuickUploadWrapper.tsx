@@ -1,7 +1,9 @@
 import { ReactNode, useEffect } from 'react';
+import { useLocation } from 'react-router';
 import OUploadModal from 'src/component/organisms/OUploadModal/OUploadModal';
 import { typeModal } from 'src/constants/type';
 import useOpen from 'src/hooks/useOpen';
+import { ignorePath } from './config';
 
 export interface QuickUploadWrapperPropsType {
 	children: ReactNode;
@@ -15,6 +17,7 @@ const QuickUploadWrapper = ({
 	updateModalOpening,
 }: QuickUploadWrapperPropsType) => {
 	const { isOpen, openModal, closeModal } = useOpen();
+	const { pathname } = useLocation();
 
 	useEffect(() => {
 		if (isOpen) updateModalOpening(typeModal.QUICK_UPLOAD);
@@ -23,6 +26,7 @@ const QuickUploadWrapper = ({
 	}, [isOpen]);
 
 	const handleDrag = () => {
+		if (ignorePath.includes(pathname)) return;
 		if (modalOpening === typeModal.NONE) openModal();
 	};
 
