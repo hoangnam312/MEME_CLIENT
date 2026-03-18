@@ -32,6 +32,7 @@ import { FileWithMetadata, UploadState } from './types';
 import { extractErrorMessage } from './utils/errorHandling';
 import UploadProgressTracker from './UploadProgressTracker';
 
+const baseURL = import.meta.env.VITE_BASE_URL;
 const BulkUpload: React.FC = () => {
 	const navigate = useNavigate();
 	const { uploadId: urlUploadId } = useParams<{ uploadId?: string }>();
@@ -49,10 +50,6 @@ const BulkUpload: React.FC = () => {
 
 	const { setupSSEHandlers } = useSSEHandlers();
 	const { validateFile } = useFileValidation();
-	const baseURL = useMemo(
-		() => import.meta.env.VITE_BASE_URL || window.location.origin,
-		[]
-	);
 
 	useEffect(() => {
 		if (urlUploadId && !uploadState.isUploading) {
@@ -75,7 +72,7 @@ const BulkUpload: React.FC = () => {
 								percentage: response.data.percentage,
 								status: response.data.status,
 							},
-							results: [],
+							results: response.data.recentResults || [],
 						});
 
 						setupSSEHandlers(sseTracker.current, setUploadState);
@@ -97,7 +94,7 @@ const BulkUpload: React.FC = () => {
 								percentage: 100,
 								status: 'completed',
 							},
-							results: [],
+							results: response.data.recentResults || [],
 						});
 					}
 				})
@@ -108,13 +105,7 @@ const BulkUpload: React.FC = () => {
 					}
 				});
 		}
-	}, [
-		urlUploadId,
-		setupSSEHandlers,
-		baseURL,
-		navigate,
-		uploadState.isUploading,
-	]);
+	}, [urlUploadId, setupSSEHandlers, navigate, uploadState.isUploading]);
 
 	const handleFileSelect = useCallback(
 		(event: React.ChangeEvent<HTMLInputElement>) => {
@@ -267,7 +258,7 @@ const BulkUpload: React.FC = () => {
 				results: [],
 			});
 		}
-	}, [files, navigate, setupSSEHandlers, baseURL]);
+	}, [files, navigate, setupSSEHandlers]);
 
 	const clearAll = useCallback(() => {
 		files.forEach((f) => URL.revokeObjectURL(f.preview));

@@ -412,6 +412,11 @@
 			"cancel": "Hủy",
 			"saveChanges": "Lưu thay đổi"
 		},
+		"result": {
+			"copyImageUrl": "Sao chép URL",
+			"copied": "Đã sao chép!",
+			"uploadFailed": "Thất bại"
+		},
 		"progress": {
 			"uploadComplete": "Tải lên hoàn tất!",
 			"uploadFailed": "Tải lên thất bại",
@@ -423,6 +428,7 @@
 			"processingMemes": "Đang xử lý meme của bạn...",
 			"processingDescription": "Quá trình này có thể mất vài phút tùy thuộc vào số lượng tệp. Bạn có thể rời khỏi trang này ngay bây giờ.",
 			"noResultsYet": "Chưa có kết quả",
+			"unnamedFile": "Tệp không tên",
 			"successfullyUploaded": "Đã tải lên thành công {{successCount}} trong số {{totalFiles}} meme!",
 			"filesFailedToUpload": "{{failedCount}} tệp{{plural}} tải lên thất bại.",
 			"totalTime": "Tổng thời gian: {{time}}",

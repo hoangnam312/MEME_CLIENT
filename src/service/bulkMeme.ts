@@ -58,6 +58,7 @@ export interface BulkUploadStatusResponse {
 	elapsedTime: number;
 	percentage: number;
 	status: 'processing' | 'completed' | 'error';
+	recentResults?: MemeUploadResult[];
 }
 
 const createBulkMemes = (formData: FormData) =>

@@ -416,6 +416,11 @@
 			"cancel": "Cancel",
 			"saveChanges": "Save Changes"
 		},
+		"result": {
+			"copyImageUrl": "Copy URL",
+			"copied": "Copied!",
+			"uploadFailed": "Failed"
+		},
 		"progress": {
 			"uploadComplete": "Upload Complete!",
 			"uploadFailed": "Upload Failed",
@@ -427,6 +432,7 @@
 			"processingMemes": "Processing your memes...",
 			"processingDescription": "This may take a few minutes depending on the number of files. You can leave this page right now.",
 			"noResultsYet": "No results yet",
+			"unnamedFile": "Unnamed file",
 			"successfullyUploaded": "Successfully uploaded {{successCount}} out of {{totalFiles}} memes!",
 			"filesFailedToUpload": "{{failedCount}} file{{plural}} failed to upload.",
 			"totalTime": "Total time: {{time}}",

@@ -7,10 +7,11 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import AButton from 'src/component/atoms/AButton/AButton';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 import { BulkUploadProgress, MemeUploadResult } from 'src/service/bulkMeme';
+import { ResultCard } from './components';
 
 interface UploadProgressTrackerProps {
 	progress: BulkUploadProgress;
@@ -22,12 +23,25 @@ interface UploadProgressTrackerProps {
 
 const UploadProgressTracker: React.FC<UploadProgressTrackerProps> = ({
 	progress,
+	results,
 	onGoToMyMemes,
 	onRetry,
 }) => {
-	const isComplete = progress.status === 'completed';
-	const hasError = progress.status === 'error';
-	const isProcessing = progress.status === 'processing';
+	const [isComplete, setIsComplete] = useState<boolean>(
+		progress.status === 'completed'
+	);
+	const [hasError, setHasError] = useState<boolean>(
+		progress.status === 'error'
+	);
+	const [isProcessing, setIsProcessing] = useState<boolean>(
+		progress.status === 'processing'
+	);
+
+	useEffect(() => {
+		setIsComplete(progress.status === 'completed');
+		setHasError(progress.status === 'error');
+		setIsProcessing(progress.status === 'processing');
+	}, [progress.status]);
 
 	const formatTime = (seconds: number): string => {
 		if (seconds < 60) return `${seconds}s`;
@@ -121,27 +135,29 @@ const UploadProgressTracker: React.FC<UploadProgressTrackerProps> = ({
 			)}
 
 			<div className="mt-4 md:mt-8">
-				<div className="py-6 text-center text-gray-500 md:py-12">
-					{isProcessing ? (
-						<>
-							<FontAwesomeIcon
-								icon={faHourglassHalf}
-								spin
-								className="mb-2 text-2xl text-emerald-300 md:mb-4 md:text-3xl lg:text-4xl"
-							/>
-							<p className="mb-1 px-2 text-base font-medium md:mb-2 md:text-lg">
-								{t('bulkUpload.progress.processingMemes')}
-							</p>
-							<p className="px-4 text-xs md:text-sm">
-								{t('bulkUpload.progress.processingDescription')}
-							</p>
-						</>
-					) : (
-						<p className="text-sm md:text-base">
-							{t('bulkUpload.progress.noResultsYet')}
+				{isProcessing && !results.length && (
+					<div className="py-6 text-center text-gray-500 md:py-12">
+						<FontAwesomeIcon
+							icon={faHourglassHalf}
+							spin
+							className="mb-2 text-2xl text-emerald-300 md:mb-4 md:text-3xl lg:text-4xl"
+						/>
+						<p className="mb-1 px-2 text-base font-medium md:mb-2 md:text-lg">
+							{t('bulkUpload.progress.processingMemes')}
 						</p>
-					)}
-				</div>
+						<p className="px-4 text-xs md:text-sm">
+							{t('bulkUpload.progress.processingDescription')}
+						</p>
+					</div>
+				)}
+
+				{results.length > 0 && (
+					<div className="grid grid-cols-2 gap-2 sm:gap-4 md:grid-cols-3 lg:grid-cols-4 lg:gap-6 xl:grid-cols-5">
+						{results.map((result) => (
+							<ResultCard key={result.index} result={result} />
+						))}
+					</div>
+				)}
 			</div>
 
 			{(isComplete || hasError) && (
