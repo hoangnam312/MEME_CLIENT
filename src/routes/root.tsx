@@ -3,6 +3,7 @@ import { BoardHomepage } from 'src/containers/BoardHomepage/BoardHomepage';
 import Layout from 'src/containers/Layout/Layout';
 import Login from 'src/containers/Login/Login';
 import MyMeme from 'src/containers/MyMeme/MyMeme';
+import UserProfile from 'src/containers/UserProfile';
 import Account from 'src/containers/Account/Account';
 import Register from 'src/containers/Register/Register';
 import EmailVerification from 'src/containers/EmailVerification/EmailVerification';
@@ -25,6 +26,7 @@ const AppRoutes = () => {
 				<Route path="bulk-upload/:uploadId" element={<BulkUpload />} />
 				<Route path="trending" element={<Trending />} />
 				<Route path="trending-users" element={<TrendingUsers />} />
+				<Route path="user/:userId" element={<UserProfile />} />
 				<Route path="account" element={<Account />} />
 			</Route>
 

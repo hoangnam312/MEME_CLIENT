@@ -12,6 +12,7 @@ export interface UserCardCompactProps {
 	onFollowersClick?: () => void;
 	onFollowingClick?: () => void;
 	enableFollowModal?: boolean;
+	onUserClick?: () => void;
 }
 
 const UserCardCompact: React.FC<UserCardCompactProps> = ({
@@ -23,10 +24,14 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 	onFollowersClick,
 	onFollowingClick,
 	enableFollowModal = false,
+	onUserClick,
 }) => {
 	return (
 		<div
-			className={`flex items-center gap-2 rounded-lg bg-indigo-200 p-1.5 md:gap-3 md:p-2 dark:bg-indigo-900 ${addClass}`}
+			className={`flex items-center gap-2 rounded-lg bg-indigo-200 p-1.5 md:gap-3 md:p-2 dark:bg-indigo-900 ${
+				onUserClick ? 'cursor-pointer' : ''
+			} ${addClass}`}
+			onClick={onUserClick}
 		>
 			<img
 				className="h-10 w-10 rounded-lg md:h-12 md:w-12 md:rounded-xl"
@@ -45,7 +50,10 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 								? 'cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400'
 								: ''
 						}
-						onClick={onFollowersClick}
+						onClick={(e) => {
+							e.stopPropagation();
+							onFollowersClick?.();
+						}}
 					>
 						{user.followCount} {t('followers')}
 					</span>
@@ -56,7 +64,10 @@ const UserCardCompact: React.FC<UserCardCompactProps> = ({
 								? 'cursor-pointer hover:text-indigo-600 dark:hover:text-indigo-400'
 								: ''
 						}
-						onClick={onFollowingClick}
+						onClick={(e) => {
+							e.stopPropagation();
+							onFollowingClick?.();
+						}}
 					>
 						{user.followingCount} {t('following')}
 					</span>

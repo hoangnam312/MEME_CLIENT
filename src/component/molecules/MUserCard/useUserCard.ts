@@ -78,7 +78,7 @@ export const useUserCard = ({
 				return;
 			}
 
-			if (userId === user.username) {
+			if (userId === user.id) {
 				toast.error(t('followToast.cannotFollowSelf'));
 				return;
 			}

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faCheckDouble, faUserPlus } from '@fortawesome/free-solid-svg-icons';
 import AButton from '../AButton/AButton';
@@ -26,6 +26,13 @@ const AFollowButton: React.FC<AFollowButtonProps> = ({
 	const { isLoggedIn } = useAuthen();
 	const [internalFollowing, setInternalFollowing] = useState(isFollowing);
 	const [followBounce, setFollowBounce] = useState(FollowBounceState.None);
+
+	// Sync internal state when the prop changes (e.g. store update after status fetch)
+	useEffect(() => {
+		if (followBounce === FollowBounceState.None) {
+			setInternalFollowing(isFollowing);
+		}
+	}, [followBounce, isFollowing]);
 
 	const handleFollowToggle = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
 		e.stopPropagation();

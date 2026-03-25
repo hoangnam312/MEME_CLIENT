@@ -14,6 +14,7 @@ export interface UserCardDetailedProps {
 	onFollowersClick?: () => void;
 	onFollowingClick?: () => void;
 	enableFollowModal?: boolean;
+	onUserClick?: () => void;
 }
 
 const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
@@ -25,10 +26,14 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 	onFollowersClick,
 	onFollowingClick,
 	enableFollowModal = false,
+	onUserClick,
 }) => {
 	return (
 		<div
-			className={`rounded-xl bg-indigo-200 p-4 shadow-lg md:rounded-2xl md:p-6 dark:bg-indigo-900 ${addClass}`}
+			className={`rounded-xl bg-indigo-200 p-4 shadow-lg md:rounded-2xl md:p-6 dark:bg-indigo-900 ${
+				onUserClick ? 'cursor-pointer' : ''
+			} ${addClass}`}
+			onClick={onUserClick}
 		>
 			<div className="flex flex-col items-center text-center">
 				<img
@@ -57,7 +62,10 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 								? 'cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-gray-50 md:p-2 dark:hover:bg-gray-700'
 								: ''
 						}`}
-						onClick={onFollowersClick}
+						onClick={(e) => {
+							e.stopPropagation();
+							onFollowersClick?.();
+						}}
 					>
 						<div className="text-base font-bold text-indigo-800 md:text-lg dark:text-white">
 							{user.followCount}
@@ -72,7 +80,10 @@ const UserCardDetailed: React.FC<UserCardDetailedProps> = ({
 								? 'cursor-pointer rounded-lg p-1.5 transition-colors hover:bg-gray-50 md:p-2 dark:hover:bg-gray-700'
 								: ''
 						}`}
-						onClick={onFollowingClick}
+						onClick={(e) => {
+							e.stopPropagation();
+							onFollowingClick?.();
+						}}
 					>
 						<div className="text-base font-bold text-indigo-800 md:text-lg dark:text-white">
 							{user.followingCount}

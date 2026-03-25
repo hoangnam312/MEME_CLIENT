@@ -79,8 +79,19 @@ export interface ChangePasswordResponse {
 	success: boolean;
 }
 
+export interface PublicUserProfileResponse {
+	_id: string;
+	username: string;
+	profile?: UserProfile;
+	stats: UserStats;
+	timestamps: UserTimestamps;
+}
+
 // API functions
 export const getMyProfile = () => api.get<MyProfileResponse>('/users/me');
+
+export const getPublicUserProfile = (userId: string) =>
+	api.get<PublicUserProfileResponse>(`/users/${userId}/profile`);
 
 export const updateProfile = (payload: UpdateProfilePayload | FormData) => {
 	// Check if payload is FormData (contains avatar file) or regular object

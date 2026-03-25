@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router';
 import {
 	useUserCard,
 	UserCardData,
@@ -7,6 +8,7 @@ import UserCardCompact from './variants/UserCardCompact';
 import UserCardDetailed from './variants/UserCardDetailed';
 import UserCardMinimal from './variants/UserCardMinimal';
 import OFollowListModal from 'src/component/organisms/OFollowListModal/OFollowListModal';
+import { Path } from 'src/constants/type';
 
 export type UserCardVariant = 'compact' | 'detailed' | 'minimal';
 
@@ -15,6 +17,7 @@ export interface MUserCardProps {
 	user: UserCardData;
 	addClass?: string;
 	enableFollowModal?: boolean;
+	enableProfileLink?: boolean;
 }
 
 const MUserCard: React.FC<MUserCardProps> = ({
@@ -22,7 +25,9 @@ const MUserCard: React.FC<MUserCardProps> = ({
 	user,
 	addClass = '',
 	enableFollowModal = true,
+	enableProfileLink = true,
 }) => {
+	const navigate = useNavigate();
 	const {
 		user: userData,
 		isLoggedIn,
@@ -52,6 +57,12 @@ const MUserCard: React.FC<MUserCardProps> = ({
 		}
 	};
 
+	const handleUserClick = () => {
+		if (enableProfileLink) {
+			navigate(`${Path.USER_PROFILE}/${user.id}`);
+		}
+	};
+
 	const commonProps = {
 		user: userData,
 		isShowFollowButton: isLoggedIn && !isMyself,
@@ -61,6 +72,7 @@ const MUserCard: React.FC<MUserCardProps> = ({
 		onFollowersClick: handleFollowersClick,
 		onFollowingClick: handleFollowingClick,
 		enableFollowModal,
+		onUserClick: enableProfileLink ? handleUserClick : undefined,
 	};
 
 	const renderVariant = () => {

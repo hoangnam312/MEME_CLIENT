@@ -9,17 +9,20 @@ export interface UserCardMinimalProps {
 	onFollowersClick?: () => void;
 	onFollowingClick?: () => void;
 	enableFollowModal?: boolean;
+	onUserClick?: () => void;
 }
 
 const UserCardMinimal: React.FC<UserCardMinimalProps> = ({
 	user,
 	addClass = '',
-	onFollowersClick,
+	onUserClick,
 }) => {
 	return (
 		<div
-			className={`flex items-center gap-1.5 rounded-lg bg-indigo-200 p-1 md:gap-2 md:p-1.5 dark:bg-indigo-900 ${addClass}`}
-			onClick={() => onFollowersClick?.()}
+			className={`flex items-center gap-1.5 rounded-lg bg-indigo-200 p-1 md:gap-2 md:p-1.5 dark:bg-indigo-900 ${
+				onUserClick ? 'cursor-pointer' : ''
+			} ${addClass}`}
+			onClick={onUserClick}
 		>
 			<img
 				className="h-7 w-7 rounded-md md:h-8 md:w-8 md:rounded-lg"

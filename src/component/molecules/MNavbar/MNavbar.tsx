@@ -42,7 +42,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 						<div className="flex flex-shrink-0 items-center justify-start">
 							<img
 								className="h-12 w-12 cursor-pointer object-cover sm:h-14 sm:w-14"
-								src="logo.svg"
+								src="/logo.svg"
 								alt="logo"
 								onClick={() => (window.location.href = '/')}
 							/>
@@ -67,7 +67,7 @@ export const MNavbar = ({ updateModalOpening }: MNavbarPropsType) => {
 						<div className="mr-5 flex items-center justify-start">
 							<img
 								className="h-14 w-14 cursor-pointer object-cover"
-								src="logo.svg"
+								src="/logo.svg"
 								alt="logo"
 								onClick={() => (window.location.href = '/')}
 							/>
