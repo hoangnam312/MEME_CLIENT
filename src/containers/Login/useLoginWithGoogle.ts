@@ -22,6 +22,8 @@ import { getErrorFromAxiosError } from 'src/utils/error';
 import { initializeLanguage } from 'src/utils/languageUtils';
 import { setToken } from 'src/utils/token';
 
+const VITE_EXTENSION_AUTH = import.meta.env.VITE_EXTENSION_AUTH;
+
 interface GoogleOAuthResponse {
 	data: {
 		_id: string;
@@ -108,6 +110,20 @@ const handleGoogleOAuthSuccess = async (
 		// Initialize language based on user preferences
 		await initializeLanguage(response.data.preferences);
 
+		// Notify extension if login was triggered from it
+		const urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.get('source') === 'extension') {
+			window.postMessage(
+				{
+					type: VITE_EXTENSION_AUTH,
+					token: authenticationData.token,
+					userId: authenticationData.userId,
+					username: authenticationData.username,
+				},
+				window.location.origin
+			);
+		}
+
 		// Navigate to homepage
 		navigate(Path.HOME_PAGE);
 	} catch (error: unknown) {
@@ -146,6 +162,20 @@ const handleGoogleOneTapSuccess = async (
 
 		// Initialize language based on user preferences
 		await initializeLanguage(response.data.preferences);
+
+		// Notify extension if login was triggered from it
+		const urlParams = new URLSearchParams(window.location.search);
+		if (urlParams.get('source') === 'extension') {
+			window.postMessage(
+				{
+					type: VITE_EXTENSION_AUTH,
+					token: authenticationData.token,
+					userId: authenticationData.userId,
+					username: authenticationData.username,
+				},
+				window.location.origin
+			);
+		}
 
 		// Navigate to homepage
 		navigate(Path.HOME_PAGE);

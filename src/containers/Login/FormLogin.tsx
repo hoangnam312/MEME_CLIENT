@@ -14,6 +14,8 @@ import { initializeLanguage } from 'src/utils/languageUtils';
 import { loginValidationSchema, LoginFormData } from './login.validation';
 import { t } from 'i18next';
 
+const VITE_EXTENSION_AUTH = import.meta.env.VITE_EXTENSION_AUTH;
+
 type TInputs = {
 	email: string;
 	password: string;
@@ -51,6 +53,20 @@ function FormLogin() {
 
 				// Initialize language based on user preferences
 				await initializeLanguage(res.data.preferences);
+
+				// Notify extension if login was triggered from it
+				const urlParams = new URLSearchParams(window.location.search);
+				if (urlParams.get('source') === 'extension') {
+					window.postMessage(
+						{
+							type: VITE_EXTENSION_AUTH,
+							token: newAuthen.token,
+							userId: newAuthen.userId,
+							username: newAuthen.username,
+						},
+						window.location.origin
+					);
+				}
 			});
 			navigate(Path.HOME_PAGE);
 		} catch (error) {

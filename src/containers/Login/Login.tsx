@@ -4,6 +4,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { t } from 'i18next';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router';
 import GoogleIcon from 'src/assets/icon/GoogleIcon';
 import MainIcon from 'src/assets/icon/MainIcon';
@@ -11,14 +12,37 @@ import AButton from 'src/component/atoms/AButton/AButton';
 import AOutlineButton from 'src/component/atoms/AOutlineButton/AOutlineButton';
 import ASquareOutlineButton from 'src/component/atoms/ASquareOutlineButton/ASquareOutlineButton';
 import { Path } from 'src/constants/type';
+import { useAuthen } from 'src/hooks/useAuthen';
 import useNavigateBack from 'src/hooks/useNavigateBack';
 import FormLogin from './FormLogin';
 import useLoginWithGoogle from './useLoginWithGoogle';
+
+const VITE_EXTENSION_AUTH = import.meta.env.VITE_EXTENSION_AUTH;
 
 function Login() {
 	const navigate = useNavigate();
 	const goBack = useNavigateBack();
 	const { loginWithGoogle } = useLoginWithGoogle();
+	const { isLoggedIn, token, userId, username } = useAuthen();
+
+	// --- Extension token handshake ---
+	// The extension opens /login?source=extension to retrieve a token even when
+	// the user is already logged in. Calling postMessage during render is too early:
+	useEffect(() => {
+		const urlParams = new URLSearchParams(window.location.search);
+		if (isLoggedIn() && urlParams.get('source') !== 'extension') {
+			console.log('NAVIGATE BACK TO HOME');
+			navigate(Path.HOME_PAGE);
+			return;
+		}
+		if (!isLoggedIn() || urlParams.get('source') !== 'extension') return;
+
+		console.log('send messsage to extension with token:');
+		window.postMessage(
+			{ type: VITE_EXTENSION_AUTH, token, userId, username },
+			window.location.origin
+		);
+	}, [isLoggedIn, navigate, token, userId, username]);
 
 	return (
 		<div className="flex min-h-screen flex-col justify-center bg-gray-100 py-6 sm:py-12 dark:bg-gray-800">
