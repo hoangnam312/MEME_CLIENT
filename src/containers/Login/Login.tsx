@@ -31,13 +31,11 @@ function Login() {
 	useEffect(() => {
 		const urlParams = new URLSearchParams(window.location.search);
 		if (isLoggedIn() && urlParams.get('source') !== 'extension') {
-			console.log('NAVIGATE BACK TO HOME');
 			navigate(Path.HOME_PAGE);
 			return;
 		}
 		if (!isLoggedIn() || urlParams.get('source') !== 'extension') return;
 
-		console.log('send messsage to extension with token:');
 		window.postMessage(
 			{ type: VITE_EXTENSION_AUTH, token, userId, username },
 			window.location.origin
